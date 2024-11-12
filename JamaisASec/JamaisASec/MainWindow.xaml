@@ -11,7 +11,7 @@
             <TextBlock Text="ERP" FontWeight="Bold" FontSize="16" Margin="10,0" DockPanel.Dock="Left" VerticalAlignment="Center"/>
             <Button Content="Accueil" Click="AccueilButton_Click" Margin="10,0" Width="75" />
             <Button Content="Produits" Click="ProduitsButton_Click" Margin="10,0" Width="75"/>
-            <Button Content="Fournisseurs" Margin="10,0" Width="75"/>
+            <Button Content="Fournisseurs" Click="fournisseursButton_Click" Margin="10,0" Width="75"/>
             <Button Content="Familles" Margin="10,0" Width="75"/>
             <Button Content="Stocks" Margin="10,0" Width="75"/>
             <Button Content="Commandes" Margin="10,0" Width="75"/>

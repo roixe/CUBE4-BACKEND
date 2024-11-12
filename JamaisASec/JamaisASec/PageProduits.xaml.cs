@@ -2,9 +2,9 @@
 
 namespace JamaisASec
 {
-    public partial class ProduitsPage : Page
+    public partial class PageProduits : Page
     {
-        public ProduitsPage()
+        public PageProduits()
         {
             InitializeComponent();
             
