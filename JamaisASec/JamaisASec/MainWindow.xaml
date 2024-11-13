@@ -13,7 +13,7 @@
             <Button Content="Produits" Click="ProduitsButton_Click" Margin="10,0" Width="75"/>
             <Button Content="Fournisseurs" Click="fournisseursButton_Click" Margin="10,0" Width="75"/>
             <Button Content="Familles" Margin="10,0" Width="75"/>
-            <Button Content="Stocks" Margin="10,0" Width="75"/>
+            <Button Content="Stocks" Click="StocksButton_Click" Margin="10,0" Width="75"/>
             <Button Content="Commandes" Margin="10,0" Width="75"/>
         </DockPanel>
         <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Margin="10,60,10,10"/>

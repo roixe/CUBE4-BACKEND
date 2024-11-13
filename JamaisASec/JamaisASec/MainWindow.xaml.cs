@@ -14,19 +14,25 @@ namespace JamaisASec
         private void AccueilButton_Click(object sender, RoutedEventArgs e)
         {
             // Charger une page d'accueil si elle existe
-            MainFrame.Navigate(new Accueil()); // Clear the frame to show default view
+            MainFrame.Navigate(new Accueil()); 
         }
 
         private void ProduitsButton_Click(object sender, RoutedEventArgs e)
         {
-            // Naviguer vers la page des produits
+
             MainFrame.Navigate(new PageProduits());
         }
 
         private void fournisseursButton_Click(object sender, RoutedEventArgs e)
         {
-            // Charger une page d'accueil si elle existe
-            MainFrame.Navigate(new PageFournisseurs()); // Clear the frame to show default view
+
+            MainFrame.Navigate(new PageFournisseurs());
+        }
+
+        private void StocksButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            MainFrame.Navigate(new PageStocks()); 
         }
     }
 }
