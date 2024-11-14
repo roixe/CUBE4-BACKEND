@@ -3,20 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ERP" Height="600" Width="900">
 
+
+
     <!-- Conteneur principal -->
     <Grid Margin="10">
 
         <!-- Barre de navigation en haut -->
-        <DockPanel LastChildFill="False" Background="LightGray" Height="50" VerticalAlignment="Top">
-            <TextBlock Text="ERP" FontWeight="Bold" FontSize="16" Margin="10,0" DockPanel.Dock="Left" VerticalAlignment="Center"/>
-            <Button Content="Accueil" Click="AccueilButton_Click" Margin="10,0" Width="75" />
-            <Button Content="Produits" Click="ProduitsButton_Click" Margin="10,0" Width="75"/>
-            <Button Content="Fournisseurs" Click="fournisseursButton_Click" Margin="10,0" Width="75"/>
-            <Button Content="Familles" Margin="10,0" Width="75"/>
-            <Button Content="Stocks" Click="StocksButton_Click" Margin="10,0" Width="75"/>
-            <Button Content="Commandes" Margin="10,0" Width="75"/>
-        </DockPanel>
-        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Margin="10,60,10,10"/>
+        <Border Background="MediumVioletRed" Height="50" VerticalAlignment="Top" CornerRadius="5,5,5,5">
+            <Grid>
+
+                <TextBlock Text="ERP" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Margin="10,0,841,0"/>
+                <Button Content="Accueil" Click="AccueilButton_Click"  BorderThickness="1,1,1,1" Margin="59,7,746,7"/>
+                <Button Content="Produits" Click="ProduitsButton_Click" Margin="154,7,651,7"/>
+                <Button Content="Fournisseurs" Click="fournisseursButton_Click" Margin="249,7,556,7"/>
+                <Button Content="Familles" Margin="344,7,461,7"/>
+                <Button Content="Stocks" Click="StocksButton_Click" Margin="439,7,366,7"/>
+                <Button Content="Commandes" Margin="534,7,271,7"/>
+            </Grid>
+        </Border>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Margin="10,60,10,10"/>
     </Grid>
-    </Window>
+
+</Window>
 
