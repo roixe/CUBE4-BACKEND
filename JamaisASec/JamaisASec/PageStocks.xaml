@@ -13,45 +13,48 @@
 
 
         <Border BorderBrush="Black" BorderThickness="1" Margin="0,50,0,0" Padding="5">
-            <DataGrid AutoGenerateColumns="False" HeadersVisibility="Column"
-                      Background="White" Foreground="Black" GridLinesVisibility="All">
-
+            <DataGrid x:Name="MonDataGrid" AutoGenerateColumns="False" HeadersVisibility="Column"
+          Background="White" Foreground="Black" GridLinesVisibility="All">
                 <DataGrid.Columns>
-                    
-                        <DataGridTemplateColumn Header="Nom" Width="2*">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="Produit Test" HorizontalAlignment="Center"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        
-                        <DataGridTemplateColumn Header="Description" Width="4*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="Description de test" HorizontalAlignment="Center"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
+                    <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*"/>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="4*"/>
                     <DataGridTemplateColumn Header="Stock" Width="2*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Content="-" Width="20" Margin="2"
-                                            Click="DecrementStock_Click"/>
-                                    <TextBlock Text="10" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
-                                    <Button Content="+" Width="20" Margin="2"
-                                            Click="IncrementStock_Click"/>
+                                    <Button Name="RemoveStock" Content="-" Width="20" Margin="2"
+                                Click="DecrementStock_Click"/>
+                                    <TextBlock Text="{Binding Stock}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
+                                    <Button Name="AddStock" Content="+" Width="20" Margin="2"
+                                Click="IncrementStock_Click"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    
-                    <DataGridTextColumn Header="Familles" Binding="{Binding Famille}" Width="2*"/>
-                    
+                    <DataGridTemplateColumn Header="Stock min" Width="2*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button Name="RemoveStockMin" Content="-" Width="20" Margin="2" Click="DecrementStock_Click"/>
+                                    <TextBlock Text="{Binding StockMin}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
+                                    <Button Name="AddStockMin" Content="+" Width="20" Margin="2" Click="IncrementStock_Click"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Colisage" Width="2*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button Name="RemoveColisage"  Content="-" Width="20" Margin="2" Click="DecrementStock_Click"/>
+                                    <TextBlock Text="{Binding Colisage}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
+                                    <Button Name="AddColisage" Content="+" Width="20" Margin="2" Click="IncrementStock_Click"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Famille" Binding="{Binding Famille}" Width="2*"/>
                 </DataGrid.Columns>
-                <TextBlock Text="Test" Margin="5" Grid.Row="1" Grid.Column="0"/>
             </DataGrid>
         </Border>
     </Grid>
