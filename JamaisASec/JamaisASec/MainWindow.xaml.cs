@@ -14,7 +14,7 @@ namespace JamaisASec
         private void AccueilButton_Click(object sender, RoutedEventArgs e)
         {
             // Charger une page d'accueil si elle existe
-            MainFrame.Navigate(new Accueil()); 
+            MainFrame.Navigate(new Accueil());
         }
 
         private void ProduitsButton_Click(object sender, RoutedEventArgs e)

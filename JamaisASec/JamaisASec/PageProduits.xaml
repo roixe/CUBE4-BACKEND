@@ -16,7 +16,7 @@
         <!-- Table des produits -->
         <Border BorderBrush="Black" BorderThickness="1" Margin="0,50,0,0" Padding="5">
             <DataGrid AutoGenerateColumns="False" HeadersVisibility="Column"
-                      Background="White" Foreground="Black" GridLinesVisibility="All" SelectionChanged="DataGrid_SelectionChanged">
+                      Background="White" Foreground="Black" GridLinesVisibility="All" SelectionChanged="DataGrid_SelectionChanged" Margin="0,0,0,231">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="4*"/>
@@ -26,5 +26,26 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
+        <Grid Margin="10,306,10,10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,10">
+                <Button Content="Rechercher par Famille" Width="150" Margin="5" />
+                <Button Content="Ajouter Famille" Width="150" Margin="5" />
+                <Button Content="Modifier (à la sélection)" Width="200" Margin="5" />
+                <Button Content="Supprimer (à la sélection)" Width="200" Margin="5" />
+            </StackPanel>
+
+            <Border Grid.Row="3" Margin="0,50,0,0" Padding="5">
+                <DataGrid AutoGenerateColumns="False" HeadersVisibility="Column"
+               Background="White" Foreground="Black" GridLinesVisibility="All">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Familles" Width="2*"/>
+                        <DataGridTextColumn Header="Description" Width="2*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+
+        </Grid>
+        
     </Grid>
+    
 </Page>
