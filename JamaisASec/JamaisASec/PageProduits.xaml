@@ -2,11 +2,23 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" 
-      Title="ProduitsPage" Background="White" av:DesignHeight="484.51">
+      Title="ProduitsPage" Background="White" av:DesignHeight="484.51" av:DesignWidth="850.816">
 
     <Grid Margin="10">
-        <!-- Commandes en haut pour produits -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,10">
+        <!-- Définition des lignes du Grid -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Commandes produits -->
+            <RowDefinition Height="*"/>
+            <!-- Table des produits -->
+            <RowDefinition Height="Auto"/>
+            <!-- Commandes familles -->
+            <RowDefinition Height="*"/>
+            <!-- Table des familles -->
+        </Grid.RowDefinitions>
+
+        <!-- Commandes pour produits -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
             <Button Content="Rechercher par nom" Width="150" Margin="5" />
             <Button Content="Ajouter Produit" Width="150" Margin="5" />
             <Button Content="Modifier (à la sélection)" Width="200" Margin="5" />
@@ -14,38 +26,35 @@
         </StackPanel>
 
         <!-- Table des produits -->
-        <Border BorderBrush="Black" BorderThickness="1" Margin="0,50,0,0" Padding="5">
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Padding="5">
             <DataGrid AutoGenerateColumns="False" HeadersVisibility="Column"
-                      Background="White" Foreground="Black" GridLinesVisibility="All" SelectionChanged="DataGrid_SelectionChanged" Margin="0,0,0,231">
+                      Background="White" Foreground="Black" GridLinesVisibility="All" HorizontalAlignment="Stretch">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*"/>
-                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="4*"/>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="5*"/>
                     <DataGridTextColumn Header="Stock" Binding="{Binding Stock}" Width="2*"/>
-                    <DataGridTextColumn Header="Familles" Width="2*"/>
+                    <DataGridTextColumn Header="Famille" Width="2*"/>
                     <DataGridTextColumn Header="Prix" Width="2*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
-        <Grid Margin="10,306,10,10">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,10">
-                <Button Content="Rechercher par Famille" Width="150" Margin="5" />
-                <Button Content="Ajouter Famille" Width="150" Margin="5" />
-                <Button Content="Modifier (à la sélection)" Width="200" Margin="5" />
-                <Button Content="Supprimer (à la sélection)" Width="200" Margin="5" />
-            </StackPanel>
 
-            <Border Grid.Row="3" Margin="0,50,0,0" Padding="5">
-                <DataGrid AutoGenerateColumns="False" HeadersVisibility="Column"
-               Background="White" Foreground="Black" GridLinesVisibility="All">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Familles" Width="2*"/>
-                        <DataGridTextColumn Header="Description" Width="2*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Border>
+        <!-- Commandes pour familles -->
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,10,0,10">
+            <Button Content="Rechercher par Famille" Width="150" Margin="5" />
+            <Button Content="Ajouter Famille" Width="150" Margin="5" />
+            <Button Content="Modifier (à la sélection)" Width="200" Margin="5" />
+            <Button Content="Supprimer (à la sélection)" Width="200" Margin="5" />
+        </StackPanel>
 
-        </Grid>
-        
+        <!-- Table des familles -->
+        <Border Grid.Row="3" BorderBrush="Black" BorderThickness="1" Padding="5">
+            <DataGrid AutoGenerateColumns="False" HeadersVisibility="Column"
+                      Background="White" Foreground="Black" GridLinesVisibility="All">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Familles" Width="2*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
     </Grid>
-    
 </Page>
