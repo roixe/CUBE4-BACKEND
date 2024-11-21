@@ -26,15 +26,15 @@
         </StackPanel>
 
         <!-- Table des produits -->
-        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Padding="5">
-            <DataGrid AutoGenerateColumns="False" HeadersVisibility="Column"
-                      Background="White" Foreground="Black" GridLinesVisibility="All" HorizontalAlignment="Stretch">
+        <Border Grid.Row="1" Padding="5">
+            <DataGrid x:Name="ProduitGrid" AutoGenerateColumns="False" HeadersVisibility="Column"
+                      Background="White" GridLinesVisibility="None" HorizontalAlignment="Stretch">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="5*"/>
                     <DataGridTextColumn Header="Stock" Binding="{Binding Stock}" Width="2*"/>
-                    <DataGridTextColumn Header="Famille" Width="2*"/>
-                    <DataGridTextColumn Header="Prix" Width="2*"/>
+                    <DataGridTextColumn Header="Famille" Binding="{Binding Famille}" Width="2*"/>
+                    <DataGridTextColumn Header="Prix" Binding="{Binding Prix}" Width="2*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
@@ -48,9 +48,9 @@
         </StackPanel>
 
         <!-- Table des familles -->
-        <Border Grid.Row="3" BorderBrush="Black" BorderThickness="1" Padding="5">
+        <Border Grid.Row="3" Padding="5">
             <DataGrid AutoGenerateColumns="False" HeadersVisibility="Column"
-                      Background="White" Foreground="Black" GridLinesVisibility="All">
+                      Background="White" Foreground="Black" GridLinesVisibility="None">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Familles" Width="2*"/>
                 </DataGrid.Columns>

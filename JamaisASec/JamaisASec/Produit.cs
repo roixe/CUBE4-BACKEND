@@ -14,11 +14,14 @@ namespace JamaisASec
         public int StockMin { get; set; } = 0; // Fix for CS8618
         public int Colisage { get; set; } = 1; // Fix for CS8618
         public string Famille { get; set; } = string.Empty; // Fix for CS8618
-        public Produit(string nom, string description, string famille)
+
+        public int Prix { get; set; } = 0; // Fix for CS8618
+        public Produit(string nom, string description, string famille, int prix)
         {
             Nom = nom;
             Description = description;
             Famille = famille;
+            Prix = prix;
             Stock = 0;
             StockMin = 0;
             Colisage = 1;

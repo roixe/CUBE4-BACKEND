@@ -20,26 +20,20 @@ namespace JamaisASec
     /// </summary>
     public partial class PageStocks : Page
     {
-        public PageStocks()
+        public PageStocks(List<Produit> produits)
         {
             InitializeComponent();
-            var produits = new List<Produit>
-            {
-                new Produit("Produit A", "Description du produit A", "Famille 1"),
-                new Produit("Produit B", "Description du produit B", "Famille 2"),
-                new Produit("Produit C", "Description du produit C", "Famille 1" )
-            };
 
             // Lier les données au DataGrid
-            MonDataGrid.ItemsSource = produits;
+            StockGrid.ItemsSource = produits;
         }
-
-
 
         private void IncrementStock_Click(object sender, RoutedEventArgs e)
         {
+            // Vérifier si le bouton est un bouton de stock
             if (sender is Button button && button.DataContext is Produit produit)
             {
+                // Incrémenter le stock en fonction du bouton cliqué
                 if (button.Name == "AddStock")
                 {
                     produit.Stock++;
@@ -51,14 +45,16 @@ namespace JamaisASec
                 {
                     produit.Colisage++;
                 }
-                MonDataGrid.Items.Refresh(); // Met à jour le DataGrid
+                StockGrid.Items.Refresh(); // Met à jour le DataGrid
             }
         }
 
         private void DecrementStock_Click(object sender, RoutedEventArgs e)
         {
+            // Vérifier si le bouton est un bouton de stock
             if (sender is Button button && button.DataContext is Produit produit)
             {
+                // Décrémenter le stock en fonction du bouton cliqué
                 if (button.Name == "RemoveStock")
                 {
                     produit.Stock--;
@@ -71,7 +67,7 @@ namespace JamaisASec
                 {
                     produit.Colisage--;
                 }
-                MonDataGrid.Items.Refresh(); // Met à jour le DataGrid
+                StockGrid.Items.Refresh(); // Met à jour le DataGrid
             }
         }
 
