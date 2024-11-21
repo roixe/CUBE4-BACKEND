@@ -12,9 +12,9 @@
         </StackPanel>
 
 
-        <Border BorderBrush="Black" BorderThickness="1" Margin="0,50,0,0" Padding="5">
-            <DataGrid x:Name="MonDataGrid" AutoGenerateColumns="False" HeadersVisibility="Column"
-          Background="White" Foreground="Black" GridLinesVisibility="All">
+        <Border Margin="0,50,0,0" Padding="5">
+            <DataGrid x:Name="StockGrid" AutoGenerateColumns="False" HeadersVisibility="Column"
+          Background="White" Foreground="Black" GridLinesVisibility="None">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="4*"/>

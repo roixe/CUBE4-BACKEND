@@ -20,9 +20,10 @@ namespace JamaisASec
     /// </summary>
     public partial class Accueil : Page
     {
-        public Accueil()
+        public Accueil(List<Produit> produits)
         {
             InitializeComponent();
+            ProduitsGrid.ItemsSource = produits;
         }
     }
 }

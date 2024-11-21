@@ -19,25 +19,17 @@
         </Grid.RowDefinitions>
 
         <!-- Tableau des produits et quantités en stock -->
-        <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <!-- En-têtes des colonnes -->
-                <TextBlock Text="Produits" FontWeight="Bold" Margin="5" Grid.Row="0" Grid.Column="0"/>
-                <TextBlock Text="Quantité en stocks" FontWeight="Bold" Margin="5" Grid.Row="0" Grid.Column="1"/>
-
-                <!-- Contenu de la table des produits (exemple de lignes vides) -->
-                <TextBlock Text="Produit A" Margin="5" Grid.Row="1" Grid.Column="0"/>
-                <TextBlock Text="100" Margin="5" Grid.Row="1" Grid.Column="1"/>
-            </Grid>
+        <Border Grid.Row="0" Grid.Column="0" Margin="5">
+            <StackPanel>
+                <TextBlock Text="Produits en stock" FontWeight="Bold" Margin="5" TextAlignment="Center"/>
+                <DataGrid x:Name="ProduitsGrid" AutoGenerateColumns="False" HeadersVisibility="Column" 
+                          Background="White" GridLinesVisibility="None" CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Produits" Binding="{Binding Nom}" Width="*"/>
+                        <DataGridTextColumn Header="Quantité en stock" Binding="{Binding Stock}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
         </Border>
 
         <!-- Tableau des 10 dernières commandes clients -->
