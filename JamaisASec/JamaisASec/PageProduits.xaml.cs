@@ -17,8 +17,9 @@ namespace JamaisASec
         }
         private void AjouterProduit_Click(object sender, RoutedEventArgs e)
         {
-            
-            MessageBox.Show("hello", "info", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            AjouterProduitForm ajouterProduitForm = new AjouterProduitForm();
+            ajouterProduitForm.ShowDialog();
         }
     }
 }
