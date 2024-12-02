@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace JamaisASec
 {
@@ -13,6 +14,11 @@ namespace JamaisASec
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+        private void AjouterProduit_Click(object sender, RoutedEventArgs e)
+        {
+            
+            MessageBox.Show("hello", "info", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

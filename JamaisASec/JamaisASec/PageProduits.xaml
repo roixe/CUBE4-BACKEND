@@ -8,7 +8,7 @@
         <!-- Commandes en haut pour produits -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,10">
             <Button Content="Rechercher par nom" Width="150" Margin="5" />
-            <Button Content="Ajouter Produit" Width="150" Margin="5" />
+            <Button Content="Ajouter Produit" Width="150" Margin="5" Click="AjouterProduit_Click"/>
             <Button Content="Modifier (à la sélection)" Width="200" Margin="5" />
             <Button Content="Supprimer (à la sélection)" Width="200" Margin="5" />
         </StackPanel>
