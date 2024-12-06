@@ -19,7 +19,8 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,0">
                     <Button Content="Accueil" Click="AccueilButton_Click" Width="100" Margin="5"/>
                     <Button Content="Produits et Familles" Click="ProduitsButton_Click" Width="119" Margin="5"/>
-                    <Button Content="Fournisseurs" Click="fournisseursButton_Click" Width="100" Margin="5"/>
+                    <Button Content="Fournisseurs" Click="FournisseursButton_Click" Width="100" Margin="5"/>
+                    <Button Content="Clients" Click="ClientsButton_Click" Width="100" Margin="5"/>
                     <Button Content="Stocks" Click="StocksButton_Click" Width="100" Margin="5"/>
                     <Button Content="Commandes" Width="100" Margin="5"/>
                 </StackPanel>
