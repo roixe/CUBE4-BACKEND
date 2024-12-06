@@ -1,24 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace JamaisASec
 {
-    /// <summary>
-    /// Interaction logic for AjouterProduitForm.xaml
-    /// </summary>
     public partial class AjouterProduitForm : Window
     {
+        public Produit ProduitAjoute { get; private set; }
+
         public AjouterProduitForm()
         {
             InitializeComponent();
@@ -26,12 +14,29 @@ namespace JamaisASec
 
         private void AjouterButton_Click(object sender, RoutedEventArgs e)
         {
+            // Vérifier les erreurs de validation
+            if (Validation.GetHasError(StockTextBox) || Validation.GetHasError(PrixTextBox))
+            {
+                MessageBox.Show("Veuillez corriger les erreurs dans les champs Stock et Prix.");
+                return;
+            }
+
             // Récupérer les valeurs des champs de texte
             string nom = NomTextBox.Text;
             string description = DescriptionTextBox.Text;
-            string stock = StockTextBox.Text;
+            int stock = int.Parse(StockTextBox.Text);
             string familles = FamillesTextBox.Text;
-            string prix = PrixTextBox.Text;
+            int prix = int.Parse(PrixTextBox.Text);
+
+            // Créer un nouveau produit
+            ProduitAjoute = new Produit
+            {
+                Nom = nom,
+                Description = description,
+                Stock = stock,
+                Familles = familles,
+                Prix = prix
+            };
 
             // Ajouter le produit (vous pouvez ajouter votre logique ici)
             MessageBox.Show("Produit ajouté avec succès!");

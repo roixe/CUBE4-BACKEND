@@ -1,8 +1,13 @@
 ﻿<Page
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="JamaisASec.ProduitsPage"
-      Title="ProduitsPage" Background="White" av:DesignHeight="484.51">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="av"
+    x:Class="JamaisASec.ProduitsPage"
+    Title="ProduitsPage"
+    Background="White"
+    av:DesignHeight="484.51">
 
     <Grid Margin="10">
         <!-- Commandes en haut pour produits -->
@@ -15,14 +20,14 @@
 
         <!-- Table des produits -->
         <Border BorderBrush="Black" BorderThickness="1" Margin="0,50,0,0" Padding="5">
-            <DataGrid AutoGenerateColumns="False" HeadersVisibility="Column"
+            <DataGrid ItemsSource="{Binding Produits}" AutoGenerateColumns="False" HeadersVisibility="Column"
                       Background="White" Foreground="Black" GridLinesVisibility="All" SelectionChanged="DataGrid_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="4*"/>
                     <DataGridTextColumn Header="Stock" Binding="{Binding Stock}" Width="2*"/>
-                    <DataGridTextColumn Header="Familles" Width="2*"/>
-                    <DataGridTextColumn Header="Prix" Width="2*"/>
+                    <DataGridTextColumn Header="Familles" Binding="{Binding Familles}" Width="2*"/>
+                    <DataGridTextColumn Header="Prix" Binding="{Binding Prix}" Width="2*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
