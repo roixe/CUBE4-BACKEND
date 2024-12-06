@@ -6,6 +6,7 @@ namespace JamaisASec
     public partial class MainWindow : Window
     {
         List<Produit> Produits { get; set; }
+        List<Fournisseur> Fournisseurs { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -18,6 +19,12 @@ namespace JamaisASec
                 new("Produit C", "Description du produit C", "Famille 1", 30)
             ];
 
+            Fournisseurs =
+            [
+                new("Domaine Tariquet", "adresse 1", "tariquet@mail.com", "0123456789", "123456789"),
+                new("Pelleheaut", "adresse 2", "pelleheaut@mail.com", "0123456789", "123456789"),
+                new("Domaine Uby", "adresse 3", "uby@mail.com", "012345678", "123456789")
+            ];
             MainFrame.Navigate(new Accueil(Produits));
         }
 
@@ -33,16 +40,21 @@ namespace JamaisASec
             MainFrame.Navigate(new PageProduits(Produits));
         }
 
-        private void fournisseursButton_Click(object sender, RoutedEventArgs e)
+        private void FournisseursButton_Click(object sender, RoutedEventArgs e)
         {
 
-            MainFrame.Navigate(new PageFournisseurs());
+            MainFrame.Navigate(new PageFournisseurs(Fournisseurs));
         }
 
         private void StocksButton_Click(object sender, RoutedEventArgs e)
         {
             
             MainFrame.Navigate(new PageStocks(Produits)); 
+        }
+
+        private void ClientsButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new PageClients());
         }
     }
 }
