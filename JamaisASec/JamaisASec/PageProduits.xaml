@@ -20,7 +20,7 @@
         <!-- Commandes pour produits -->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
             <Button Content="Rechercher par nom" Width="150" Margin="5" />
-            <Button Content="Ajouter Produit" Width="150" Margin="5" />
+            <Button Content="Ajouter Produit" Width="150" Margin="5" Click="AjouterProduitButton_Click" />
             <Button Content="Modifier (à la sélection)" Width="200" Margin="5" />
             <Button Content="Supprimer (à la sélection)" Width="200" Margin="5" />
         </StackPanel>
