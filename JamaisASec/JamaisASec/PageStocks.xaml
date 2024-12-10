@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" 
-      Title="ProduitsPage" Background="White" av:DesignHeight="484.51" av:DesignWidth="850.816">
+      Title="ProduitsPage" av:DesignHeight="484.51" av:DesignWidth="850.816">
 
     <Grid Margin="10">
 
@@ -58,5 +58,5 @@
             </DataGrid>
         </Border>
     </Grid>
-    
+
 </Page>

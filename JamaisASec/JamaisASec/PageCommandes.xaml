@@ -1,16 +1,18 @@
-﻿<Page x:Class="JamaisASec.PageFournisseurs"
+﻿<Page x:Class="JamaisASec.PageCommandes"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:av="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      mc:Ignorable="av"
-      Title="PageFournisseurs" av:DesignHeight="484.51" av:DesignWidth="850.816">
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:JamaisASec"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PageCommandes">
 
     <Grid Margin="10">
         <!-- Commandes en haut pour produits -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,10">
             <Button Content="Rechercher par nom" Width="150" Margin="5" />
-            <Button Content="Ajouter Fournisseur" Width="150" Margin="5" />
+            <Button Content="Ajouter Commande" Width="150" Margin="5" />
             <Button Content="Modifier (à la sélection)" Width="200" Margin="5" />
             <Button Content="Supprimer (à la sélection)" Width="200" Margin="5" />
         </StackPanel>
@@ -18,7 +20,7 @@
         <!-- Table des produits -->
         <Border Margin="0,50,0,0" Padding="5">
             <DataGrid Name="FournisseursGrid" AutoGenerateColumns="False" HeadersVisibility="Column"
-                      Background="White" Foreground="Black" GridLinesVisibility="None">
+                  Background="White" Foreground="Black" GridLinesVisibility="None">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*"/>
                     <DataGridTextColumn Header="Adresse" Binding="{Binding Adresse}" Width="4*"/>
