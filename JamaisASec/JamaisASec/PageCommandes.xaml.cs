@@ -16,14 +16,13 @@ using System.Windows.Shapes;
 namespace JamaisASec
 {
     /// <summary>
-    /// Interaction logic for Accueil.xaml
+    /// Interaction logic for Page1.xaml
     /// </summary>
-    public partial class Accueil : Page
+    public partial class PageCommandes : Page
     {
-        public Accueil(List<Produit> produits)
+        public PageCommandes()
         {
             InitializeComponent();
-            ProduitsGrid.ItemsSource = produits;
         }
     }
 }

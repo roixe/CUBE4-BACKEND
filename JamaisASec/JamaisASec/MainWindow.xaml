@@ -2,32 +2,142 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         WindowState="Maximized"
-        Title="ERP">
-
-
+        Title="Jamais à sec" Width="683" Height="485">
 
     <!-- Conteneur principal -->
-    <Grid Margin="10">
+    <Grid Background="#f4eded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <!-- Colonne pour le menu -->
+            <ColumnDefinition Width="*"/>
+            <!-- Colonne pour le contenu principal -->
+        </Grid.ColumnDefinitions>
 
-        <!-- Barre de navigation en haut -->
-        <Border Background="MediumVioletRed" Height="50" VerticalAlignment="Top" CornerRadius="5,5,5,5">
-            <DockPanel LastChildFill="False" HorizontalAlignment="Stretch">
+        <!-- Menu sur le côté gauche -->
+        <Border Background="#5c1111" Grid.Column="0" CornerRadius="0,40,40,0">
+            <StackPanel>
+                <TextBlock Text="Jamais à sec" FontWeight="Bold" FontSize="20" Style="{StaticResource MenuText}" Margin="20,10,10,20"/>
 
-                <!-- Titre ERP aligné à gauche -->
-                <TextBlock Text="ERP" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Margin="10,0" DockPanel.Dock="Left"/>
+                <ToggleButton x:Name="DashboardButton" Tag="Dashboard" Click="DashboardButton_Click" Style="{StaticResource MenuButton}" IsChecked="True">
+                    <Image Width="24" Height="24" Margin="0,0,10,0">
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=DashboardButton}" Value="False">
+                                        <Setter Property="Source" Value="pack://application:,,,/Images/defaulthome.png" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=DashboardButton}" Value="True">
+                                        <Setter Property="Source" Value="pack://application:,,,/Images/clickedhome.png" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </ToggleButton>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,0">
-                    <Button Content="Accueil" Click="AccueilButton_Click" Width="100" Margin="5"/>
-                    <Button Content="Produits et Familles" Click="ProduitsButton_Click" Width="119" Margin="5"/>
-                    <Button Content="Fournisseurs" Click="FournisseursButton_Click" Width="100" Margin="5"/>
-                    <Button Content="Clients" Click="ClientsButton_Click" Width="100" Margin="5"/>
-                    <Button Content="Stocks" Click="StocksButton_Click" Width="100" Margin="5"/>
-                    <Button Content="Commandes" Width="100" Margin="5"/>
-                </StackPanel>
-            </DockPanel>
+                <ToggleButton x:Name="ProduitsButton" Tag="Produits et Familles" Click="ProduitsButton_Click" Style="{StaticResource MenuButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="24" Height="24" Margin="0,0,10,0">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=ProduitsButton}" Value="False">
+                                            <Setter Property="Source" Value="pack://application:,,,/Images/defaultbox.png" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=ProduitsButton}" Value="True">
+                                            <Setter Property="Source" Value="pack://application:,,,/Images/clickedbox.png" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </StackPanel>
+                </ToggleButton>
+
+                <ToggleButton x:Name="FournisseursButton" Tag="Fournisseurs" Click="FournisseursButton_Click" Style="{StaticResource MenuButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="24" Height="24" Margin="0,0,10,0">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=FournisseursButton}" Value="False">
+                                            <Setter Property="Source" Value="pack://application:,,,/Images/defaulttruck.png" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=FournisseursButton}" Value="True">
+                                            <Setter Property="Source" Value="pack://application:,,,/Images/clickedtruck.png" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </StackPanel>
+                </ToggleButton>
+
+                <ToggleButton x:Name="ClientsButton" Tag="Clients" Click="ClientsButton_Click" Style="{StaticResource MenuButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="24" Height="24" Margin="0,0,10,0">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=ClientsButton}" Value="False">
+                                            <Setter Property="Source" Value="pack://application:,,,/Images/defaultusers.png" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=ClientsButton}" Value="True">
+                                            <Setter Property="Source" Value="pack://application:,,,/Images/clickedusers.png" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </StackPanel>
+                </ToggleButton>
+
+                <ToggleButton x:Name="StocksButton" Tag="Stocks" Click="StocksButton_Click" Style="{StaticResource MenuButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="24" Height="24" Margin="0,0,10,0">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=StocksButton}" Value="False">
+                                            <Setter Property="Source" Value="pack://application:,,,/Images/defaultpackage.png" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=StocksButton}" Value="True">
+                                            <Setter Property="Source" Value="pack://application:,,,/Images/clickedpackage.png" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </StackPanel>
+                </ToggleButton>
+
+                <ToggleButton x:Name="CommandesButton" Tag="Commandes" Click="CommandesButton_Click" Style="{StaticResource MenuButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="24" Height="24" Margin="0,0,10,0">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=CommandesButton}" Value="False">
+                                            <Setter Property="Source" Value="pack://application:,,,/Images/defaultclipboard.png" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=CommandesButton}" Value="True">
+                                            <Setter Property="Source" Value="pack://application:,,,/Images/clickedclipboard.png" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </StackPanel>
+                </ToggleButton>
+            </StackPanel>
         </Border>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Margin="10,60,10,10"/>
+
+        <!-- Contenu principal -->
+        <Grid Grid.Column="1" Margin="10">
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
+        </Grid>
     </Grid>
-
 </Window>
-
