@@ -7,9 +7,11 @@ namespace JamaisASec
     /// </summary>
     public partial class PageClients : Page
     {
-        public PageClients()
+        public PageClients(List<Client> clients)
         {
             InitializeComponent();
+            ClientsGrid.ItemsSource = clients;
         }
+
     }
 }

@@ -1,62 +1,70 @@
 ﻿<Page x:Class="JamaisASec.PageStocks"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:local="clr-namespace:JamaisASec"
       xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" 
       Title="ProduitsPage" av:DesignHeight="484.51" av:DesignWidth="850.816">
 
-    <Grid Margin="10">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <local:SearchBox Grid.Row="0" x:Name="searchStock" Width="300" HorizontalAlignment="Left"/>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,10">
-            <Button Content="Rechercher par nom de produit" Width="190" Margin="5" />
-        </StackPanel>
+        <DataGrid Style="{StaticResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="1" Name="StockGrid">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}">
+                    <DataGridCheckBoxColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <CheckBox Style="{StaticResource CheckBoxStyle1}"/>
+                        </DataTemplate>
+                    </DataGridCheckBoxColumn.HeaderTemplate>
+                </DataGridCheckBoxColumn>
+                <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Nom}"/>
+                <DataGridTextColumn Header="Description" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Description}"/>
+                <DataGridTemplateColumn Header="Stock" IsReadOnly="True" CanUserResize="False" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" >
+                                <Button Name="RemoveStock" Content="-" Width="20" Margin="2" Click="DecrementStock_Click"/>
+                                <TextBlock Text="{Binding Stock}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
+                                <Button Name="AddStock" Content="+" Width="20" Margin="2" Click="IncrementStock_Click"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Stock min" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Name="RemoveStockMin" Content="-" Width="20" Margin="2" Click="DecrementStock_Click"/>
+                                <TextBlock Text="{Binding StockMin}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
+                                <Button Name="AddStockMin" Content="+" Width="20" Margin="2" Click="IncrementStock_Click"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Colisage" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Name="RemoveColisage"  Content="-" Width="20" Margin="2" Click="DecrementStock_Click"/>
+                                <TextBlock Text="{Binding Colisage}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
+                                <Button Name="AddColisage" Content="+" Width="20" Margin="2" Click="IncrementStock_Click"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Famille" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Famille}"/>
 
+            </DataGrid.Columns>
+        </DataGrid>
 
-        <Border Margin="0,50,0,0" Padding="5">
-            <DataGrid x:Name="StockGrid" AutoGenerateColumns="False" HeadersVisibility="Column"
-          Background="White" Foreground="Black" GridLinesVisibility="None">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*"/>
-                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="4*"/>
-                    <DataGridTemplateColumn Header="Stock" Width="2*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Name="RemoveStock" Content="-" Width="20" Margin="2"
-                                Click="DecrementStock_Click"/>
-                                    <TextBlock Text="{Binding Stock}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
-                                    <Button Name="AddStock" Content="+" Width="20" Margin="2"
-                                Click="IncrementStock_Click"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Stock min" Width="2*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Name="RemoveStockMin" Content="-" Width="20" Margin="2" Click="DecrementStock_Click"/>
-                                    <TextBlock Text="{Binding StockMin}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
-                                    <Button Name="AddStockMin" Content="+" Width="20" Margin="2" Click="IncrementStock_Click"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Colisage" Width="2*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Name="RemoveColisage"  Content="-" Width="20" Margin="2" Click="DecrementStock_Click"/>
-                                    <TextBlock Text="{Binding Colisage}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
-                                    <Button Name="AddColisage" Content="+" Width="20" Margin="2" Click="IncrementStock_Click"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Famille" Binding="{Binding Famille}" Width="2*"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </Border>
+        <local:Pagination Grid.Row="2"/>
     </Grid>
 
 </Page>
