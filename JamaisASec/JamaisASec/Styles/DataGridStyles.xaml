@@ -318,8 +318,9 @@
         </Setter>
     </Style>
     <!--#endregion-->
-
-    <Style x:Key="gridEditButton" TargetType="Button">
+    
+    
+    <Style x:Key="gridButton" TargetType="Button">
         <Setter Property="Background" Value="{StaticResource Burgundy}"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Margin" Value="3"/>
@@ -341,7 +342,16 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="gridRemoveButton" TargetType="Button" BasedOn="{StaticResource gridEditButton}">
+    <Style x:Key="gridEditButton" TargetType="Button" BasedOn="{StaticResource gridButton}">
+        <Setter Property="Background" Value="{StaticResource Burgundy}"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource LightBurgundy}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="gridRemoveButton" TargetType="Button" BasedOn="{StaticResource gridButton}">
         <Setter Property="Background" Value="#d32f2f"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
