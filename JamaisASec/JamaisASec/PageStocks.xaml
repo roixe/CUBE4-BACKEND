@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       xmlns:local="clr-namespace:JamaisASec"
+      xmlns:userControls="clr-namespace:JamaisASec.UserControls"
       xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" 
       Title="ProduitsPage" av:DesignHeight="484.51" av:DesignWidth="850.816">
@@ -13,7 +14,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <local:SearchBox Grid.Row="0" x:Name="searchStock" Width="300" HorizontalAlignment="Left"/>
+        <userControls:SearchBox Grid.Row="0" x:Name="searchStock" Width="300" HorizontalAlignment="Left"/>
 
         <DataGrid Style="{StaticResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="1" Name="StockGrid">
             <DataGrid.Columns>
@@ -64,7 +65,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <local:Pagination Grid.Row="2"/>
+        <userControls:Pagination Grid.Row="2"/>
     </Grid>
 
 </Page>

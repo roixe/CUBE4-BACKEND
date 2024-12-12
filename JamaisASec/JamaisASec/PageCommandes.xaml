@@ -5,6 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:JamaisASec"
+      xmlns:userControls="clr-namespace:JamaisASec.UserControls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PageCommandes">
@@ -15,8 +16,8 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <local:SearchBox Grid.Row="0" x:Name="searchCommande" Width="300" HorizontalAlignment="Left"/>
-        <local:TabControls Grid.Row="0" x:Name="controlsCommande" />
+        <userControls:SearchBox Grid.Row="0" x:Name="searchCommande" Width="300" HorizontalAlignment="Left"/>
+        <userControls:TabControls Grid.Row="0" x:Name="controlsCommande" />
 
         <!-- Table des commandes -->
         <DataGrid Style="{StaticResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="1" Name="CommandesGrid">
@@ -48,6 +49,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <local:Pagination Grid.Row="2"/>
+        <userControls:Pagination Grid.Row="2"/>
     </Grid>
 </Page>

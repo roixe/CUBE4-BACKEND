@@ -1,0 +1,35 @@
+﻿<Window x:Class="JamaisASec.Forms.AjouterProduitForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JamaisASec"
+        mc:Ignorable="d"
+        Title="AjouterProduitForm" Height="450" Width="800">
+    <Grid Margin="10">
+        <StackPanel>
+            <TextBlock Text="Nom du produit:" Margin="0,0,0,5"/>
+            <TextBox x:Name="NomTextBox" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Description:" Margin="0,0,0,5"/>
+            <TextBox x:Name="DescriptionTextBox" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Stock:" Margin="0,0,0,5"/>
+            <TextBox x:Name="StockTextBox" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Stock Minimum:" Margin="0,0,0,5"/>
+            <TextBox x:Name="StockMinTextBox" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Colisage:" Margin="0,0,0,5"/>
+            <TextBox x:Name="ColisageTextBox" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Familles:" Margin="0,0,0,5"/>
+            <TextBox x:Name="FamillesTextBox" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Prix:" Margin="0,0,0,5"/>
+            <TextBox x:Name="PrixTextBox" Margin="0,0,0,10"/>
+
+            <Button Content="Ajouter" Width="100" Margin="0,10,0,0" Click="AjouterButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -6,7 +6,7 @@
         Title="Jamais à sec" Width="683" Height="618">
 
     <!-- Conteneur principal -->
-    <Grid Background="#f4eded">
+    <Grid Background="{StaticResource WindowBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -18,7 +18,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- Menu sur le côté gauche -->
-        <Border Background="#5c1111" Grid.Column="0" CornerRadius="0,40,40,0">
+        <Border Background="{StaticResource Burgundy}" Grid.Column="0" CornerRadius="0,40,40,0">
             <StackPanel>
                 <TextBlock Text="Jamais à sec" FontWeight="Bold" FontSize="20" Style="{StaticResource MenuText}" Margin="20,15,10,20"/>
 

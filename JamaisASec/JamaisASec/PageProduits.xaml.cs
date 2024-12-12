@@ -11,20 +11,24 @@ namespace JamaisASec
         public PageProduits(List<Produit> produits)
         {
             InitializeComponent();
-            Produits = produits ?? new List<Produit>();
+            Produits = produits;
             ProduitGrid.ItemsSource = Produits;
-        }
 
+            controlsProduit.AddItem += ControlsProduit_AjouterItem;
+        }
+        private void ControlsProduit_AjouterItem(object sender, RoutedEventArgs e)
+        {
+            AjouterProduitButton_Click(sender, e);
+        }
         private void AjouterProduitButton_Click(object sender, RoutedEventArgs e)
         {
             // Créer une instance de la fenêtre AjouterProduitForm
-            var ajouterProduitForm = new AjouterProduitForm(Produits);
+            var ajouterProduitForm = new Forms.AjouterProduitForm(Produits);
 
             ajouterProduitForm.ShowDialog();
 
             // Rafraîchir la grille après ajout d'un produit
-            ProduitGrid.ItemsSource = null; 
-            ProduitGrid.ItemsSource = Produits; 
+            ProduitGrid.Items.Refresh();
         }
     }
 }

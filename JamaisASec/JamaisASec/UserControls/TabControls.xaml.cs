@@ -13,16 +13,22 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace JamaisASec
+namespace JamaisASec.UserControls
 {
     /// <summary>
     /// Logique d'interaction pour UserControl1.xaml
     /// </summary>
-    public partial class Pagination : UserControl
+    public partial class TabControls : UserControl
     {
-        public Pagination()
+        public event RoutedEventHandler? AddItem; // Allow null value for the event
+        public TabControls()
         {
             InitializeComponent();
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddItem?.Invoke(this, e);
         }
     }
 }

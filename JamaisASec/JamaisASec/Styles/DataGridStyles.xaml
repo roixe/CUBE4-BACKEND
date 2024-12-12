@@ -3,7 +3,7 @@
                     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
 
     <Style x:Key="textboxSearch" TargetType="TextBox">
-        <Setter Property="Background" Value="#ffffff"/>
+        <Setter Property="Background" Value="White"/>
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="FontSize" Value="12"/>
@@ -13,17 +13,17 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBoxBase">
-                    <Border x:Name="border" CornerRadius="20" Background="{TemplateBinding Background}" SnapsToDevicePixels="True"
-                BorderThickness="1" BorderBrush="#e0e6ed">
+                    <Border x:Name="border" CornerRadius="15" Background="{TemplateBinding Background}" SnapsToDevicePixels="True"
+                BorderThickness="1" BorderBrush="{StaticResource LightTaupe}">
                         <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden"
                           VerticalScrollBarVisibility="Hidden"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="#d9d9d9" TargetName="border"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource Taupe}" TargetName="border"/>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter Property="BorderBrush" Value="#d9d9d9" TargetName="border"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource Taupe}" TargetName="border"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -32,8 +32,8 @@
     </Style>
 
     <Style x:Key="topButton" TargetType="Button">
-        <Setter Property="Background" Value="#ccabab"/>
-        <Setter Property="Foreground" Value="#5c1111"/>
+        <Setter Property="Background" Value="{StaticResource Taupe}"/>
+        <Setter Property="Foreground" Value="{StaticResource Burgundy}"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Width" Value="36"/>
         <Setter Property="Height" Value="36"/>
@@ -50,7 +50,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#d8c5c5"/>
+                <Setter Property="Background" Value="{StaticResource LightTaupe}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -228,11 +228,11 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#ca9191"/>
+                <Setter Property="Background" Value="{StaticResource LightTaupe}"/>
                 <Setter Property="Foreground" Value="White"/>
             </Trigger>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="#ca9191"/>
+                <Setter Property="Background" Value="{StaticResource LightTaupe}"/>
                 <Setter Property="Foreground" Value="White"/>
             </Trigger>
             <MultiTrigger>
@@ -288,7 +288,7 @@
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter Property="Background" TargetName="checkBoxBorder" Value="{StaticResource OptionMark.MouseOver.Background}"/>
-                            <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="#df6b6b"/>
+                            <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="{StaticResource Taupe}"/>
                             <Setter Property="Fill" TargetName="optionMark" Value="{StaticResource OptionMark.MouseOver.Glyph}"/>
                             <Setter Property="Fill" TargetName="indeterminateMark" Value="{StaticResource OptionMark.MouseOver.Glyph}"/>
                         </Trigger>
@@ -320,7 +320,7 @@
     <!--#endregion-->
 
     <Style x:Key="gridEditButton" TargetType="Button">
-        <Setter Property="Background" Value="#5c1111"/>
+        <Setter Property="Background" Value="{StaticResource Burgundy}"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Margin" Value="3"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -336,7 +336,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#711616"/>
+                <Setter Property="Background" Value="{StaticResource LightBurgundy}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -352,7 +352,7 @@
 
     <Style x:Key="pagingButton" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="#6c7682"/>
+        <Setter Property="Foreground" Value="Gray"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="Margin" Value="1 0"/>
@@ -367,7 +367,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#5c1111"/>
+                <Setter Property="Background" Value="{StaticResource Burgundy}"/>
                 <Setter Property="Foreground" Value="White"/>
             </Trigger>
         </Style.Triggers>

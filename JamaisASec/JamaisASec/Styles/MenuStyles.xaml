@@ -30,15 +30,22 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource Self}}" Value="True">
-                            <Setter Property="Background" Value="#f4eded"/>
-                            <Setter TargetName="Text" Property="Foreground" Value="#5c1111"/>
-                            <Setter Property="Foreground" Value="#5c1111"/>
+                            <Setter Property="Background" Value="{StaticResource WindowBackground}"/>
+                            <Setter TargetName="Text" Property="Foreground" Value="{StaticResource Burgundy}"/>
+                            <Setter Property="Foreground" Value="{StaticResource Burgundy}"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource Self}}" Value="False">
                             <Setter Property="Background" Value="Transparent"/>
                             <Setter TargetName="Text" Property="Foreground" Value="White"/>
                             <Setter Property="Foreground" Value="White"/>
                         </DataTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsChecked" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="{StaticResource LightBurgundy}"/>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

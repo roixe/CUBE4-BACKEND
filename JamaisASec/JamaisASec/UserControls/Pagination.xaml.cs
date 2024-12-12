@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace JamaisASec
+namespace JamaisASec.UserControls
 {
     /// <summary>
     /// Logique d'interaction pour UserControl1.xaml
     /// </summary>
-    public partial class TabControls : UserControl
+    public partial class Pagination : UserControl
     {
-        public TabControls()
+        public Pagination()
         {
             InitializeComponent();
         }

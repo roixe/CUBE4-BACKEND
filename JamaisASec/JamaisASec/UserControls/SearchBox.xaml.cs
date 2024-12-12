@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace JamaisASec
+namespace JamaisASec.UserControls
 {
     /// <summary>
     /// Logique d'interaction pour UserControl1.xaml
