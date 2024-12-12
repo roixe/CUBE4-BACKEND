@@ -31,9 +31,13 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" >
-                                <Button Name="RemoveStock" Content="-" Width="20" Margin="2" Click="DecrementStock_Click"/>
+                                <Button Style="{StaticResource gridButton}" Name="RemoveStock" Click="DecrementStock_Click">
+                                    <iconPacks:PackIconBootstrapIcons Kind="Dash" Width="12" Height="12" VerticalAlignment="Center"/>
+                                </Button>
                                 <TextBlock Text="{Binding Stock}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
-                                <Button Name="AddStock" Content="+" Width="20" Margin="2" Click="IncrementStock_Click"/>
+                                <Button Style="{StaticResource gridButton}" Name="AddStock" Click="IncrementStock_Click">
+                                    <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="12" Height="12" VerticalAlignment="Center"/>
+                                </Button>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -42,9 +46,13 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Name="RemoveStockMin" Content="-" Width="20" Margin="2" Click="DecrementStock_Click"/>
+                                <Button Style="{StaticResource gridButton}" Name="RemoveStockMin" Click="DecrementStock_Click">
+                                    <iconPacks:PackIconBootstrapIcons Kind="Dash" Width="12" Height="12" VerticalAlignment="Center"/>
+                                </Button>
                                 <TextBlock Text="{Binding StockMin}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
-                                <Button Name="AddStockMin" Content="+" Width="20" Margin="2" Click="IncrementStock_Click"/>
+                                <Button Style="{StaticResource gridButton}" Name="AddStockMin" Click="IncrementStock_Click">
+                                    <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="12" Height="12" VerticalAlignment="Center"/>
+                                </Button>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -53,9 +61,13 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Name="RemoveColisage"  Content="-" Width="20" Margin="2" Click="DecrementStock_Click"/>
+                                <Button Style="{StaticResource gridButton}" Name="RemoveColisage" Click="DecrementStock_Click">
+                                    <iconPacks:PackIconBootstrapIcons Kind="Dash" Width="12" Height="12" VerticalAlignment="Center"/>
+                                </Button>
                                 <TextBlock Text="{Binding Colisage}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
-                                <Button Name="AddColisage" Content="+" Width="20" Margin="2" Click="IncrementStock_Click"/>
+                                <Button Style="{StaticResource gridButton}" Name="AddColisage" Click="IncrementStock_Click">
+                                    <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="12" Height="12" VerticalAlignment="Center"/>
+                                </Button>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
