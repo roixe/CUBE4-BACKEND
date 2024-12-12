@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="Styles/ColorStyles.xaml"/>
                 <ResourceDictionary Source="Styles/MenuStyles.xaml"/>
                 <ResourceDictionary Source="Styles/DataGridStyles.xaml"/>
+                <ResourceDictionary Source="Styles/FormStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
