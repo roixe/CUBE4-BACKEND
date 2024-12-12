@@ -9,55 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\chevron-left.png" />
-    <None Remove="Images\chevron-right.png" />
-    <None Remove="Images\chevrons-left.png" />
-    <None Remove="Images\chevrons-right.png" />
-    <None Remove="Images\clickedbox.png" />
-    <None Remove="Images\clickedclipboard.png" />
-    <None Remove="Images\clickedhome.png" />
-    <None Remove="Images\clickedpackage.png" />
-    <None Remove="Images\clickedtruck.png" />
-    <None Remove="Images\clickedusers.png" />
-    <None Remove="Images\defaultbox.png" />
-    <None Remove="Images\defaultclipboard.png" />
-    <None Remove="Images\defaulthome.png" />
-    <None Remove="Images\defaultpackage.png" />
-    <None Remove="Images\defaulttruck.png" />
-    <None Remove="Images\defaultusers.png" />
-    <None Remove="Images\menu.png" />
-    <None Remove="Images\search.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Remove="Styles\ButtonStyles.xaml" />
     <Page Remove="Styles\DataGridStyles.xaml" />
+    <Page Remove="Styles\MenuStyles.xaml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Styles\ButtonStyles.xaml" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="5.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Styles\MenuStyles.xaml" />
     <Resource Include="Styles\DataGridStyles.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Images\chevron-left.png" />
-    <Resource Include="Images\chevron-right.png" />
-    <Resource Include="Images\chevrons-left.png" />
-    <Resource Include="Images\chevrons-right.png" />
-    <Resource Include="Images\clickedbox.png" />
-    <Resource Include="Images\clickedclipboard.png" />
-    <Resource Include="Images\clickedhome.png" />
-    <Resource Include="Images\clickedpackage.png" />
-    <Resource Include="Images\clickedtruck.png" />
-    <Resource Include="Images\clickedusers.png" />
-    <Resource Include="Images\defaultbox.png" />
-    <Resource Include="Images\defaultclipboard.png" />
-    <Resource Include="Images\defaulthome.png" />
-    <Resource Include="Images\defaultpackage.png" />
-    <Resource Include="Images\defaulttruck.png" />
-    <Resource Include="Images\defaultusers.png" />
-    <Resource Include="Images\menu.png" />
-    <Resource Include="Images\search.png" />
   </ItemGroup>
 
 </Project>
