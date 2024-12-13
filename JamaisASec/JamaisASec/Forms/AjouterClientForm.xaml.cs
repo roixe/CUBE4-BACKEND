@@ -29,8 +29,6 @@ namespace JamaisASec.Forms
             ClientAjoute = new Client(nom, adresse, mail, telephone);
             Clients.Add(ClientAjoute);
 
-            MessageBox.Show("Client ajouté avec succès !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
-
             this.Close();
         }
 
@@ -79,15 +77,6 @@ namespace JamaisASec.Forms
             }
 
             return isValid;
-        }
-
-
-        private void ClearInputs()
-        {
-            clientName.Text = string.Empty;
-            clientAddress.Text = string.Empty;
-            clientMail.Text = string.Empty;
-            clientPhoneNumber.Text = string.Empty;
         }
 
     }
