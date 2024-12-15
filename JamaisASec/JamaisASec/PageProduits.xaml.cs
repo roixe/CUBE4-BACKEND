@@ -13,6 +13,7 @@ namespace JamaisASec
             InitializeComponent();
             Produits = produits;
             ProduitGrid.ItemsSource = Produits;
+            searchProduit.TextChanged += SearchProduit_TextChanged;
 
             controlsProduit.AddItem += ControlsProduit_AjouterItem;
         }
@@ -29,6 +30,19 @@ namespace JamaisASec
 
             // Rafraîchir la grille après ajout d'un produit
             ProduitGrid.Items.Refresh();
+        }
+
+        private void SearchProduit_TextChanged(object sender, RoutedEventArgs e)
+        {
+            string searchText = searchProduit.Text;
+            FilterProduits(searchText);
+        }
+
+        private void FilterProduits(string searchText)
+        {
+            var filteredProduits = Produits.Where(p => p.Nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                       p.Description.Contains(searchText, System.StringComparison.OrdinalIgnoreCase)).ToList();
+            ProduitGrid.ItemsSource = filteredProduits;
         }
     }
 }
