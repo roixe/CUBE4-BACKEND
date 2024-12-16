@@ -4,32 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JamaisASec"
+        xmlns:uc="clr-namespace:JamaisASec.UserControls"
         mc:Ignorable="d"
-        Title="AjouterProduitForm" Height="450" Width="800">
-    <Grid Margin="10">
-        <StackPanel>
-            <TextBlock Text="Nom du produit:" Margin="0,0,0,5"/>
-            <TextBox x:Name="NomTextBox" Margin="0,0,0,10"/>
-
-            <TextBlock Text="Description:" Margin="0,0,0,5"/>
-            <TextBox x:Name="DescriptionTextBox" Margin="0,0,0,10"/>
-
-            <TextBlock Text="Stock:" Margin="0,0,0,5"/>
-            <TextBox x:Name="StockTextBox" Margin="0,0,0,10"/>
-
-            <TextBlock Text="Stock Minimum:" Margin="0,0,0,5"/>
-            <TextBox x:Name="StockMinTextBox" Margin="0,0,0,10"/>
-
-            <TextBlock Text="Colisage:" Margin="0,0,0,5"/>
-            <TextBox x:Name="ColisageTextBox" Margin="0,0,0,10"/>
-
-            <TextBlock Text="Familles:" Margin="0,0,0,5"/>
-            <TextBox x:Name="FamillesTextBox" Margin="0,0,0,10"/>
-
-            <TextBlock Text="Prix:" Margin="0,0,0,5"/>
-            <TextBox x:Name="PrixTextBox" Margin="0,0,0,10"/>
-
-            <Button Content="Ajouter" Width="100" Margin="0,10,0,0" Click="AjouterButton_Click"/>
+        Style="{StaticResource FormWindowStyle}"
+        Title="Ajouter produit">
+    <Border Style="{StaticResource FormContent}">
+        <StackPanel Margin="20">
+            <uc:CustomTextBox x:Name="produitNom" Caption="Nom" Hint="Entrez le nom"/>
+            <uc:CustomTextBox x:Name="produitDescription" Caption="Description" Hint="Entrez la description"/>
+            <uc:CustomTextBox x:Name="produitStock" Caption="Stock" Hint="Entrez le stock"/>
+            <uc:CustomTextBox x:Name="produitStockMin" Caption="Stock minimum" Hint="Entrez le stock minimum"/>
+            <uc:CustomTextBox x:Name="produitColisage" Caption="Colisage" Hint="Entrez le colisage"/>
+            <uc:CustomComboBox x:Name="produitFamille" Caption="Famille" Hint="Selectionnez la famille"/>
+            <uc:CustomTextBox x:Name="produitPrix" 
+                              Caption="Prix" 
+                              Hint="Entrez le prix"/>
+            <Button Content="Ajouter" Width="100" Margin="0,10,0,0" 
+                HorizontalAlignment="Right"
+                Style="{StaticResource FormButton}" Click="AjouterButton_Click">
+                <Button.Effect>
+                    <DropShadowEffect ShadowDepth="5" BlurRadius="10" Color="#5c1111" Opacity="0.3" Direction="-120"/>
+                </Button.Effect>
+            </Button>
         </StackPanel>
-    </Grid>
+    </Border>
 </Window>
