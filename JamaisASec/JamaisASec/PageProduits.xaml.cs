@@ -12,9 +12,13 @@ namespace JamaisASec
         public PageProduits(List<Produit> produits, List<Famille> familles)
         {
             InitializeComponent();
+            
             Produits = produits;
             ProduitGrid.ItemsSource = Produits;
             controlsProduit.AddItem += ControlsProduit_AjouterItem;
+            
+            searchProduit.TextChanged += SearchProduit_TextChanged;
+
             Familles = familles;
             FamillesGrid.ItemsSource = Familles;
             controlsFamille.AddItem += ControlsFamille_AjouterItem;
@@ -54,6 +58,7 @@ namespace JamaisASec
         {
             AjouterFamilleButton_Click(sender, e);
         }
+        
         private void AjouterFamilleButton_Click(object sender, RoutedEventArgs e)
         {
             // Créer une instance de la fenêtre AjouterProduitForm
@@ -79,6 +84,18 @@ namespace JamaisASec
                 // Rafraîchir la grille après modification
                 ProduitGrid.Items.Refresh();
             }
+
+        private void SearchProduit_TextChanged(object sender, RoutedEventArgs e)
+        {
+            string searchText = searchProduit.Text;
+            FilterProduits(searchText);
+        }
+
+        private void FilterProduits(string searchText)
+        {
+            var filteredProduits = Produits.Where(p => p.Nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                       p.Description.Contains(searchText, System.StringComparison.OrdinalIgnoreCase)).ToList();
+            ProduitGrid.ItemsSource = filteredProduits;
         }
     }
 }

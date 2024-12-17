@@ -23,6 +23,20 @@ namespace JamaisASec.UserControls
         public SearchBox()
         {
             InitializeComponent();
+            txtSearch.TextChanged += TxtSearch_TextChanged;
+        }
+
+        public event RoutedEventHandler TextChanged;
+
+        private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextChanged?.Invoke(this, new RoutedEventArgs());
+        }
+
+        public string Text
+        {
+            get { return txtSearch.Text; }
+            set { txtSearch.Text = value; }
         }
     }
 }
