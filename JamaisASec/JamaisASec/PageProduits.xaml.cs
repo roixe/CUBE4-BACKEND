@@ -84,6 +84,7 @@ namespace JamaisASec
                 // Rafraîchir la grille après modification
                 ProduitGrid.Items.Refresh();
             }
+        }
 
         private void SearchProduit_TextChanged(object sender, RoutedEventArgs e)
         {
