@@ -12,10 +12,10 @@
         <StackPanel Margin="20">
             <uc:CustomTextBox x:Name="produitNom" Caption="Nom" Hint="Entrez le nom"/>
             <uc:CustomTextBox x:Name="produitDescription" Caption="Description" Hint="Entrez la description"/>
-            <uc:CustomTextBox x:Name="produitStock" Caption="Stock" Hint="Entrez le stock"/>
-            <uc:CustomTextBox x:Name="produitStockMin" Caption="Stock minimum" Hint="Entrez le stock minimum"/>
-            <uc:CustomTextBox x:Name="produitColisage" Caption="Colisage" Hint="Entrez le colisage"/>
-            <uc:CustomComboBox x:Name="produitFamille" Caption="Famille" Hint="Selectionnez la famille"/>
+            <uc:CustomTextBox x:Name="produitStock" Caption="Stock" Hint="Entrez le stock" Text="0"/>
+            <uc:CustomTextBox x:Name="produitStockMin" Caption="Stock minimum" Hint="Entrez le stock minimum" Text="0"/>
+            <uc:CustomTextBox x:Name="produitColisage" Caption="Colisage" Hint="Entrez le colisage" Text="1"/>
+            <uc:CustomComboBox x:Name="produitFamille" Caption="Famille"/>
             <uc:CustomTextBox x:Name="produitPrix" 
                               Caption="Prix" 
                               Hint="Entrez le prix"/>

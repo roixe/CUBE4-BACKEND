@@ -11,6 +11,7 @@ namespace JamaisASec
         List<Produit> Produits { get; set; }
         List<Fournisseur> Fournisseurs { get; set; }
         List<Client> Clients { get; set; }
+        List<Famille> Familles { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -18,9 +19,9 @@ namespace JamaisASec
             // Initialiser les produits
             Produits =
             [
-                new("Produit A", "Description du produit A", "Famille 1", 20),
-                new("Produit B", "Description du produit B", "Famille 2", 25),
-                new("Produit C", "Description du produit C", "Famille 1", 30)
+                new("Produit A", "Description du produit A", "Vin Blanc", 20),
+                new("Produit B", "Description du produit B", "Vin Rouge", 25),
+                new("Produit C", "Description du produit C", "Vin Rosé", 30)
             ];
 
             Fournisseurs =
@@ -42,6 +43,15 @@ namespace JamaisASec
                 new("Terres de Vins", "67 chemin des Grappes", "terresdevins@mail.com", "0156748392"),
                 new("Le Raisin Bleu", "89 rue des Tonneaux", "raisinbleu@mail.com", "0143967285"),
                 new("L'Art du Vin", "101 cours des Sommeliers", "artduvin@mail.com", "0192834765")
+            ];
+
+
+            Familles = 
+            [
+                new("Vin Rouge"), 
+                new("Vin Blanc"),
+                new("Vin Rosé"),
+                new("Crémant")
             ];
 
             MenuButtons =
@@ -78,7 +88,7 @@ namespace JamaisASec
         private void ProduitsButton_Click(object sender, RoutedEventArgs e)
         {
 
-            MainFrame.Navigate(new PageProduits(Produits));
+            MainFrame.Navigate(new PageProduits(Produits, Familles));
             SetActiveButton(ProduitsButton);
         }
 

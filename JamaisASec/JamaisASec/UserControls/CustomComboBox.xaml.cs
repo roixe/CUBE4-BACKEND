@@ -12,15 +12,6 @@ namespace JamaisASec.UserControls
         {
             InitializeComponent();
         }
-
-        public string Hint
-        {
-            get { return (string)GetValue(HintProperty); }
-            set { SetValue(HintProperty, value); }
-        }
-
-        public static readonly DependencyProperty HintProperty =
-            DependencyProperty.Register("Hint", typeof(string), typeof(CustomComboBox), new PropertyMetadata(""));
         public string Caption
         {
             get { return (string)GetValue(CaptionProperty); }
@@ -73,6 +64,15 @@ namespace JamaisASec.UserControls
         }
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register("SelectedItem", typeof(object), typeof(CustomComboBox), new PropertyMetadata(null));
+
+        // DisplayMemberPath property
+        public string DisplayMemberPath
+        {
+            get { return (string)GetValue(DisplayMemberPathProperty); }
+            set { SetValue(DisplayMemberPathProperty, value); }
+        }
+        public static readonly DependencyProperty DisplayMemberPathProperty =
+            DependencyProperty.Register("DisplayMemberPath", typeof(string), typeof(CustomComboBox), new PropertyMetadata(null));
 
     }
 }
