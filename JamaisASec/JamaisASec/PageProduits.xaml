@@ -41,14 +41,13 @@
                 </DataGridCheckBoxColumn>
                 <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Nom}"/>
                 <DataGridTextColumn Header="Description" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Description}"/>
-                <DataGridTextColumn Header="Stock" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Stock}"/>
                 <DataGridTextColumn Header="Famille" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Famille}"/>
                 <DataGridTextColumn Header="Prix" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Prix}"/>
                 <DataGridTemplateColumn Header="Opérations" IsReadOnly="True" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridEditButton}">
+                                <Button Style="{StaticResource gridEditButton}" Click="EditProduitButton_Click">
                                     <iconPacks:PackIconBootstrapIcons Kind="Pencil" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
                                 <Button Style="{StaticResource gridRemoveButton}">

@@ -9,11 +9,7 @@ namespace JamaisASec
     public class Produit
     {
         public string Nom { get; set; } = string.Empty; 
-<<<<<<< HEAD
         public string Description { get; set; } = string.Empty;
-=======
-        public string Description { get; set; } = string.Empty; 
->>>>>>> 2c833e3852b51f664a574c41ac1bb84e66389d7a
         public int Stock { get; set; } = 0;
         public int StockMin { get; set; } = 0; 
         public int Colisage { get; set; } = 1;

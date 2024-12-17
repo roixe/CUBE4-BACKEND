@@ -1,4 +1,4 @@
-﻿<Window x:Class="JamaisASec.Forms.AjouterProduitForm"
+﻿<Window x:Class="JamaisASec.Forms.ProduitForm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,8 +6,7 @@
         xmlns:local="clr-namespace:JamaisASec"
         xmlns:uc="clr-namespace:JamaisASec.UserControls"
         mc:Ignorable="d"
-        Style="{StaticResource FormWindowStyle}"
-        Title="Ajouter produit">
+        Style="{StaticResource FormWindowStyle}">
     <Border Style="{StaticResource FormContent}">
         <StackPanel Margin="20">
             <uc:CustomTextBox x:Name="produitNom" Caption="Nom" Hint="Entrez le nom"/>
@@ -19,9 +18,11 @@
             <uc:CustomTextBox x:Name="produitPrix" 
                               Caption="Prix" 
                               Hint="Entrez le prix"/>
-            <Button Content="Ajouter" Width="100" Margin="0,10,0,0" 
-                HorizontalAlignment="Right"
-                Style="{StaticResource FormButton}" Click="AjouterButton_Click">
+            <Button x:Name="ajouterButton"
+                    Content="{Binding IsEditMode, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToTextConverter}}"
+                    Width="100" Margin="0,10,0,0"
+                    HorizontalAlignment="Right"
+                    Style="{StaticResource FormButton}" Click="AjouterButton_Click">
                 <Button.Effect>
                     <DropShadowEffect ShadowDepth="5" BlurRadius="10" Color="#5c1111" Opacity="0.3" Direction="-120"/>
                 </Button.Effect>

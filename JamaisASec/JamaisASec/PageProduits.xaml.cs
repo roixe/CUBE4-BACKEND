@@ -14,7 +14,6 @@ namespace JamaisASec
             InitializeComponent();
             Produits = produits;
             ProduitGrid.ItemsSource = Produits;
-
             controlsProduit.AddItem += ControlsProduit_AjouterItem;
             Familles = familles;
             FamillesGrid.ItemsSource = Familles;
@@ -27,14 +26,29 @@ namespace JamaisASec
         private void AjouterProduitButton_Click(object sender, RoutedEventArgs e)
         {
             // Créer une instance de la fenêtre AjouterProduitForm
-            var ajouterProduitForm = new Forms.AjouterProduitForm(Produits);
+            var ajouterProduitForm = new Forms.ProduitForm(Produits, Familles);
 
             ajouterProduitForm.ShowDialog();
 
             // Rafraîchir la grille après ajout d'un produit
             ProduitGrid.Items.Refresh();
         }
-    }
+
+        private void EditProduitButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Récupérer le produit associé à la ligne
+            if (sender is Button button && button.DataContext is Produit produitSelectionne)
+            {
+                // Ouvrir la fenêtre de modification
+                var modifierProduitForm = new Forms.ProduitForm(Produits, Familles, produitSelectionne);
+
+                // Afficher la fenêtre en mode dialogue
+                modifierProduitForm.ShowDialog();
+
+                // Rafraîchir la grille après modification
+                ProduitGrid.Items.Refresh();
+            }
+        }
 
         private void ControlsFamille_AjouterItem(object sender, RoutedEventArgs e)
         {
