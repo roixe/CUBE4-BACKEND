@@ -17,12 +17,89 @@ namespace JamaisASec
             InitializeComponent();
 
             // Initialiser les produits
-            Produits =
-            [
-                new("Produit A", "Description du produit A", "Vin Blanc", 20),
-                new("Produit B", "Description du produit B", "Vin Rouge", 25),
-                new("Produit C", "Description du produit C", "Vin Rosé", 30)
-            ];
+            Produits = new List<Produit>
+            {
+                new("Chateau Margaux 2015", 
+                    "Vin rouge elegant aux aromes de fruits rouges et notes boisees.", 
+                    "Vin Rouge", 1200, 2015)
+                {
+                    Stock = 120,
+                    StockMin = 1,
+                    Colisage = 6
+                },
+                new("Romanee-Conti 2018",
+                    "Un vin mythique, riche et complexe.",
+                    "Vin Rouge", 20000, 2018)
+                {
+                    Stock = 50,
+                    StockMin = 1,
+                    Colisage = 1
+                },
+                new("Maison Mumm Cordon Rouge",
+                    "Champagne brut aux notes de pomme et de brioche.",
+                    "Champagne", 35, 2023)
+                {
+                    Stock = 200,
+                    StockMin = 6,
+                    Colisage = 12
+                },
+                new("Chateau d Yquem 2010",
+                    "Vin doux liquoreux avec des aromes de miel et de fruits exotiques.",
+                    "Vin Doux", 300, 2010)
+                {
+                    Stock = 30,
+                    StockMin = 1,
+                    Colisage = 6
+                },
+                new ("Chateau Petrus 2012",
+                     "Vin rouge exceptionnel avec des notes de prune et de truffe.",
+                     "Vin Rouge", 3000, 2012)
+                {
+                    Stock = 20,
+                    StockMin = 1,
+                    Colisage = 3
+                },
+                new("Domaine Leroy Bourgogne Blanc 2020",
+                    "Vin blanc bio aux aromes floraux et mineraux.",
+                    "Vin Blanc", 150, 2020)
+                {
+                    Stock = 100,
+                    StockMin = 2,
+                    Colisage = 6
+                },
+                new("Domaine Leflaive Puligny-Montrachet 2019",
+                    "Vin blanc complexe avec une belle acidite et des notes de noisette.",
+                    "Vin Blanc", 450, 2019)
+                {
+                    Stock = 80,
+                    StockMin = 1,
+                    Colisage = 6
+                },
+                new("Chateau Haut-Brion 2016",
+                    "Vin rouge equilibre avec des tanins soyeux et des notes de cassis.",
+                    "Vin Rouge", 900, 2016)
+                {
+                    Stock = 150,
+                    StockMin = 1,
+                    Colisage = 6
+                },
+                new("Maison Ruinart Blanc de Blancs",
+                    "Champagne elegant avec des aromes de citron et de fleurs blanches.",
+                     "Champagne", 70, 2022)
+                {
+                    Stock = 200,
+                    StockMin = 6,
+                    Colisage = 12
+                },
+                new("Chateau Cheval Blanc 2018",
+                    "Vin rouge intense aux notes de fruits noirs et d epices.",
+                    "Vin Rouge", 1200, 2018)
+                {
+                    Stock = 60,
+                    StockMin = 1,
+                    Colisage = 6
+                }
+            };
 
             Fournisseurs =
             [
@@ -51,7 +128,9 @@ namespace JamaisASec
                 new("Vin Rouge"), 
                 new("Vin Blanc"),
                 new("Vin Rosé"),
-                new("Crémant")
+                new("Champagne"),
+                new("Vin Doux")
+
             ];
 
             MenuButtons =

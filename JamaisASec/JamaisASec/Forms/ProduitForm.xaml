@@ -15,6 +15,7 @@
             <uc:CustomTextBox x:Name="produitStockMin" Caption="Stock minimum" Hint="Entrez le stock minimum" Text="0"/>
             <uc:CustomTextBox x:Name="produitColisage" Caption="Colisage" Hint="Entrez le colisage" Text="1"/>
             <uc:CustomComboBox x:Name="produitFamille" Caption="Famille"/>
+            <uc:CustomTextBox x:Name="produitAnnee" Caption="Annee" Hint="Entrez l'année"/>
             <uc:CustomTextBox x:Name="produitPrix" 
                               Caption="Prix" 
                               Hint="Entrez le prix"/>

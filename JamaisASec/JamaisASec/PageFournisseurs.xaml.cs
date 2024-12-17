@@ -33,7 +33,7 @@ namespace JamaisASec
             FournisseursGrid.Items.Refresh();
         }
 
-        private void EditProduitButton_Click(object sender, RoutedEventArgs e)
+        private void EditFournisseurButton_Click(object sender, RoutedEventArgs e)
         {
             // Récupérer le client associé à la ligne
             if (sender is Button button && button.DataContext is Fournisseur fournisseurSelectionne)
@@ -45,6 +45,18 @@ namespace JamaisASec
                 modifierProduitForm.ShowDialog();
 
                 // Rafraîchir la grille après modification
+                FournisseursGrid.Items.Refresh();
+            }
+        }
+
+        private void RemoveFournisseurButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Récupérer le client associé à la ligne
+            if (sender is Button button && button.DataContext is Fournisseur fournisseurSelectionne)
+            {
+                // Supprimer le client de la liste
+                Fournisseurs.Remove(fournisseurSelectionne);
+                // Rafraîchir la grille après suppression
                 FournisseursGrid.Items.Refresh();
             }
         }

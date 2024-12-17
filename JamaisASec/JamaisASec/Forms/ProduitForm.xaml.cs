@@ -48,6 +48,7 @@ namespace JamaisASec.Forms
             int colisage = int.TryParse(produitColisage.Text, out int parsedColisage) ? parsedColisage : 1;
             int prix = int.TryParse(produitPrix.Text, out int parsedPrix) ? parsedPrix : 0;
             string famille = ((Famille)produitFamille.SelectedItem)?.Nom ?? string.Empty;
+            int annee = int.TryParse(produitAnnee.Text, out int parsedAnnee) ? parsedAnnee : 0;
 
             if (ProduitEnCours != null)
             {
@@ -61,7 +62,7 @@ namespace JamaisASec.Forms
             }
             else
             {
-                Produit produitAjoute = new Produit(nom, description, famille, prix)
+                Produit produitAjoute = new Produit(nom, description, famille, prix, annee)
                 {
                     Stock = stock,
                     StockMin = stockMin,
