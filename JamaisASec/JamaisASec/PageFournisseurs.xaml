@@ -5,7 +5,7 @@
       xmlns:userControls="clr-namespace:JamaisASec.UserControls"
       xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="av"
       Title="PageFournisseurs" av:DesignHeight="484.51" av:DesignWidth="850.816">
 
@@ -21,7 +21,7 @@
             <userControls:SearchBox Grid.Row="0" x:Name="searchFournisseur" Width="300"/>
         </StackPanel>
 
-        <!-- Table des produits -->
+        <!-- Table des fournisseurs -->
         <DataGrid Style="{StaticResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="1" Name="FournisseursGrid">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}">
