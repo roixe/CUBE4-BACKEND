@@ -16,10 +16,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <userControls:SearchBox Grid.Row="0" x:Name="searchClient" Width="300" HorizontalAlignment="Left"/>
-        <userControls:TabControls Grid.Row="0" x:Name="controlsClient"  HorizontalAlignment="Right"/>
+        <StackPanel Orientation="Horizontal">
+            <userControls:TabControls Grid.Row="0" x:Name="controlsClient"/>
+            <Rectangle VerticalAlignment="Stretch" Fill="{StaticResource Taupe}" Width="1" Margin="20 10 25 10"/>
+            <userControls:SearchBox Grid.Row="0" x:Name="searchClient" Width="300"/>
+        </StackPanel>
+        
 
         <!-- Table des clients -->
         <DataGrid Style="{StaticResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="1" Name="ClientsGrid">
@@ -39,10 +42,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridEditButton}" Click="EditProduitButton_Click">
+                                <Button Style="{StaticResource gridEditButton}" Click="EditClientButton_Click">
                                     <iconPacks:PackIconBootstrapIcons Kind="Pencil" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
-                                <Button Style="{StaticResource gridRemoveButton}"> 
+                                <Button Style="{StaticResource gridRemoveButton}" Click="RemoveClientButton_Click">
                                     <iconPacks:PackIconBootstrapIcons Kind="Trash" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
                             </StackPanel>
@@ -51,7 +54,5 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
-        <userControls:Pagination Grid.Row="2" HorizontalAlignment="Right"/>
     </Grid>
 </Page>

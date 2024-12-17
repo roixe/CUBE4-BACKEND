@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace JamaisASec
@@ -54,6 +53,18 @@ namespace JamaisASec
             }
         }
 
+        private void RemoveProduitButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Récupérer le produit associé à la ligne
+            if (sender is Button button && button.DataContext is Produit produitSelectionne)
+            {
+                // Supprimer le produit de la liste
+                Produits.Remove(produitSelectionne);
+                // Rafraîchir la grille après modification
+                ProduitGrid.Items.Refresh();
+            }
+        }
+
         private void ControlsFamille_AjouterItem(object sender, RoutedEventArgs e)
         {
             AjouterFamilleButton_Click(sender, e);
@@ -83,6 +94,18 @@ namespace JamaisASec
 
                 // Rafraîchir la grille après modification
                 ProduitGrid.Items.Refresh();
+            }
+        }
+
+        private void RemoveFamilleButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Récupérer le produit associé à la ligne
+            if (sender is Button button && button.DataContext is Famille familleSelectionne)
+            {
+                // Supprimer le produit de la liste
+                Familles.Remove(familleSelectionne);
+                // Rafraîchir la grille après modification
+                FamillesGrid.Items.Refresh();
             }
         }
 

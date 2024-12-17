@@ -32,7 +32,7 @@ namespace JamaisASec
             ClientsGrid.Items.Refresh();
         }
 
-        private void EditProduitButton_Click(object sender, RoutedEventArgs e)
+        private void EditClientButton_Click(object sender, RoutedEventArgs e)
         {
             // Récupérer le client associé à la ligne
             if (sender is Button button && button.DataContext is Client clientSelectionne)
@@ -44,6 +44,18 @@ namespace JamaisASec
                 modifierProduitForm.ShowDialog();
 
                 // Rafraîchir la grille après modification
+                ClientsGrid.Items.Refresh();
+            }
+        }
+
+        private void RemoveClientButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Récupérer le client associé à la ligne
+            if (sender is Button button && button.DataContext is Client clientSelectionne)
+            {
+                // Supprimer le client de la liste
+                Clients.Remove(clientSelectionne);
+                // Rafraîchir la grille après suppression
                 ClientsGrid.Items.Refresh();
             }
         }

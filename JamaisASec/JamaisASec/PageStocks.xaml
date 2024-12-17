@@ -12,7 +12,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <userControls:SearchBox Grid.Row="0" x:Name="searchStock" Width="300" HorizontalAlignment="Left"/>
 
@@ -76,8 +75,6 @@
 
             </DataGrid.Columns>
         </DataGrid>
-
-        <userControls:Pagination Grid.Row="2"/>
     </Grid>
 
 </Page>

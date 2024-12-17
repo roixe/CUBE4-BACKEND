@@ -14,7 +14,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <userControls:SearchBox Grid.Row="0" x:Name="searchCommande" Width="300" HorizontalAlignment="Left"/>
 
@@ -32,22 +31,7 @@
                 <DataGridTextColumn Header="Client" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Client}"/>
                 <DataGridTextColumn Header="Montant" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Montant}"/>
                 <DataGridTextColumn Header="Statut" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Statut}"/>
-                <DataGridTemplateColumn Header="Opérations" IsReadOnly="True" Width="auto">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridEditButton}">
-                                    <iconPacks:PackIconBootstrapIcons Kind="Pencil" Width="12" Height="12" VerticalAlignment="Center"/>
-                                </Button>
-                                <Button Style="{StaticResource gridRemoveButton}">
-                                    <iconPacks:PackIconBootstrapIcons Kind="Trash" Width="12" Height="12" VerticalAlignment="Center"/>
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <userControls:Pagination Grid.Row="2"/>
     </Grid>
 </Page>
