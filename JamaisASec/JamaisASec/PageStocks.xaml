@@ -5,8 +5,9 @@
       xmlns:local="clr-namespace:JamaisASec"
       xmlns:userControls="clr-namespace:JamaisASec.UserControls"
       xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" 
-      Title="ProduitsPage" av:DesignHeight="484.51" av:DesignWidth="850.816">
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="av"
+      Title="PageStocks" av:DesignHeight="484.51" av:DesignWidth="850.816">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -29,7 +30,7 @@
                 <DataGridTemplateColumn Header="Stock" IsReadOnly="True" CanUserResize="False" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" >
+                            <StackPanel Orientation="Horizontal">
                                 <Button Style="{StaticResource gridButton}" Name="RemoveStock" Click="DecrementStock_Click">
                                     <iconPacks:PackIconBootstrapIcons Kind="Dash" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
@@ -72,9 +73,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Famille" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Famille}"/>
-
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
-
 </Page>
