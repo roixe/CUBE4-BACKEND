@@ -37,7 +37,7 @@ namespace JamaisASec.Forms
             }
         }
 
-        private void AjouterButton_Click(object sender, RoutedEventArgs e)
+        private void FormButton_Click(object sender, RoutedEventArgs e)
         {
             if (!ValidateInputs()) return;
 

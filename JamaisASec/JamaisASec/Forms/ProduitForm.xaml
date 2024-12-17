@@ -18,11 +18,11 @@
             <uc:CustomTextBox x:Name="produitPrix" 
                               Caption="Prix" 
                               Hint="Entrez le prix"/>
-            <Button x:Name="ajouterButton"
+            <Button x:Name="formButton"
                     Content="{Binding IsEditMode, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToTextConverter}}"
                     Width="100" Margin="0,10,0,0"
                     HorizontalAlignment="Right"
-                    Style="{StaticResource FormButton}" Click="AjouterButton_Click">
+                    Style="{StaticResource FormButton}" Click="FormButton_Click">
                 <Button.Effect>
                     <DropShadowEffect ShadowDepth="5" BlurRadius="10" Color="#5c1111" Opacity="0.3" Direction="-120"/>
                 </Button.Effect>

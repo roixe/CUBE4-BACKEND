@@ -6,17 +6,31 @@ namespace JamaisASec.Forms
     /// <summary>
     /// Logique d'interaction pour Window1.xaml
     /// </summary>
-    public partial class AjouterClient : Window
+    public partial class ClientForm : Window
     {
         private List<Client> Clients { get; set; }
+        public bool IsEditMode { get; private set; }
+        private Client? ClientEnCours { get; set; }
 
-        public AjouterClient(List<Client> clients)
+        public ClientForm(List<Client> clients, Client? clientAModifier = null)
         {
             InitializeComponent();
-            Clients = clients ?? new List<Client>();
+            Clients = clients ?? [];
+
+            IsEditMode = clientAModifier != null;
+            ClientEnCours = clientAModifier;
+            this.Title = IsEditMode ? "Modifier un client" : "Ajouter un client";
+
+            if (ClientEnCours != null)
+            {
+                clientName.Text = ClientEnCours.Nom;
+                clientAddress.Text = ClientEnCours.Adresse;
+                clientMail.Text = ClientEnCours.Mail;
+                clientPhoneNumber.Text = ClientEnCours.Telephone;
+            }
         }
 
-        private void AjouterButton_Click(object sender, RoutedEventArgs e)
+        private void FormButton_Click(object sender, RoutedEventArgs e)
         {
             if (!ValidateInputs()) { return; }
 
@@ -25,7 +39,18 @@ namespace JamaisASec.Forms
             string mail = clientMail.Text;
             string telephone = clientPhoneNumber.Text;
 
-            Clients.Add(new Client(nom, adresse, mail, telephone));
+            if (ClientEnCours != null)
+            {
+                ClientEnCours.Nom = nom;
+                ClientEnCours.Adresse = adresse;
+                ClientEnCours.Mail = mail;
+                ClientEnCours.Telephone = telephone;
+            }
+            else
+            {
+
+                Clients.Add(new Client(nom, adresse, mail, telephone));
+            }
 
             this.Close();
         }
