@@ -48,7 +48,6 @@ namespace JamaisASec.Forms
             }
             else
             {
-
                 Clients.Add(new Client(nom, adresse, mail, telephone));
             }
 

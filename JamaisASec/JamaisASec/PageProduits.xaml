@@ -26,7 +26,7 @@
         </Grid.RowDefinitions>
 
         <userControls:SearchBox Grid.Row="0" x:Name="searchProduit" Width="300" HorizontalAlignment="Left"/>
-        <userControls:TabControls Grid.Row="0" x:Name="controlsProduit" />
+        <userControls:TabControls Grid.Row="0" x:Name="controlsProduit" HorizontalAlignment="Right"/>
 
 
         <!-- Table des produits -->
@@ -65,7 +65,7 @@
         <Separator Grid.Row="3" Margin="0 10 0 0" Background="#5c1111" Height="5"/>
 
         <userControls:SearchBox Grid.Row="4" x:Name="searchFamille" Width="300" HorizontalAlignment="Left"/>
-        <userControls:TabControls Grid.Row="4" x:Name="controlsFamille" />
+        <userControls:TabControls Grid.Row="4" x:Name="controlsFamille"  HorizontalAlignment="Right"/>
 
         <!-- Table des familles -->
         <DataGrid Name="FamillesGrid" Style="{StaticResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="5">

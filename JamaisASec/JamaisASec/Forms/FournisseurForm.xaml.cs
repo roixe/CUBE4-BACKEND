@@ -15,18 +15,33 @@ using System.Windows.Shapes;
 namespace JamaisASec.Forms
 {
     /// <summary>
-    /// Logique d'interaction pour AjouterFournisseur.xaml
+    /// Logique d'interaction pour FournisseurForm.xaml
     /// </summary>
-    public partial class AjouterFournisseur : Window
+    public partial class FournisseurForm : Window
     {
         private List<Fournisseur> Fournisseurs { get; set; }
-        public AjouterFournisseur(List<Fournisseur> fournisseurs)
+        public bool IsEditMode { get; private set; }
+        private Fournisseur? FournisseurEnCours { get; set; }
+        public FournisseurForm(List<Fournisseur> fournisseurs, Fournisseur? fournisseurAModifier = null)
         {
             InitializeComponent();
             Fournisseurs = fournisseurs ?? new List<Fournisseur>();
+
+            IsEditMode = fournisseurAModifier != null;
+            FournisseurEnCours = fournisseurAModifier;
+            this.Title = IsEditMode ? "Modifier un fournisseur" : "Ajouter un fournisseur";
+
+            if (FournisseurEnCours != null)
+            {
+                fournisseurName.Text = FournisseurEnCours.Nom;
+                fournisseurAddress.Text = FournisseurEnCours.Adresse;
+                fournisseurMail.Text = FournisseurEnCours.Mail;
+                fournisseurPhoneNumber.Text = FournisseurEnCours.Telephone;
+                fournisseurSIRET.Text = FournisseurEnCours.SIRET;
+            }
         }
 
-        private void AjouterButton_Click(object sender, RoutedEventArgs e)
+        private void FormButton_Click(object sender, RoutedEventArgs e)
         {
             if (!ValidateInputs()) { return; }
 
@@ -36,8 +51,18 @@ namespace JamaisASec.Forms
             string telephone = fournisseurPhoneNumber.Text;
             string siret = fournisseurSIRET.Text;
 
-            Fournisseurs.Add(new Fournisseur(nom, adresse, mail, telephone, siret));
-
+            if (FournisseurEnCours != null)
+            {
+                FournisseurEnCours.Nom = nom;
+                FournisseurEnCours.Adresse = adresse;
+                FournisseurEnCours.Mail = mail;
+                FournisseurEnCours.Telephone = telephone;
+                FournisseurEnCours.SIRET = siret;
+            }
+            else
+            {
+                Fournisseurs.Add(new Fournisseur(nom, adresse, mail, telephone, siret));
+            }
             this.Close();
         }
 
