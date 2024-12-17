@@ -6,24 +6,41 @@ namespace JamaisASec.Forms
     /// <summary>
     /// Logique d'interaction pour AjouterFamille.xaml
     /// </summary>
-    public partial class AjouterFamille : Window
+    public partial class FamilleForm : Window
     {
         private List<Famille> Famille { get; set; }
-        public AjouterFamille(List<Famille> famille)
+        public bool IsEditMode { get; private set; }
+        private Famille? FamilleEnCours { get; set; }
+        public FamilleForm(List<Famille> famille, Famille? familleAModifier = null)
         {
             InitializeComponent();
             Famille = famille ?? new List<Famille>();
 
+            IsEditMode = familleAModifier != null;
+            FamilleEnCours = familleAModifier;
+            this.Title = IsEditMode ? "Modifier une famille" : "Ajouter une famille";
+
+            if (FamilleEnCours != null)
+            {
+                familleName.Text = FamilleEnCours.Nom;
+            }
+
         }
 
-        private void AjouterButton_Click(object sender, RoutedEventArgs e)
+        private void FormButton_Click(object sender, RoutedEventArgs e)
         {
             if (!ValidateInputs()) { return; }
 
             string nom = familleName.Text;
 
-            Famille.Add(new Famille(nom));
-
+            if (FamilleEnCours != null)
+            {
+                FamilleEnCours.Nom = nom;
+            }
+            else
+            {
+                Famille.Add(new Famille(nom));
+            }
             this.Close();
         }
 

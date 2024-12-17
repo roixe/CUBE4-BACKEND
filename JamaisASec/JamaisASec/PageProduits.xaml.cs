@@ -57,12 +57,28 @@ namespace JamaisASec
         private void AjouterFamilleButton_Click(object sender, RoutedEventArgs e)
         {
             // Créer une instance de la fenêtre AjouterProduitForm
-            var ajouterProduitForm = new Forms.AjouterFamille(Familles);
+            var ajouterProduitForm = new Forms.FamilleForm(Familles);
 
             ajouterProduitForm.ShowDialog();
 
             // Rafraîchir la grille après ajout d'un produit
             FamillesGrid.Items.Refresh();
+        }
+
+        private void EditFamilleButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Récupérer le produit associé à la ligne
+            if (sender is Button button && button.DataContext is Famille familleSelectionne)
+            {
+                // Ouvrir la fenêtre de modification
+                var modifierProduitForm = new Forms.FamilleForm(Familles, familleSelectionne);
+
+                // Afficher la fenêtre en mode dialogue
+                modifierProduitForm.ShowDialog();
+
+                // Rafraîchir la grille après modification
+                ProduitGrid.Items.Refresh();
+            }
         }
     }
 }

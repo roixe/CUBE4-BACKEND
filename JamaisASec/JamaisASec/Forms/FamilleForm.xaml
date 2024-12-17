@@ -1,4 +1,4 @@
-﻿<Window x:Class="JamaisASec.Forms.AjouterFamille"
+﻿<Window x:Class="JamaisASec.Forms.FamilleForm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -7,15 +7,16 @@
         xmlns:local="clr-namespace:JamaisASec"
         xmlns:uc="clr-namespace:JamaisASec.UserControls"
         mc:Ignorable="d"
-        Title="Ajout famille"
         Style="{StaticResource FormWindowStyle}"
         WindowStartupLocation="CenterScreen">
     <Border Style="{StaticResource FormContent}">
         <StackPanel Margin="20">
             <uc:CustomTextBox x:Name="familleName" Caption="Famille" Hint="Entrez une famille"/>
-            <Button Content="Ajouter" Width="100" Margin="0,10,0,0" 
-                            HorizontalAlignment="Right"
-                            Style="{StaticResource FormButton}" Click="AjouterButton_Click">
+            <Button x:Name="formButton"
+        Content="{Binding IsEditMode, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToTextConverter}}"
+        Width="100" Margin="0,10,0,0"
+        HorizontalAlignment="Right"
+        Style="{StaticResource FormButton}" Click="FormButton_Click">
                 <Button.Effect>
                     <DropShadowEffect ShadowDepth="5" BlurRadius="10" Color="#5c1111" Opacity="0.3" Direction="-120"/>
                 </Button.Effect>

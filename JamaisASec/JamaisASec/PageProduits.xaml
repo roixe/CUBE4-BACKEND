@@ -82,7 +82,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridEditButton}">
+                                <Button Style="{StaticResource gridEditButton}" Click="EditFamilleButton_Click">
                                     <iconPacks:PackIconBootstrapIcons Kind="Pencil" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
                                 <Button Style="{StaticResource gridRemoveButton}">
