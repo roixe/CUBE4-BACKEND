@@ -14,7 +14,8 @@
 
         <ComboBox Style="{DynamicResource ComboBoxStyle1}"
                   ItemsSource="{Binding ElementName=customComboBox, Path=ItemsSource}"
-                  SelectedItem="{Binding ElementName=customComboBox, Path=SelectedItem}"/>
+                  SelectedItem="{Binding ElementName=customComboBox, Path=SelectedItem}"
+                  DisplayMemberPath="{Binding DisplayMemberPath, RelativeSource={RelativeSource AncestorType=UserControl}}" />
 
         <!-- Error Message -->
         <TextBlock Text="{Binding ElementName=customComboBox, Path=ErrorMessage}" 
