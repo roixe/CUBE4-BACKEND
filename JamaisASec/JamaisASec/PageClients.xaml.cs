@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace JamaisASec
 {
@@ -9,6 +11,7 @@ namespace JamaisASec
     public partial class PageClients : Page
     {
         private List<Client> Clients { get; set; }
+
         public PageClients(List<Client> clients)
         {
             InitializeComponent();
@@ -16,6 +19,7 @@ namespace JamaisASec
             ClientsGrid.ItemsSource = Clients;
 
             controlsClient.AddItem += ControlsClient_AjouterItem;
+            searchClient.TextChanged += SearchClient_TextChanged;
         }
 
         private void ControlsClient_AjouterItem(object sender, RoutedEventArgs e)
@@ -60,5 +64,19 @@ namespace JamaisASec
             }
         }
 
+        private void SearchClient_TextChanged(object sender, RoutedEventArgs e)
+        {
+            string searchText = searchClient.Text;
+            FilterClients(searchText);
+        }
+
+        private void FilterClients(string searchText)
+        {
+            var filteredClients = Clients.Where(c => c.Nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                     c.Adresse.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                     c.Mail.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                     c.Telephone.Contains(searchText, System.StringComparison.OrdinalIgnoreCase)).ToList();
+            ClientsGrid.ItemsSource = filteredClients;
+        }
     }
 }
