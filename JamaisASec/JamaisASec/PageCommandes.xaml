@@ -17,7 +17,6 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <userControls:SearchBox Grid.Row="0" x:Name="searchCommande" Width="300" HorizontalAlignment="Left"/>
-        <userControls:TabControls Grid.Row="0" x:Name="controlsCommande" />
 
         <!-- Table des commandes -->
         <DataGrid Style="{StaticResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="1" Name="CommandesGrid">

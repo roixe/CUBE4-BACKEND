@@ -13,7 +13,7 @@ namespace JamaisASec
         {
             InitializeComponent();
             Clients = clients;
-            ClientsGrid.ItemsSource = clients;
+            ClientsGrid.ItemsSource = Clients;
 
             controlsClient.AddItem += ControlsClient_AjouterItem;
         }
@@ -26,7 +26,7 @@ namespace JamaisASec
         private void AjouterClientButton_Click(object sender, RoutedEventArgs e)
         {
             // Créer une instance de la fenêtre AjouterClientForm
-            var ajouterClientForm = new Forms.AjouterClientForm(Clients);
+            var ajouterClientForm = new Forms.AjouterClient(Clients);
             ajouterClientForm.ShowDialog();
             // Rafraîchir la grille après ajout d'un client
             ClientsGrid.Items.Refresh();

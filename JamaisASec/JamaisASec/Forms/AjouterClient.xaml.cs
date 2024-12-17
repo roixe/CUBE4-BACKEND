@@ -6,12 +6,11 @@ namespace JamaisASec.Forms
     /// <summary>
     /// Logique d'interaction pour Window1.xaml
     /// </summary>
-    public partial class AjouterClientForm : Window
+    public partial class AjouterClient : Window
     {
-        public Client? ClientAjoute { get; private set; } // Allow ClientAjoute to be nullable
         private List<Client> Clients { get; set; }
 
-        public AjouterClientForm(List<Client> clients)
+        public AjouterClient(List<Client> clients)
         {
             InitializeComponent();
             Clients = clients ?? new List<Client>();
@@ -26,8 +25,7 @@ namespace JamaisASec.Forms
             string mail = clientMail.Text;
             string telephone = clientPhoneNumber.Text;
 
-            ClientAjoute = new Client(nom, adresse, mail, telephone);
-            Clients.Add(ClientAjoute);
+            Clients.Add(new Client(nom, adresse, mail, telephone));
 
             this.Close();
         }
@@ -38,7 +36,7 @@ namespace JamaisASec.Forms
 
             if (string.IsNullOrWhiteSpace(clientName.Text))
             {
-                clientName.ErrorMessage = "Ce champ est obligatoire.";
+                clientName.ErrorMessage = "Veuillez entrer un nom.";
                 isValid = false;
             }
             else
@@ -48,7 +46,7 @@ namespace JamaisASec.Forms
 
             if (string.IsNullOrWhiteSpace(clientAddress.Text))
             {
-                clientAddress.ErrorMessage = "Ce champ est obligatoire.";
+                clientAddress.ErrorMessage = "Veuillez entrer une adresse.";
                 isValid = false;
             }
             else
@@ -58,7 +56,7 @@ namespace JamaisASec.Forms
 
             if (string.IsNullOrWhiteSpace(clientMail.Text))
             {
-                clientMail.ErrorMessage = "Ce champ est obligatoire.";
+                clientMail.ErrorMessage = "Veuillez entrer une adresse e-mail.";
                 isValid = false;
             }
             else
@@ -68,7 +66,7 @@ namespace JamaisASec.Forms
 
             if (string.IsNullOrWhiteSpace(clientPhoneNumber.Text))
             {
-                clientPhoneNumber.ErrorMessage = "Ce champ est obligatoire.";
+                clientPhoneNumber.ErrorMessage = "Veuillez entrer un numéro de téléphone.";
                 isValid = false;
             }
             else
