@@ -9,5 +9,6 @@ namespace JamaisASec
     public class Famille(string nom)
     {
         public string Nom { get; set; } = nom;
+        public bool IsSelected { get; set; }
     }
 }

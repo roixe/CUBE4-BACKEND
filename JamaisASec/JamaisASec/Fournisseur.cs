@@ -13,6 +13,7 @@ namespace JamaisASec
         public string Mail { get; set; } = string.Empty;
         public string Telephone { get; set; } = string.Empty;
         public string SIRET { get; set; } = string.Empty;
+        public bool IsSelected { get; set; }
 
         public Fournisseur(string nom, string adresse, string mail, string telephone, string siret) { 
             Nom = nom;

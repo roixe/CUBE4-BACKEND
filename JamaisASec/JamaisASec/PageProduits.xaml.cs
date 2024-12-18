@@ -65,6 +65,30 @@ namespace JamaisASec
             }
         }
 
+        private void HeaderProduitCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox headerCheckBox)
+            {
+                foreach (var produit in Produits)
+                {
+                    produit.IsSelected = true;
+                }
+                ProduitGrid.Items.Refresh(); // Rafraîchir la grille pour refléter les modifications
+            }
+        }
+
+        private void HeaderProduitCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox headerCheckBox)
+            {
+                foreach (var produit in Produits)
+                {
+                    produit.IsSelected = false;
+                }
+                ProduitGrid.Items.Refresh(); // Rafraîchir la grille pour refléter les modifications
+            }
+        }
+
         private void ControlsFamille_AjouterItem(object sender, RoutedEventArgs e)
         {
             AjouterFamilleButton_Click(sender, e);
@@ -106,6 +130,30 @@ namespace JamaisASec
                 Familles.Remove(familleSelectionne);
                 // Rafraîchir la grille après modification
                 FamillesGrid.Items.Refresh();
+            }
+        }
+
+        private void HeaderFamilleCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox headerCheckBox)
+            {
+                foreach (var famille in Familles)
+                {
+                    famille.IsSelected = true;
+                }
+                FamillesGrid.Items.Refresh(); // Rafraîchir la grille pour refléter les modifications
+            }
+        }
+
+        private void HeaderFamilleCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox headerCheckBox)
+            {
+                foreach (var famille in Familles)
+                {
+                    famille.IsSelected = false;
+                }
+                FamillesGrid.Items.Refresh(); // Rafraîchir la grille pour refléter les modifications
             }
         }
 
