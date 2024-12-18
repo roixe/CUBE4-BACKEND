@@ -20,10 +20,10 @@ namespace JamaisASec
     /// </summary>
     public partial class DashBoard : Page
     {
-        public DashBoard(List<Produit> produits)
+        public DashBoard(List<Article> articles)
         {
             InitializeComponent();
-            ProduitsGrid.ItemsSource = produits;
+            ArticlesGrid.ItemsSource = articles;
         }
     }
 }

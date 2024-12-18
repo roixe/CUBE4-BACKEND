@@ -21,11 +21,11 @@
         <!-- Tableau des produits et quantités en stock -->
         <Border Grid.Row="0" Grid.Column="0" Margin="5">
             <StackPanel>
-                <TextBlock Text="Produits en stock" FontWeight="Bold" Margin="5" TextAlignment="Center"/>
-                <DataGrid x:Name="ProduitsGrid" AutoGenerateColumns="False" HeadersVisibility="Column" 
+                <TextBlock Text="Articles en stock" FontWeight="Bold" Margin="5" TextAlignment="Center"/>
+                <DataGrid x:Name="ArticlesGrid" AutoGenerateColumns="False" HeadersVisibility="Column" 
                           Background="White" GridLinesVisibility="None" CanUserAddRows="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Produits" Binding="{Binding Nom}" Width="*"/>
+                        <DataGridTextColumn Header="Articles" Binding="{Binding Nom}" Width="*"/>
                         <DataGridTextColumn Header="Quantité en stock" Binding="{Binding Stock}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>

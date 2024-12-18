@@ -8,7 +8,7 @@ namespace JamaisASec
     public partial class MainWindow : Window
     {
         List<ToggleButton> MenuButtons { get; set; }
-        List<Produit> Produits { get; set; }
+        List<Article> Articles { get; set; }
         List<Fournisseur> Fournisseurs { get; set; }
         List<Client> Clients { get; set; }
         List<Famille> Familles { get; set; }
@@ -17,7 +17,7 @@ namespace JamaisASec
             InitializeComponent();
 
             // Initialiser les produits
-            Produits = new List<Produit>
+            Articles = new List<Article>
             {
                 new("Chateau Margaux 2015", 
                     "Vin rouge elegant aux aromes de fruits rouges et notes boisees.", 
@@ -136,13 +136,13 @@ namespace JamaisASec
             MenuButtons =
             [
                 DashboardButton,
-                ProduitsButton,
+                ArticlesButton,
                 FournisseursButton,
                 StocksButton,
                 ClientsButton,
                 CommandesButton
             ];
-            MainFrame.Navigate(new DashBoard(Produits));
+            MainFrame.Navigate(new DashBoard(Articles));
         }
 
         private void SetActiveButton(ToggleButton button)
@@ -159,16 +159,16 @@ namespace JamaisASec
 
         private void DashboardButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new DashBoard(Produits));
+            MainFrame.Navigate(new DashBoard(Articles));
             SetActiveButton(DashboardButton);
 
         }
 
-        private void ProduitsButton_Click(object sender, RoutedEventArgs e)
+        private void ArticlesButton_Click(object sender, RoutedEventArgs e)
         {
 
-            MainFrame.Navigate(new PageProduits(Produits, Familles));
-            SetActiveButton(ProduitsButton);
+            MainFrame.Navigate(new PageArticles(Articles, Familles));
+            SetActiveButton(ArticlesButton);
         }
 
         private void FournisseursButton_Click(object sender, RoutedEventArgs e)
@@ -181,7 +181,7 @@ namespace JamaisASec
         private void StocksButton_Click(object sender, RoutedEventArgs e)
         {
 
-            MainFrame.Navigate(new PageStocks(Produits));
+            MainFrame.Navigate(new PageStocks(Articles));
             SetActiveButton(StocksButton);
         }
 
