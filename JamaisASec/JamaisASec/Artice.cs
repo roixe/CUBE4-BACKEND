@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JamaisASec
 {
-    public class Produit
+    public class Article
     {
         public string Nom { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
@@ -18,7 +18,7 @@ namespace JamaisASec
         public string Famille { get; set; } = string.Empty;
         public bool IsSelected { get; set; }
 
-        public Produit(string nom, string description, string famille, int prix, int annee)
+        public Article(string nom, string description, string famille, int prix, int annee)
         {
             Nom = nom;
             Description = description;
