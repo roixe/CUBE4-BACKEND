@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace JamaisASec
 {
@@ -9,6 +11,7 @@ namespace JamaisASec
     public partial class PageFournisseurs : Page
     {
         private List<Fournisseur> Fournisseurs { get; set; }
+
         public PageFournisseurs(List<Fournisseur> fournisseurs)
         {
             InitializeComponent();
@@ -16,7 +19,9 @@ namespace JamaisASec
             FournisseursGrid.ItemsSource = Fournisseurs;
 
             controlsFournisseur.AddItem += ControlsFournisseur_AjouterItem;
+            searchFournisseur.TextChanged += SearchFournisseur_TextChanged;
         }
+
         private void ControlsFournisseur_AjouterItem(object sender, RoutedEventArgs e)
         {
             AjouterFournisseurButton_Click(sender, e);
@@ -59,6 +64,22 @@ namespace JamaisASec
                 // Rafraîchir la grille après suppression
                 FournisseursGrid.Items.Refresh();
             }
+        }
+
+        private void SearchFournisseur_TextChanged(object sender, RoutedEventArgs e)
+        {
+            string searchText = searchFournisseur.Text;
+            FilterFournisseurs(searchText);
+        }
+
+        private void FilterFournisseurs(string searchText)
+        {
+            var filteredFournisseurs = Fournisseurs.Where(f => f.Nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                             f.Adresse.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                             f.Mail.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                             f.Telephone.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                             f.SIRET.Contains(searchText, System.StringComparison.OrdinalIgnoreCase)).ToList();
+            FournisseursGrid.ItemsSource = filteredFournisseurs;
         }
 
         private void HeaderCheckBox_Checked(object sender, RoutedEventArgs e)

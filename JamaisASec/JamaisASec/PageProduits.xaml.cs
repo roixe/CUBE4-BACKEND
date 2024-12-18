@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace JamaisASec
 {
@@ -11,21 +13,25 @@ namespace JamaisASec
         public PageProduits(List<Produit> produits, List<Famille> familles)
         {
             InitializeComponent();
-            
+
             Produits = produits;
             ProduitGrid.ItemsSource = Produits;
             controlsProduit.AddItem += ControlsProduit_AjouterItem;
-            
+
             searchProduit.TextChanged += SearchProduit_TextChanged;
 
             Familles = familles;
             FamillesGrid.ItemsSource = Familles;
             controlsFamille.AddItem += ControlsFamille_AjouterItem;
+
+            searchFamille.TextChanged += SearchFamille_TextChanged;
         }
+
         private void ControlsProduit_AjouterItem(object sender, RoutedEventArgs e)
         {
             AjouterProduitButton_Click(sender, e);
         }
+
         private void AjouterProduitButton_Click(object sender, RoutedEventArgs e)
         {
             // Créer une instance de la fenêtre AjouterProduitForm
@@ -93,7 +99,7 @@ namespace JamaisASec
         {
             AjouterFamilleButton_Click(sender, e);
         }
-        
+
         private void AjouterFamilleButton_Click(object sender, RoutedEventArgs e)
         {
             // Créer une instance de la fenêtre AjouterProduitForm
@@ -117,7 +123,7 @@ namespace JamaisASec
                 modifierProduitForm.ShowDialog();
 
                 // Rafraîchir la grille après modification
-                ProduitGrid.Items.Refresh();
+                FamillesGrid.Items.Refresh();
             }
         }
 
@@ -168,6 +174,18 @@ namespace JamaisASec
             var filteredProduits = Produits.Where(p => p.Nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
                                                        p.Description.Contains(searchText, System.StringComparison.OrdinalIgnoreCase)).ToList();
             ProduitGrid.ItemsSource = filteredProduits;
+        }
+
+        private void SearchFamille_TextChanged(object sender, RoutedEventArgs e)
+        {
+            string searchText = searchFamille.Text;
+            FilterFamilles(searchText);
+        }
+
+        private void FilterFamilles(string searchText)
+        {
+            var filteredFamilles = Familles.Where(f => f.Nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase)).ToList();
+            FamillesGrid.ItemsSource = filteredFamilles;
         }
     }
 }
