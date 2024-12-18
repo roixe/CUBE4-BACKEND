@@ -25,8 +25,8 @@
                 <DataGrid x:Name="ArticlesGrid" AutoGenerateColumns="False" HeadersVisibility="Column" 
                           Background="White" GridLinesVisibility="None" CanUserAddRows="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Articles" Binding="{Binding Nom}" Width="*"/>
-                        <DataGridTextColumn Header="Quantité en stock" Binding="{Binding Stock}" Width="*"/>
+                        <DataGridTextColumn Header="Articles" Binding="{Binding nom}" Width="*"/>
+                        <DataGridTextColumn Header="Quantité en stock" Binding="{Binding quantite}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

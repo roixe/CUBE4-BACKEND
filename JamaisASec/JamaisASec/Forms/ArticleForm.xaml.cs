@@ -27,13 +27,13 @@ namespace JamaisASec.Forms
 
             if (ArticleEnCours != null)
             {
-                articleNom.Text = ArticleEnCours.Nom;
-                articleDescription.Text = ArticleEnCours.Description;
-                articleStock.Text = ArticleEnCours.Stock.ToString();
-                articleStockMin.Text = ArticleEnCours.StockMin.ToString();
-                articleColisage.Text = ArticleEnCours.Colisage.ToString();
-                articlePrix.Text = ArticleEnCours.Prix.ToString();
-                articleFamille.SelectedItem = Familles.FirstOrDefault(f => f.Nom == ArticleEnCours.Famille);
+                articleNom.Text = ArticleEnCours.nom;
+                articleDescription.Text = ArticleEnCours.description;
+                articleStock.Text = ArticleEnCours.quantite.ToString();
+                articleStockMin.Text = ArticleEnCours.quantite_Min.ToString();
+                articleColisage.Text = ArticleEnCours.colisage.ToString();
+                articlePrix.Text = ArticleEnCours.prix_unitaire.ToString();
+                //articleFamille.SelectedItem = Familles.FirstOrDefault(f => f.Nom == ArticleEnCours.Famille);
             }
         }
 
@@ -52,15 +52,15 @@ namespace JamaisASec.Forms
 
             if (ArticleEnCours != null)
             {
-                ArticleEnCours.Nom = nom;
-                ArticleEnCours.Description = description;
-                ArticleEnCours.Stock = stock;
-                ArticleEnCours.StockMin = stockMin;
-                ArticleEnCours.Colisage = colisage;
-                ArticleEnCours.Prix = prix;
-                ArticleEnCours.Famille = famille;
+                ArticleEnCours.nom = nom;
+                ArticleEnCours.description = description;
+                ArticleEnCours.quantite = stock;
+                ArticleEnCours.quantite_Min = stockMin;
+                ArticleEnCours.colisage = colisage;
+                ArticleEnCours.prix_unitaire = prix;
+              //  ArticleEnCours.Famille = famille;
             }
-            else
+            /*else
             {
                 Article produitAjoute = new Article(nom, description, famille, prix, annee)
                 {
@@ -70,7 +70,7 @@ namespace JamaisASec.Forms
                 };
 
                 Articles.Add(produitAjoute);
-            }
+            }*/
 
             this.Close();
         }

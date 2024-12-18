@@ -8,24 +8,18 @@ namespace JamaisASec
 {
     public class Article
     {
-        public string Nom { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public int Stock { get; set; } = 0;
-        public int StockMin { get; set; } = 0;
-        public int Colisage { get; set; } = 1;
-        public int Prix { get; set; } = 0;
-        public int Annee { get; set; } = 0;
-        public string Famille { get; set; } = string.Empty;
+        public int id {  get; set; }
+        public string nom { get; set; }
+        public string description { get; set; } 
+        public int quantite { get; set; }
+        public int quantite_Min { get; set; }
+        public int colisage { get; set; } 
+        public int prix_unitaire { get; set; } 
+        public int annee { get; set; } 
+        public int familles_id { get; set; } 
+        public int maisons_id { get; set; }
+        public string image { get; set; }
         public bool IsSelected { get; set; }
-
-        public Article(string nom, string description, string famille, int prix, int annee)
-        {
-            Nom = nom;
-            Description = description;
-            Famille = famille;
-            Prix = prix;
-            Annee = annee;
-        }
     }
 
 }
