@@ -10,11 +10,19 @@ namespace JamaisASec
         private List<Article> Articles { get; set; }
         private List<Famille> Familles { get; set; }
 
+        ApiClient ApiClient { get; set; }
+
         public PageArticles(List<Article> articles, List<Famille> familles)
         {
             InitializeComponent();
 
+            ApiClient apiClient = new ApiClient();
+
+
+
             Articles = articles;
+
+            
             ArticleGrid.ItemsSource = Articles;
             controlsArticle.AddItem += ControlsArticle_AjouterItem;
 
@@ -171,8 +179,8 @@ namespace JamaisASec
 
         private void FilterArticles(string searchText)
         {
-            var filteredArticles = Articles.Where(p => p.Nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
-                                                       p.Description.Contains(searchText, System.StringComparison.OrdinalIgnoreCase)).ToList();
+            var filteredArticles = Articles.Where(p => p.nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                       p.description.Contains(searchText, System.StringComparison.OrdinalIgnoreCase)).ToList();
             ArticleGrid.ItemsSource = filteredArticles;
         }
 
