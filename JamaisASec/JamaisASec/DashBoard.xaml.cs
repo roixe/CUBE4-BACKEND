@@ -18,11 +18,12 @@ namespace JamaisASec
     /// <summary>
     /// Interaction logic for Accueil.xaml
     /// </summary>
-    public partial class Accueil : Page
+    public partial class DashBoard : Page
     {
-        public Accueil()
+        public DashBoard(List<Article> articles)
         {
             InitializeComponent();
+            ArticlesGrid.ItemsSource = articles;
         }
     }
 }

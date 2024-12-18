@@ -1,0 +1,33 @@
+﻿<Window x:Class="JamaisASec.Forms.ArticleForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JamaisASec"
+        xmlns:uc="clr-namespace:JamaisASec.UserControls"
+        mc:Ignorable="d"
+        Style="{StaticResource FormWindowStyle}">
+    <Border Style="{StaticResource FormContent}">
+        <StackPanel Margin="20">
+            <uc:CustomTextBox x:Name="articleNom" Caption="Nom" Hint="Entrez le nom"/>
+            <uc:CustomTextBox x:Name="articleDescription" Caption="Description" Hint="Entrez la description"/>
+            <uc:CustomTextBox x:Name="articleStock" Caption="Stock" Hint="Entrez le stock" Text="0"/>
+            <uc:CustomTextBox x:Name="articleStockMin" Caption="Stock minimum" Hint="Entrez le stock minimum" Text="0"/>
+            <uc:CustomTextBox x:Name="articleColisage" Caption="Colisage" Hint="Entrez le colisage" Text="1"/>
+            <uc:CustomComboBox x:Name="articleFamille" Caption="Famille"/>
+            <uc:CustomTextBox x:Name="articleAnnee" Caption="Annee" Hint="Entrez l'année"/>
+            <uc:CustomTextBox x:Name="articlePrix" 
+                              Caption="Prix" 
+                              Hint="Entrez le prix"/>
+            <Button x:Name="formButton"
+                    Content="{Binding IsEditMode, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToTextConverter}}"
+                    Width="100" Margin="0,10,0,0"
+                    HorizontalAlignment="Right"
+                    Style="{StaticResource FormButton}" Click="FormButton_Click">
+                <Button.Effect>
+                    <DropShadowEffect ShadowDepth="5" BlurRadius="10" Color="#5c1111" Opacity="0.3" Direction="-120"/>
+                </Button.Effect>
+            </Button>
+        </StackPanel>
+    </Border>
+</Window>
