@@ -81,5 +81,29 @@ namespace JamaisASec
                                                              f.SIRET.Contains(searchText, System.StringComparison.OrdinalIgnoreCase)).ToList();
             FournisseursGrid.ItemsSource = filteredFournisseurs;
         }
+
+        private void HeaderCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox headerCheckBox)
+            {
+                foreach (var fournisseur in Fournisseurs)
+                {
+                    fournisseur.IsSelected = true;
+                }
+                FournisseursGrid.Items.Refresh(); // Rafraîchir la grille pour refléter les modifications
+            }
+        }
+
+        private void HeaderCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox headerCheckBox)
+            {
+                foreach (var fournisseur in Fournisseurs)
+                {
+                    fournisseur.IsSelected = false;
+                }
+                FournisseursGrid.Items.Refresh(); // Rafraîchir la grille pour refléter les modifications
+            }
+        }
     }
 }

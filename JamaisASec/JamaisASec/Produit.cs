@@ -16,6 +16,7 @@ namespace JamaisASec
         public int Prix { get; set; } = 0;
         public int Annee { get; set; } = 0;
         public string Famille { get; set; } = string.Empty;
+        public bool IsSelected { get; set; }
 
         public Produit(string nom, string description, string famille, int prix, int annee)
         {

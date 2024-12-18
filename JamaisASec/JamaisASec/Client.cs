@@ -12,6 +12,7 @@ namespace JamaisASec
         public string Adresse { get; set; }
         public string Mail { get; set; }
         public string Telephone { get; set; }
+        public bool IsSelected { get; set; }
         public Client(string nom, string adresse, string email, string telephone)
         {
             Nom = nom;

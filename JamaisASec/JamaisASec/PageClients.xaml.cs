@@ -70,6 +70,30 @@ namespace JamaisASec
             FilterClients(searchText);
         }
 
+        private void HeaderCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox headerCheckBox)
+            {
+                foreach (var client in Clients)
+                {
+                    client.IsSelected = true;
+                }
+                ClientsGrid.Items.Refresh(); // Rafraîchir la grille pour refléter les modifications
+            }
+        }
+
+        private void HeaderCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox headerCheckBox)
+            {
+                foreach (var client in Clients)
+                {
+                    client.IsSelected = false;
+                }
+                ClientsGrid.Items.Refresh(); // Rafraîchir la grille pour refléter les modifications
+            }
+        }
+
         private void FilterClients(string searchText)
         {
             var filteredClients = Clients.Where(c => c.Nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
