@@ -26,7 +26,7 @@
                     <iconPacks:PackIconBootstrapIcons Kind="House" Width="30" Height="30" Margin="0 0 10 0"/>
                 </ToggleButton>
 
-                <ToggleButton x:Name="ProduitsButton" Tag="Produits et Familles" Click="ProduitsButton_Click" Style="{StaticResource MenuButton}">
+                <ToggleButton x:Name="ArticlesButton" Tag="Articles et Familles" Click="ArticlesButton_Click" Style="{StaticResource MenuButton}">
                     <iconPacks:PackIconBootstrapIcons Kind="Box" Width="30" Height="30" Margin="0 0 10 0"/>
                 </ToggleButton>
 

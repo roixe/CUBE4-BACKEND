@@ -10,14 +10,14 @@ namespace JamaisASec
     /// </summary>
     public partial class PageStocks : Page
     {
-        private List<Produit> Produits { get; set; }
+        private List<Article> Articles { get; set; }
 
-        public PageStocks(List<Produit> produits)
+        public PageStocks(List<Article> articles)
         {
             InitializeComponent();
 
-            Produits = produits;
-            StockGrid.ItemsSource = Produits;
+            Articles = articles;
+            StockGrid.ItemsSource = Articles;
 
             searchStock.TextChanged += SearchStock_TextChanged;
         }
@@ -25,20 +25,20 @@ namespace JamaisASec
         private void IncrementStock_Click(object sender, RoutedEventArgs e)
         {
             // Vérifier si le bouton est un bouton de stock
-            if (sender is Button button && button.DataContext is Produit produit)
+            if (sender is Button button && button.DataContext is Article article)
             {
                 // Incrémenter le stock en fonction du bouton cliqué
                 if (button.Name == "AddStock")
                 {
-                    produit.Stock++;
+                    article.Stock++;
                 }
                 else if (button.Name == "AddStockMin")
                 {
-                    produit.StockMin++;
+                    article.StockMin++;
                 }
                 else if (button.Name == "AddColisage")
                 {
-                    produit.Colisage++;
+                    article.Colisage++;
                 }
                 StockGrid.Items.Refresh(); // Met à jour le DataGrid
             }
@@ -47,20 +47,20 @@ namespace JamaisASec
         private void DecrementStock_Click(object sender, RoutedEventArgs e)
         {
             // Vérifier si le bouton est un bouton de stock
-            if (sender is Button button && button.DataContext is Produit produit)
+            if (sender is Button button && button.DataContext is Article article)
             {
                 // Décrémenter le stock en fonction du bouton cliqué
                 if (button.Name == "RemoveStock")
                 {
-                    produit.Stock--;
+                    article.Stock--;
                 }
                 else if (button.Name == "RemoveStockMin")
                 {
-                    produit.StockMin--;
+                    article.StockMin--;
                 }
                 else if (button.Name == "RemoveColisage")
                 {
-                    produit.Colisage--;
+                    article.Colisage--;
                 }
                 StockGrid.Items.Refresh(); // Met à jour le DataGrid
             }
@@ -74,7 +74,7 @@ namespace JamaisASec
 
         private void FilterStocks(string searchText)
         {
-            var filteredStocks = Produits.Where(p => p.Nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+            var filteredStocks = Articles.Where(p => p.Nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
                                                      p.Description.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
                                                      p.Famille.Contains(searchText, System.StringComparison.OrdinalIgnoreCase)).ToList();
             StockGrid.ItemsSource = filteredStocks;
