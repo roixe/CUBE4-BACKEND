@@ -15,7 +15,7 @@
             <!-- Recherche produit -->
             <RowDefinition Height="Auto"/>
             <!-- Table des produits -->
-            <RowDefinition Height="*" MinHeight="180"/>
+            <RowDefinition Height="2*"/>
             <!--Separator-->
             <RowDefinition Height="Auto"/>
             <!-- Recherche famille -->
@@ -40,8 +40,8 @@
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Nom}"/>
-                <DataGridTextColumn Header="Description" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Description}"/>
+                <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="2*" Binding="{Binding Nom}"/>
+                <DataGridTextColumn Header="Description" IsReadOnly="True" CanUserResize="False" Width="3*" Binding="{Binding Description}"/>
                 <DataGridTextColumn Header="Famille" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Famille}"/>
                 <DataGridTextColumn Header="Annee" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Annee}"/>
                 <DataGridTextColumn Header="Prix" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Prix}"/>
