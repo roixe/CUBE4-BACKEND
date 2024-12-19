@@ -23,7 +23,7 @@ namespace JamaisASec
         public DashBoard(List<Article> articles)
         {
             InitializeComponent();
-            stockArticle.ItemsSource = articles;
+            ArticlesGrid.ItemsSource = articles;
         }
     }
 }

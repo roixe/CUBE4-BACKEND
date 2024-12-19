@@ -16,19 +16,12 @@ namespace JamaisASec
         public MainWindow()
         {
             InitializeComponent();
-
-            // Initialiser les produits
-            
-
+         
             ApiClient client = new ApiClient();
 
             var task = Task.Run(() => client.GetAsync<List<Article>>("Articles/get/all"));
             task.Wait();
             Articles = task.Result;
-
-         
-
-
 
             Fournisseurs =
             [

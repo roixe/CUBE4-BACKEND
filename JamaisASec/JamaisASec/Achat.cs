@@ -24,7 +24,7 @@ namespace JamaisASec
             Date = date;
             Status = status;
             // Calcul automatique du montant total
-            Montant = ArticlesCommandes.Sum(aq => aq.Quantite * aq.Article.Prix);
+            Montant = ArticlesCommandes.Sum(aq => aq.Quantite * aq.Article.prix_unitaire);
         }
     }
 }
