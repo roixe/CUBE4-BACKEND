@@ -36,7 +36,21 @@
                 <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding Date, StringFormat=d}"/>
                 <DataGridTextColumn Header="Fournisseur" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding Fournisseur.Nom}"/>
                 <DataGridTextColumn Header="Montant" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding Montant, StringFormat=N2}"/>
-                <DataGridTextColumn Header="Statut" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding Status}"/>
+                <DataGridTemplateColumn Header="Statut" IsReadOnly="True" CanUserResize="False" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Statut, Converter={StaticResource StatusToColorConverter}}" 
+                                    CornerRadius="5" 
+                                    Padding="5" 
+                                    Margin="2"
+                                    Width="120"
+                                    HorizontalAlignment="Left">
+                                <TextBlock Text="{Binding Statut}" 
+                                           Foreground="White"/>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
