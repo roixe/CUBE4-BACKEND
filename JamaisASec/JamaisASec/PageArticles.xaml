@@ -40,11 +40,11 @@
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="2*" Binding="{Binding Nom}"/>
-                <DataGridTextColumn Header="Description" IsReadOnly="True" CanUserResize="False" Width="3*" Binding="{Binding Description}"/>
-                <DataGridTextColumn Header="Famille" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Famille}"/>
-                <DataGridTextColumn Header="Annee" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Annee}"/>
-                <DataGridTextColumn Header="Prix" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Prix}"/>
+                <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="2*" Binding="{Binding nom}"/>
+                <DataGridTextColumn Header="Description" IsReadOnly="True" CanUserResize="False" Width="3*" Binding="{Binding description}"/>
+                <!--<DataGridTextColumn Header="Famille" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Famille}"/>-->
+                <DataGridTextColumn Header="Annee" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding annee}"/>
+                <DataGridTextColumn Header="Prix" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding prix_unitaire}"/>
                 <DataGridTemplateColumn Header="Opérations" IsReadOnly="True" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

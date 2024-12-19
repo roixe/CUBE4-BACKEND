@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Tableau des produits et quantités en stock -->
@@ -29,7 +29,7 @@
                       RowStyle="{DynamicResource DataGridRowStyle1}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Article" IsReadOnly="True" CanUserResize="False" Width="3*" Binding="{Binding nom}"/>
-                    <DataGridTextColumn Header="Quantité en stock" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding quantite}"/>
+                    <DataGridTextColumn Header="Stock" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding quantite}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

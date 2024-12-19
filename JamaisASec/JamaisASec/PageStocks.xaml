@@ -18,7 +18,7 @@
 
         <DataGrid Style="{StaticResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="1" Name="StockGrid">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Nom}"/>
+                <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding nom}"/>
                 <DataGridTemplateColumn Header="Stock" IsReadOnly="True" CanUserResize="False" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -26,7 +26,7 @@
                                 <Button Style="{StaticResource gridButton}" Name="RemoveStock" Click="DecrementStock_Click">
                                     <iconPacks:PackIconBootstrapIcons Kind="Dash" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
-                                <TextBlock Text="{Binding Stock}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding quantite}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
                                 <Button Style="{StaticResource gridButton}" Name="AddStock" Click="IncrementStock_Click">
                                     <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
@@ -41,7 +41,7 @@
                                 <Button Style="{StaticResource gridButton}" Name="RemoveStockMin" Click="DecrementStock_Click">
                                     <iconPacks:PackIconBootstrapIcons Kind="Dash" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
-                                <TextBlock Text="{Binding StockMin}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding quantite_Min}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
                                 <Button Style="{StaticResource gridButton}" Name="AddStockMin" Click="IncrementStock_Click">
                                     <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
@@ -56,7 +56,7 @@
                                 <Button Style="{StaticResource gridButton}" Name="RemoveColisage" Click="DecrementStock_Click">
                                     <iconPacks:PackIconBootstrapIcons Kind="Dash" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
-                                <TextBlock Text="{Binding Colisage}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding colisage}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
                                 <Button Style="{StaticResource gridButton}" Name="AddColisage" Click="IncrementStock_Click">
                                     <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
