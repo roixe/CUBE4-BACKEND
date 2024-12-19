@@ -12,7 +12,7 @@ namespace JamaisASec
         public Fournisseur Fournisseur { get; set; }
         public List<ArticlesCommandes> ArticlesCommandes { get; set; } = new List<ArticlesCommandes>();
         public DateTime Date { get; set; }
-        public string Status { get; set; }
+        public string Statut { get; set; }
         public double Montant { get; private set; }
         public bool IsSelected { get; set; }
 
@@ -22,7 +22,7 @@ namespace JamaisASec
             Fournisseur = fournisseur;
             ArticlesCommandes = articles;
             Date = date;
-            Status = status;
+            Statut = status;
             // Calcul automatique du montant total
             Montant = ArticlesCommandes.Sum(aq => aq.Quantite * aq.Article.prix_unitaire);
         }

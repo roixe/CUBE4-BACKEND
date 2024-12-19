@@ -9,6 +9,12 @@
     <SolidColorBrush x:Key="LightGray" Color="#dee4ec"/>
     <!--#endregion-->
     
+    <!--#region etiquettes-->
+    <SolidColorBrush x:Key="ForestGreen" Color="#00703C"/>
+    <SolidColorBrush x:Key="OceanBlue" Color="#5fa9e1"/>
+    <SolidColorBrush x:Key="CalmRed" Color="#cc0000"/>
+    <!--#endregion-->
+    
     <!--#region Forms-->
     <LinearGradientBrush x:Key="FormBackground" StartPoint="0,0" EndPoint="0,5">
         <GradientStop Color="#c45e5e" Offset="0.0"/>
