@@ -18,11 +18,7 @@ namespace JamaisASec
 
             ApiClient apiClient = new ApiClient();
 
-
-
             Articles = articles;
-
-            
             ArticleGrid.ItemsSource = Articles;
             controlsArticle.AddItem += ControlsArticle_AjouterItem;
 
