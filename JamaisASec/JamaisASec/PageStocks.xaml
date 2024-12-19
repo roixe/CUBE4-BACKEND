@@ -19,7 +19,6 @@
         <DataGrid Style="{StaticResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="1" Name="StockGrid">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Nom}"/>
-                <DataGridTextColumn Header="Description" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Description}"/>
                 <DataGridTemplateColumn Header="Stock" IsReadOnly="True" CanUserResize="False" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

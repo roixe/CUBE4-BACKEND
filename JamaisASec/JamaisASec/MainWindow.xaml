@@ -30,22 +30,25 @@
                     <iconPacks:PackIconBootstrapIcons Kind="Box" Width="30" Height="30" Margin="0 0 10 0"/>
                 </ToggleButton>
 
-                <ToggleButton x:Name="FournisseursButton" Tag="Fournisseurs" Click="FournisseursButton_Click" Style="{StaticResource MenuButton}">
-                    <iconPacks:PackIconBootstrapIcons Kind="Truck" Width="30" Height="30" Margin="0 0 10 0"/>
-                </ToggleButton>
-
                 <ToggleButton x:Name="ClientsButton" Tag="Clients" Click="ClientsButton_Click" Style="{StaticResource MenuButton}">
                     <iconPacks:PackIconBootstrapIcons Kind="People" Width="30" Height="30" Margin="0 0 10 0"/>
-                </ToggleButton>
-
-                <ToggleButton x:Name="StocksButton" Tag="Stocks" Click="StocksButton_Click" Style="{StaticResource MenuButton}">
-                    <iconPacks:PackIconBootstrapIcons Kind="Boxes" Width="30" Height="30" Margin="0 0 10 0"/>
                 </ToggleButton>
 
                 <ToggleButton x:Name="CommandesButton" Tag="Commandes" Click="CommandesButton_Click" Style="{StaticResource MenuButton}">
                     <iconPacks:PackIconBootstrapIcons Kind="Clipboard" Width="30" Height="30" Margin="0 0 10 0"/>
                 </ToggleButton>
-                
+
+                <ToggleButton x:Name="FournisseursButton" Tag="Fournisseurs" Click="FournisseursButton_Click" Style="{StaticResource MenuButton}">
+                    <iconPacks:PackIconBootstrapIcons Kind="Truck" Width="30" Height="30" Margin="0 0 10 0"/>
+                </ToggleButton>
+
+                <ToggleButton x:Name="AchatsButton" Tag="Achats" Click="AchatsButton_Click" Style="{StaticResource MenuButton}">
+                    <iconPacks:PackIconBootstrapIcons Kind="Cart" Width="30" Height="30" Margin="0 0 10 0"/>
+                </ToggleButton>
+
+                <ToggleButton x:Name="StocksButton" Tag="Stocks" Click="StocksButton_Click" Style="{StaticResource MenuButton}">
+                    <iconPacks:PackIconBootstrapIcons Kind="Boxes" Width="30" Height="30" Margin="0 0 10 0"/>
+                </ToggleButton>
             </StackPanel>
         </Border>
 

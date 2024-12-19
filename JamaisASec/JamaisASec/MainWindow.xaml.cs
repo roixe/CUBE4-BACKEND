@@ -12,6 +12,7 @@ namespace JamaisASec
         List<Fournisseur> Fournisseurs { get; set; }
         List<Client> Clients { get; set; }
         List<Famille> Familles { get; set; }
+        List<Achat> Achats { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -133,14 +134,68 @@ namespace JamaisASec
 
             ];
 
+            Achats =
+            [
+                new Achat(
+                    5,
+                    Fournisseurs[1],
+                    [
+                        new ArticlesCommandes(Articles[1], 20),
+                        new ArticlesCommandes(Articles[2], 10)
+                    ],
+                    new DateTime(2024, 12, 1) ,
+                    "En attente"
+                ),
+                new Achat(
+                    4,
+                    Fournisseurs[2],
+                    [
+                        new ArticlesCommandes(Articles[2], 50),
+                        new ArticlesCommandes(Articles[5], 100)
+                    ],
+                    new DateTime(2024, 11, 15),
+                    "En attente"
+                ),
+                new Achat(
+                    3,
+                    Fournisseurs[0],
+                    [
+                        new ArticlesCommandes(Articles[4], 5)
+                    ],
+                    new DateTime(2024, 11, 5),
+                    "Receptionné"
+                ),
+                new Achat(
+                    2,
+                    Fournisseurs[1],
+                    [
+                        new ArticlesCommandes(Articles[1], 30),
+                        new ArticlesCommandes(Articles[3], 20)
+                    ],
+                    new DateTime(2024, 10, 25),
+                    "Receptionné"
+                ),
+                new Achat(
+                    1,
+                    Fournisseurs[2],
+                    [
+                        new ArticlesCommandes(Articles[2], 75),
+                        new ArticlesCommandes(Articles[6], 150)
+                    ],
+                    new DateTime(2024, 10, 10),
+                    "Receptionné"
+                ),
+            ];
+
             MenuButtons =
             [
                 DashboardButton,
                 ArticlesButton,
-                FournisseursButton,
-                StocksButton,
                 ClientsButton,
-                CommandesButton
+                CommandesButton,
+                FournisseursButton,
+                AchatsButton,
+                StocksButton
             ];
             MainFrame.Navigate(new DashBoard(Articles));
         }
@@ -195,6 +250,12 @@ namespace JamaisASec
         {
             MainFrame.Navigate(new PageCommandes());
             SetActiveButton(CommandesButton);
+        }
+
+        private void AchatsButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new PageAchats(Achats));
+            SetActiveButton(AchatsButton);
         }
     }
 
