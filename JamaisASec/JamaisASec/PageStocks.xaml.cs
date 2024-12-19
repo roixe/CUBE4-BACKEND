@@ -30,15 +30,15 @@ namespace JamaisASec
                 // Incrémenter le stock en fonction du bouton cliqué
                 if (button.Name == "AddStock")
                 {
-                    article.Stock++;
+                    article.quantite++;
                 }
                 else if (button.Name == "AddStockMin")
                 {
-                    article.StockMin++;
+                    article.quantite_Min++;
                 }
                 else if (button.Name == "AddColisage")
                 {
-                    article.Colisage++;
+                    article.colisage++;
                 }
                 StockGrid.Items.Refresh(); // Met à jour le DataGrid
             }
@@ -52,15 +52,15 @@ namespace JamaisASec
                 // Décrémenter le stock en fonction du bouton cliqué
                 if (button.Name == "RemoveStock")
                 {
-                    article.Stock--;
+                    article.quantite--;
                 }
                 else if (button.Name == "RemoveStockMin")
                 {
-                    article.StockMin--;
+                    article.quantite_Min--;
                 }
                 else if (button.Name == "RemoveColisage")
                 {
-                    article.Colisage--;
+                    article.colisage--;
                 }
                 StockGrid.Items.Refresh(); // Met à jour le DataGrid
             }
@@ -74,9 +74,9 @@ namespace JamaisASec
 
         private void FilterStocks(string searchText)
         {
-            var filteredStocks = Articles.Where(p => p.Nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
-                                                     p.Description.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
-                                                     p.Famille.Contains(searchText, System.StringComparison.OrdinalIgnoreCase)).ToList();
+            var filteredStocks = Articles.Where(p => p.nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                     p.description.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) );
+                                                    // p.Famille.Contains(searchText, System.StringComparison.OrdinalIgnoreCase)).ToList();
             StockGrid.ItemsSource = filteredStocks;
         }
     }
