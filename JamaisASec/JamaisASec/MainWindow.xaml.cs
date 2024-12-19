@@ -7,43 +7,27 @@ namespace JamaisASec
 {
     public partial class MainWindow : Window
     {
+        ApiClient Client { get; set; }
         List<ToggleButton> MenuButtons { get; set; }
         List<Article> Articles { get; set; }
-        List<Fournisseur> Fournisseurs { get; set; }
-        List<Client> Clients { get; set; }
         List<Famille> Familles { get; set; }
-        List<Achat> Achats { get; set; }
+        List<Commande> Achats { get; set; }
+        List<Commande> Commandes { get; set; }
         public MainWindow()
         {
             InitializeComponent();
          
-            ApiClient client = new ApiClient();
+            Client = new ApiClient();
 
-            var task = Task.Run(() => client.GetAsync<List<Article>>("Articles/get/all"));
+            var task = Task.Run(() => Client.GetAsync<List<Article>>("Articles/get/all"));
             task.Wait();
             Articles = task.Result;
 
-            Fournisseurs =
-            [
-                new("Domaine Tariquet", "adresse 1", "tariquet@mail.com", "0123456789", "123456789"),
-                new("Pelleheaut", "adresse 2", "pelleheaut@mail.com", "0123456789", "123456789"),
-                new("Domaine Uby", "adresse 3", "uby@mail.com", "012345678", "123456789")
-            ];
-
-            Clients =
-            [
-                new("Les vins d'ici", "1 rue de la paix", "vinsdici@mail.com", "0123456789"),
-                new("Le Chai des Amis", "12 avenue des Cèdres", "chaiamis@mail.com", "0987654321"),
-                new("Saveurs de Bacchus", "34 boulevard du Château", "saveursbacchus@mail.com", "0147258369"),
-                new("Cave et Terroir", "8 impasse des Vignerons", "caveetterroir@mail.com", "0178349265"),
-                new("Les Ceps Dorés", "15 place des Vendanges", "cepsdores@mail.com", "0187654329"),
-                new("Au Bon Cru", "23 allée des Sommeliers", "auboncru@mail.com", "0192837465"),
-                new("Vigne et Passion", "45 route des Cépages", "vignepassion@mail.com", "0165483297"),
-                new("Terres de Vins", "67 chemin des Grappes", "terresdevins@mail.com", "0156748392"),
-                new("Le Raisin Bleu", "89 rue des Tonneaux", "raisinbleu@mail.com", "0143967285"),
-                new("L'Art du Vin", "101 cours des Sommeliers", "artduvin@mail.com", "0192834765")
-            ];
-
+            var commandesTask = Task.Run(() => Client.GetAsync<List<Commande>>("Commandes/get/all"));
+            commandesTask.Wait();
+            var allCommandes = commandesTask.Result;
+            Achats = allCommandes.Where(c => c.clients_ID == null).ToList();
+            Commandes = allCommandes.Where(c => c.fournisseurs_ID == null).ToList();
 
             Familles = 
             [
@@ -54,7 +38,7 @@ namespace JamaisASec
                 new("Vin Doux")
 
             ];
-
+            /*
             Achats =
             [
                 new Achat(
@@ -106,7 +90,7 @@ namespace JamaisASec
                     new DateTime(2024, 10, 10),
                     "Receptionné"
                 ),
-            ];
+            ];*/
 
             MenuButtons =
             [
@@ -147,36 +131,41 @@ namespace JamaisASec
             SetActiveButton(ArticlesButton);
         }
 
-        private void FournisseursButton_Click(object sender, RoutedEventArgs e)
-        {
-
-            MainFrame.Navigate(new PageFournisseurs(Fournisseurs));
-            SetActiveButton(FournisseursButton);
-        }
-
-        private void StocksButton_Click(object sender, RoutedEventArgs e)
-        {
-
-            MainFrame.Navigate(new PageStocks(Articles));
-            SetActiveButton(StocksButton);
-        }
-
         private void ClientsButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new PageClients(Clients));
+            var task = Task.Run(() => Client.GetAsync<List<Client>>("Clients/get/all"));
+            task.Wait();
+            var clients = task.Result;
+            MainFrame.Navigate(new PageClients(clients));
             SetActiveButton(ClientsButton);
         }
 
         private void CommandesButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new PageCommandes());
+            MainFrame.Navigate(new PageCommandes(Commandes));
             SetActiveButton(CommandesButton);
+        }
+
+        private void FournisseursButton_Click(object sender, RoutedEventArgs e)
+        {
+            var task = Task.Run(() => Client.GetAsync<List<Fournisseur>>("Fournisseurs/get/all"));
+            task.Wait();
+            var fournisseurs = task.Result;
+
+            MainFrame.Navigate(new PageFournisseurs(fournisseurs));
+            SetActiveButton(FournisseursButton);
         }
 
         private void AchatsButton_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(new PageAchats(Achats));
             SetActiveButton(AchatsButton);
+        }
+
+        private void StocksButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new PageStocks(Articles));
+            SetActiveButton(StocksButton);
         }
     }
 

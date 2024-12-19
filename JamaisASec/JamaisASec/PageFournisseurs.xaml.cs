@@ -74,11 +74,11 @@ namespace JamaisASec
 
         private void FilterFournisseurs(string searchText)
         {
-            var filteredFournisseurs = Fournisseurs.Where(f => f.Nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
-                                                             f.Adresse.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
-                                                             f.Mail.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
-                                                             f.Telephone.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
-                                                             f.SIRET.Contains(searchText, System.StringComparison.OrdinalIgnoreCase)).ToList();
+            var filteredFournisseurs = Fournisseurs.Where(f => f.nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                             f.adresse.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                             f.mail.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                             f.telephone.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                             f.siret.Contains(searchText, System.StringComparison.OrdinalIgnoreCase)).ToList();
             FournisseursGrid.ItemsSource = filteredFournisseurs;
         }
 

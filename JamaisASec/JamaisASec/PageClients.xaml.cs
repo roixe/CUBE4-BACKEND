@@ -96,10 +96,10 @@ namespace JamaisASec
 
         private void FilterClients(string searchText)
         {
-            var filteredClients = Clients.Where(c => c.Nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
-                                                     c.Adresse.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
-                                                     c.Mail.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
-                                                     c.Telephone.Contains(searchText, System.StringComparison.OrdinalIgnoreCase)).ToList();
+            var filteredClients = Clients.Where(c => c.nom.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                     c.adresse.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                     c.mail.Contains(searchText, System.StringComparison.OrdinalIgnoreCase) ||
+                                                     c.telephone.Contains(searchText, System.StringComparison.OrdinalIgnoreCase)).ToList();
             ClientsGrid.ItemsSource = filteredClients;
         }
     }

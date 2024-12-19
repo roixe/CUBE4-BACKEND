@@ -20,8 +20,8 @@ namespace JamaisASec
     /// </summary>
     public partial class PageAchats : Page
     {
-        private List<Achat> Achats;
-        public PageAchats(List<Achat> achats)
+        private List<Commande> Achats;
+        public PageAchats(List<Commande> achats)
         {
             InitializeComponent();
             Achats = achats;
