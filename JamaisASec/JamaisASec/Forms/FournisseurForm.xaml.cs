@@ -33,11 +33,11 @@ namespace JamaisASec.Forms
 
             if (FournisseurEnCours != null)
             {
-                fournisseurName.Text = FournisseurEnCours.Nom;
-                fournisseurAddress.Text = FournisseurEnCours.Adresse;
-                fournisseurMail.Text = FournisseurEnCours.Mail;
-                fournisseurPhoneNumber.Text = FournisseurEnCours.Telephone;
-                fournisseurSIRET.Text = FournisseurEnCours.SIRET;
+                fournisseurName.Text = FournisseurEnCours.nom;
+                fournisseurAddress.Text = FournisseurEnCours.adresse;
+                fournisseurMail.Text = FournisseurEnCours.mail;
+                fournisseurPhoneNumber.Text = FournisseurEnCours.telephone;
+                fournisseurSIRET.Text = FournisseurEnCours.siret;
             }
         }
 
@@ -53,16 +53,16 @@ namespace JamaisASec.Forms
 
             if (FournisseurEnCours != null)
             {
-                FournisseurEnCours.Nom = nom;
-                FournisseurEnCours.Adresse = adresse;
-                FournisseurEnCours.Mail = mail;
-                FournisseurEnCours.Telephone = telephone;
-                FournisseurEnCours.SIRET = siret;
+                FournisseurEnCours.nom = nom;
+                FournisseurEnCours.adresse = adresse;
+                FournisseurEnCours.mail = mail;
+                FournisseurEnCours.telephone = telephone;
+                FournisseurEnCours.siret = siret;
             }
-            else
+            /*else
             {
                 Fournisseurs.Add(new Fournisseur(nom, adresse, mail, telephone, siret));
-            }
+            }*/
             this.Close();
         }
 

@@ -33,10 +33,10 @@
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Nom}"/>
-                <DataGridTextColumn Header="Adresse" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Adresse}"/>
-                <DataGridTextColumn Header="Mail" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Mail}"/>
-                <DataGridTextColumn Header="Téléphone" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Telephone}"/>
+                <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding nom}"/>
+                <DataGridTextColumn Header="Adresse" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding adresse}"/>
+                <DataGridTextColumn Header="Mail" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding mail}"/>
+                <DataGridTextColumn Header="Téléphone" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding telephone}"/>
                 <DataGridTemplateColumn Header="Opérations" IsReadOnly="True" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

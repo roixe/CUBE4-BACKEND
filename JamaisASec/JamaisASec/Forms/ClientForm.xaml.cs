@@ -23,10 +23,10 @@ namespace JamaisASec.Forms
 
             if (ClientEnCours != null)
             {
-                clientName.Text = ClientEnCours.Nom;
-                clientAddress.Text = ClientEnCours.Adresse;
-                clientMail.Text = ClientEnCours.Mail;
-                clientPhoneNumber.Text = ClientEnCours.Telephone;
+                clientName.Text = ClientEnCours.nom;
+                clientAddress.Text = ClientEnCours.adresse;
+                clientMail.Text = ClientEnCours.mail;
+                clientPhoneNumber.Text = ClientEnCours.telephone;
             }
         }
 
@@ -41,15 +41,15 @@ namespace JamaisASec.Forms
 
             if (ClientEnCours != null)
             {
-                ClientEnCours.Nom = nom;
-                ClientEnCours.Adresse = adresse;
-                ClientEnCours.Mail = mail;
-                ClientEnCours.Telephone = telephone;
-            }
+                ClientEnCours.nom = nom;
+                ClientEnCours.adresse = adresse;
+                ClientEnCours.mail = mail;
+                ClientEnCours.telephone = telephone;
+            }/*
             else
             {
                 Clients.Add(new Client(nom, adresse, mail, telephone));
-            }
+            }*/
 
             this.Close();
         }

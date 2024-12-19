@@ -22,6 +22,8 @@ namespace JamaisASec.Converters
                         return Application.Current.Resources["OceanBlue"] as SolidColorBrush;
                     case "livree":
                         return Application.Current.Resources["ForestGreen"] as SolidColorBrush;
+                    case "confirmee":
+                        return Application.Current.Resources["Mandarine"] as SolidColorBrush;
                     case "en attente":
                         return Application.Current.Resources["OceanBlue"] as SolidColorBrush;
                     case "receptionnee":
