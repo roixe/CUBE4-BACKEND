@@ -19,6 +19,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="5">
             <Button x:Name="ShowArticlesButton" Content="Articles" Style="{StaticResource tabButton}"/>
             <Button x:Name="ShowFamillesButton" Content="Familles" Style="{StaticResource tabButton}"/>
+            <Button x:Name="ShowMaisonsButton" Content="Maisons" Style="{StaticResource tabButton}"/>
         </StackPanel>
 
         <!-- ContentControl -->

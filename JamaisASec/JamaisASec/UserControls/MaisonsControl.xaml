@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="JamaisASec.UserControls.FamillesControl"
+﻿<UserControl x:Class="JamaisASec.UserControls.MaisonsControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -11,11 +11,11 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <uc:TabControls x:Name="controlsFamille"/>
+            <uc:TabControls x:Name="controlsMaison"/>
             <Rectangle VerticalAlignment="Stretch" Fill="{StaticResource Taupe}" Width="1" Margin="20 10 25 10"/>
-            <uc:SearchBox x:Name="searchFamille" Width="300"/>
+            <uc:SearchBox x:Name="searchMaison" Width="300"/>
         </StackPanel>
-        <DataGrid Name="FamillesGrid" Style="{StaticResource DataGridStyle1}" 
+        <DataGrid Name="MaisonsGrid" Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{DynamicResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
                   RowStyle="{DynamicResource DataGridRowStyle1}"
@@ -24,7 +24,7 @@
                 <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}" Binding="{Binding IsSelected}">
                     <DataGridCheckBoxColumn.HeaderTemplate>
                         <DataTemplate>
-                            <CheckBox Style="{StaticResource CheckBoxStyle1}" Checked="HeaderFamilleCheckBox_Checked" Unchecked="HeaderFamilleCheckBox_Unchecked"/>
+                            <CheckBox Style="{StaticResource CheckBoxStyle1}" Checked="HeaderMaisonCheckBox_Checked" Unchecked="HeaderMaisonCheckBox_Unchecked"/>
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
@@ -33,10 +33,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridEditButton}" Click="EditFamilleButton_Click">
+                                <Button Style="{StaticResource gridEditButton}" Click="EditMaisonButton_Click">
                                     <iconPacks:PackIconBootstrapIcons Kind="Pencil" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
-                                <Button Style="{StaticResource gridRemoveButton}" Click="RemoveFamilleButton_Click">
+                                <Button Style="{StaticResource gridRemoveButton}" Click="RemoveMaisonButton_Click">
                                     <iconPacks:PackIconBootstrapIcons Kind="Trash" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
                             </StackPanel>

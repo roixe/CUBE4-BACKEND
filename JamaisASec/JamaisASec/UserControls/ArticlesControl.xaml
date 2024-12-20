@@ -29,8 +29,8 @@
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
                 <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="2*" Binding="{Binding nom}"/>
-                <DataGridTextColumn Header="Description" IsReadOnly="True" CanUserResize="False" Width="3*" Binding="{Binding description}"/>
-                <!--<DataGridTextColumn Header="Famille" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Famille}"/>-->
+                <DataGridTextColumn Header="Famille" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding famille.nom}"/>
+                <DataGridTextColumn Header="Maison" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding maison.nom}"/>
                 <DataGridTextColumn Header="Annee" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding annee}"/>
                 <DataGridTextColumn Header="Prix" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding prix_unitaire}"/>
                 <DataGridTemplateColumn Header="Opérations" IsReadOnly="True" Width="auto">

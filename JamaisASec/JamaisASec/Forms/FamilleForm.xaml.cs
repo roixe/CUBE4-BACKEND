@@ -22,7 +22,7 @@ namespace JamaisASec.Forms
 
             if (FamilleEnCours != null)
             {
-                familleName.Text = FamilleEnCours.Nom;
+                familleName.Text = FamilleEnCours.nom;
             }
 
         }
@@ -35,7 +35,7 @@ namespace JamaisASec.Forms
 
             if (FamilleEnCours != null)
             {
-                FamilleEnCours.Nom = nom;
+                FamilleEnCours.nom = nom;
             }
             else
             {

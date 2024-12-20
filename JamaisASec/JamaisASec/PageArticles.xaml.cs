@@ -12,16 +12,15 @@ namespace JamaisASec
         private List<Article> Articles { get; set; }
         private List<Famille> Familles { get; set; }
 
-        private ArticlesControl articlesControl;
-        private FamillesControl famillesControl;
         private Button activeTab;
 
-        public PageArticles(List<Article> articles, List<Famille> familles)
+        public PageArticles(List<Article> articles, List<Famille> familles, List<Maison> maisons)
         {
             InitializeComponent();
 
             var articlesControl = new ArticlesControl(articles);
             var famillesControl = new FamillesControl(familles);
+            var maisonsControl = new MaisonsControl(maisons);
 
             activeTab = ShowArticlesButton;
             UpdateTabVisuals();
@@ -29,8 +28,9 @@ namespace JamaisASec
             ContentArea.Content = articlesControl;
 
             // Navigation entre les UserControls si nécessaire
-            ShowArticlesButton.Click += (s, e) => { SwitchTab(ShowArticlesButton, new ArticlesControl(articles)); };
-            ShowFamillesButton.Click += (s, e) => { SwitchTab(ShowFamillesButton, new FamillesControl(familles)); };
+            ShowArticlesButton.Click += (s, e) => { SwitchTab(ShowArticlesButton, articlesControl); };
+            ShowFamillesButton.Click += (s, e) => { SwitchTab(ShowFamillesButton, famillesControl); };
+            ShowMaisonsButton.Click += (s, e) => { SwitchTab(ShowMaisonsButton, maisonsControl); };
         }
 
         private void SwitchTab(Button newActiveTab, UserControl newContent)
@@ -46,6 +46,7 @@ namespace JamaisASec
         {
             ShowArticlesButton.BorderBrush = Brushes.Transparent;
             ShowFamillesButton.BorderBrush = Brushes.Transparent;
+            ShowMaisonsButton.BorderBrush = Brushes.Transparent;
 
             activeTab.BorderBrush = (Brush)FindResource("Burgundy");
         }
