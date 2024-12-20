@@ -26,8 +26,19 @@ namespace JamaisASec
             var commandesTask = Task.Run(() => Client.GetAsync<List<Commande>>("Commandes/get/all"));
             commandesTask.Wait();
             var allCommandes = commandesTask.Result;
-            Achats = allCommandes.Where(c => c.clients_ID == null).ToList();
-            Commandes = allCommandes.Where(c => c.fournisseurs_ID == null).ToList();
+            Achats = new List<Commande>();
+            Commandes = new List<Commande>();
+            foreach (var commande in allCommandes)
+            {
+                if (commande.clients_ID == null)
+                {
+                    Achats.Add(commande);
+                }
+                else if (commande.fournisseurs_ID == null)
+                {
+                    Commandes.Add(commande);
+                }
+            }
 
             Familles = 
             [
@@ -38,59 +49,6 @@ namespace JamaisASec
                 new("Vin Doux")
 
             ];
-            /*
-            Achats =
-            [
-                new Achat(
-                    5,
-                    Fournisseurs[1],
-                    [
-                        new ArticlesCommandes(Articles[1], 20),
-                        new ArticlesCommandes(Articles[2], 10)
-                    ],
-                    new DateTime(2024, 12, 1) ,
-                    "En attente"
-                ),
-                new Achat(
-                    4,
-                    Fournisseurs[2],
-                    [
-                        new ArticlesCommandes(Articles[2], 50),
-                        new ArticlesCommandes(Articles[5], 100)
-                    ],
-                    new DateTime(2024, 11, 15),
-                    "En attente"
-                ),
-                new Achat(
-                    3,
-                    Fournisseurs[0],
-                    [
-                        new ArticlesCommandes(Articles[4], 5)
-                    ],
-                    new DateTime(2024, 11, 5),
-                    "Receptionné"
-                ),
-                new Achat(
-                    2,
-                    Fournisseurs[1],
-                    [
-                        new ArticlesCommandes(Articles[1], 30),
-                        new ArticlesCommandes(Articles[3], 20)
-                    ],
-                    new DateTime(2024, 10, 25),
-                    "Receptionné"
-                ),
-                new Achat(
-                    1,
-                    Fournisseurs[2],
-                    [
-                        new ArticlesCommandes(Articles[2], 75),
-                        new ArticlesCommandes(Articles[6], 150)
-                    ],
-                    new DateTime(2024, 10, 10),
-                    "Receptionné"
-                ),
-            ];*/
 
             MenuButtons =
             [

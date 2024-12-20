@@ -31,30 +31,6 @@
         </Setter>
     </Style>
 
-    <Style x:Key="topButton" TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource Taupe}"/>
-        <Setter Property="Foreground" Value="{StaticResource Burgundy}"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Width" Value="36"/>
-        <Setter Property="Height" Value="36"/>
-        <Setter Property="Margin" Value="5"/>
-        <Setter Property="HorizontalAlignment" Value="Right"/>
-        <Setter Property="Template"> 
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}" CornerRadius="50">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource LightTaupe}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
     <!--#region DataGrid-->
     <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}" TargetType="{x:Type Button}">
         <Setter Property="Template">
@@ -319,7 +295,6 @@
     </Style>
     <!--#endregion-->
     
-    
     <Style x:Key="gridButton" TargetType="Button">
         <Setter Property="Background" Value="{StaticResource Burgundy}"/>
         <Setter Property="Foreground" Value="White"/>
@@ -356,29 +331,6 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#f44336"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <Style x:Key="pagingButton" TargetType="Button">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="Gray"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="FontSize" Value="13"/>
-        <Setter Property="Margin" Value="1 0"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}" CornerRadius="5" Padding="10 5">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 1"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource Burgundy}"/>
-                <Setter Property="Foreground" Value="White"/>
             </Trigger>
         </Style.Triggers>
     </Style>

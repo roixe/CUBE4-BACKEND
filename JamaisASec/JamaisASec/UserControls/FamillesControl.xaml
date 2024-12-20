@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="JamaisASec.UserControls.FamillesControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:local="clr-namespace:JamaisASec"
+             xmlns:uc="clr-namespace:JamaisASec.UserControls">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <uc:TabControls x:Name="controlsFamille"/>
+            <Rectangle VerticalAlignment="Stretch" Fill="{StaticResource Taupe}" Width="1" Margin="20 10 25 10"/>
+            <uc:SearchBox x:Name="searchFamille" Width="300"/>
+        </StackPanel>
+        <DataGrid Name="FamillesGrid" Style="{StaticResource DataGridStyle1}" 
+                  CellStyle="{DynamicResource DataGridCellStyle1}" 
+                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+                  RowStyle="{DynamicResource DataGridRowStyle1}"
+                  Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}" Binding="{Binding IsSelected}">
+                    <DataGridCheckBoxColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <CheckBox Style="{StaticResource CheckBoxStyle1}" Checked="HeaderFamilleCheckBox_Checked" Unchecked="HeaderFamilleCheckBox_Unchecked"/>
+                        </DataTemplate>
+                    </DataGridCheckBoxColumn.HeaderTemplate>
+                </DataGridCheckBoxColumn>
+                <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Nom}"/>
+                <DataGridTemplateColumn Header="Opérations" IsReadOnly="True" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource gridEditButton}" Click="EditFamilleButton_Click">
+                                    <iconPacks:PackIconBootstrapIcons Kind="Pencil" Width="12" Height="12" VerticalAlignment="Center"/>
+                                </Button>
+                                <Button Style="{StaticResource gridRemoveButton}" Click="RemoveFamilleButton_Click">
+                                    <iconPacks:PackIconBootstrapIcons Kind="Trash" Width="12" Height="12" VerticalAlignment="Center"/>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
