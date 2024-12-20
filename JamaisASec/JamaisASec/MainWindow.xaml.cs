@@ -30,11 +30,11 @@ namespace JamaisASec
             Commandes = new List<Commande>();
             foreach (var commande in allCommandes)
             {
-                if (commande.clients_ID == null)
+                if (commande.fournisseur != null)
                 {
                     Achats.Add(commande);
                 }
-                else if (commande.fournisseurs_ID == null)
+                else if (commande.client != null)
                 {
                     Commandes.Add(commande);
                 }
