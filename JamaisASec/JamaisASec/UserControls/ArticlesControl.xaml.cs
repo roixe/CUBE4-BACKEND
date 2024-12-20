@@ -21,38 +21,17 @@ namespace JamaisASec.UserControls
     public partial class ArticlesControl : UserControl
     {
         public List<Article> Articles { get; private set; }
+        public event EventHandler<Article> EditClicked;
 
-        public event EventHandler AddItem;
 
         public ArticlesControl(List<Article> articles)
         {
             InitializeComponent();
             Articles = articles;
             ArticleGrid.ItemsSource = Articles;
-        }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddItem?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void EditArticleButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.DataContext is Article articleSelectionne)
-            {
-                var modifierArticleForm = new Forms.ArticleForm(Articles, null, articleSelectionne);
-                modifierArticleForm.ShowDialog();
-                ArticleGrid.Items.Refresh();
-            }
-        }
-
-        private void RemoveArticleButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.DataContext is Article articleSelectionne)
-            {
-                Articles.Remove(articleSelectionne);
-                ArticleGrid.Items.Refresh();
-            }
+            searchArticle.TextChanged += SearchArticle_TextChanged;
+            
         }
 
         private void HeaderArticleCheckBox_Checked(object sender, RoutedEventArgs e)
@@ -73,7 +52,7 @@ namespace JamaisASec.UserControls
             ArticleGrid.Items.Refresh();
         }
 
-        private void SearchArticle_TextChanged(object sender, TextChangedEventArgs e)
+        private void SearchArticle_TextChanged(object sender, RoutedEventArgs e)
         {
             string searchText = searchArticle.Text;
             FilterArticles(searchText);

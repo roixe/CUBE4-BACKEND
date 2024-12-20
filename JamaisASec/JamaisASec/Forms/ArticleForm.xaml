@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:JamaisASec"
         xmlns:uc="clr-namespace:JamaisASec.UserControls"
         mc:Ignorable="d"
-        Style="{StaticResource FormWindowStyle}">
+        Style="{StaticResource FormWindowStyle}"
+        WindowStartupLocation="CenterScreen">
     <Border Style="{StaticResource FormContent}">
         <StackPanel Margin="20">
             <uc:CustomTextBox x:Name="articleNom" Caption="Nom" Hint="Entrez le nom"/>

@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace JamaisASec.UserControls
 {
@@ -29,30 +17,6 @@ namespace JamaisASec.UserControls
             InitializeComponent();
             Familles = familles;
             FamillesGrid.ItemsSource = Familles;
-        }
-
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddItem?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void EditFamilleButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.DataContext is Famille familleSelectionne)
-            {
-                var modifierFamilleForm = new Forms.FamilleForm(Familles, familleSelectionne);
-                modifierFamilleForm.ShowDialog();
-                FamillesGrid.Items.Refresh();
-            }
-        }
-
-        private void RemoveFamilleButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.DataContext is Famille familleSelectionne)
-            {
-                Familles.Remove(familleSelectionne);
-                FamillesGrid.Items.Refresh();
-            }
         }
 
         private void HeaderFamilleCheckBox_Checked(object sender, RoutedEventArgs e)
