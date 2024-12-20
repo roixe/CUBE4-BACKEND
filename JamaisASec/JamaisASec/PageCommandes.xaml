@@ -34,7 +34,7 @@
                 </DataGridCheckBoxColumn>
                 <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding id}"/>
                 <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding date, StringFormat=d}"/>
-                <DataGridTextColumn Header="Fournisseur" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding clients_ID}"/>
+                <DataGridTextColumn Header="Client" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding client.nom}"/>
                 <!--<DataGridTextColumn Header="Montant" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding Montant, StringFormat=N2}"/>-->
                 <DataGridTemplateColumn Header="Statut" IsReadOnly="True" CanUserResize="False" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
