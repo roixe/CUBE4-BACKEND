@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace JamaisASec.UserControls
 {
@@ -31,30 +19,6 @@ namespace JamaisASec.UserControls
             MaisonsGrid.ItemsSource = Maisons;
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddItem?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void EditMaisonButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.DataContext is Maison maisonSelectionne)
-            {
-                var modifierFamilleForm = new Forms.MaisonForm(Maisons, maisonSelectionne);
-                modifierFamilleForm.ShowDialog();
-                MaisonsGrid.Items.Refresh();
-            }
-        }
-
-        private void RemoveMaisonButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.DataContext is Maison maisonSelectionne)
-            {
-                Maisons.Remove(maisonSelectionne);
-                MaisonsGrid.Items.Refresh();
-            }
-        }
-
         private void HeaderMaisonCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             foreach (var maison in Maisons)
@@ -66,20 +30,20 @@ namespace JamaisASec.UserControls
 
         private void HeaderMaisonCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            foreach (var famille in Maisons)
+            foreach (var maison in Maisons)
             {
-                famille.IsSelected = false;
+                maison.IsSelected = false;
             }
             MaisonsGrid.Items.Refresh();
         }
 
-        private void SearchFamille_TextChanged(object sender, TextChangedEventArgs e)
+        private void SearchMaison_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchText = searchMaison.Text;
-            FilterFamilles(searchText);
+            FilterMaisons(searchText);
         }
 
-        private void FilterFamilles(string searchText)
+        private void FilterMaisons(string searchText)
         {
             var filteredMaisons = Maisons
                 .Where(f => f.nom.Contains(searchText, StringComparison.OrdinalIgnoreCase))

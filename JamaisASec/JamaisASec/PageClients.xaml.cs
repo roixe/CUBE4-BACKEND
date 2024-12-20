@@ -18,16 +18,11 @@ namespace JamaisASec
             Clients = clients;
             ClientsGrid.ItemsSource = Clients;
 
-            controlsClient.AddItem += ControlsClient_AjouterItem;
+            controlsClient.AddItem += AjouterButton_Click;
             searchClient.TextChanged += SearchClient_TextChanged;
         }
 
-        private void ControlsClient_AjouterItem(object sender, RoutedEventArgs e)
-        {
-            AjouterClientButton_Click(sender, e);
-        }
-
-        private void AjouterClientButton_Click(object sender, RoutedEventArgs e)
+        private void AjouterButton_Click(object sender, RoutedEventArgs e)
         {
             // Créer une instance de la fenêtre AjouterClientForm
             var ajouterClientForm = new Forms.ClientForm(Clients);

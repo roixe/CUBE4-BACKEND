@@ -18,16 +18,11 @@ namespace JamaisASec
             Fournisseurs = fournisseurs;
             FournisseursGrid.ItemsSource = Fournisseurs;
 
-            controlsFournisseur.AddItem += ControlsFournisseur_AjouterItem;
+            controlsFournisseur.AddItem += AjouterButton_Click;
             searchFournisseur.TextChanged += SearchFournisseur_TextChanged;
         }
 
-        private void ControlsFournisseur_AjouterItem(object sender, RoutedEventArgs e)
-        {
-            AjouterFournisseurButton_Click(sender, e);
-        }
-
-        private void AjouterFournisseurButton_Click(object sender, RoutedEventArgs e)
+        private void AjouterButton_Click(object sender, RoutedEventArgs e)
         {
             // Créer une instance de la fenêtre AjouterFournisseur
             var form = new Forms.FournisseurForm(Fournisseurs);

@@ -11,16 +11,24 @@ namespace JamaisASec
     {
         private List<Article> Articles { get; set; }
         private List<Famille> Familles { get; set; }
+        private List<Maison> Maisons { get; set; }
+        private ArticlesControl ArticlesTab { get; set; }
+        private FamillesControl FamillesTab { get; set; }
+        private MaisonsControl MaisonsTab { get; set; }
 
         private Button activeTab;
 
         public PageArticles(List<Article> articles, List<Famille> familles, List<Maison> maisons)
         {
             InitializeComponent();
+            Articles = articles;
+            Familles = familles;
+            Maisons = maisons;
+            ArticlesTab = new ArticlesControl(Articles);
+            FamillesTab = new FamillesControl(Familles);
+            MaisonsTab = new MaisonsControl(Maisons);
 
-            var articlesControl = new ArticlesControl(articles);
-            var famillesControl = new FamillesControl(familles);
-            var maisonsControl = new MaisonsControl(maisons);
+            var articlesControl = new ArticlesControl(Articles);
 
             activeTab = ShowArticlesButton;
             UpdateTabVisuals();
@@ -28,11 +36,12 @@ namespace JamaisASec
             ContentArea.Content = articlesControl;
 
             // Navigation entre les UserControls si nécessaire
-            ShowArticlesButton.Click += (s, e) => { SwitchTab(ShowArticlesButton, articlesControl); };
-            ShowFamillesButton.Click += (s, e) => { SwitchTab(ShowFamillesButton, famillesControl); };
-            ShowMaisonsButton.Click += (s, e) => { SwitchTab(ShowMaisonsButton, maisonsControl); };
-        }
+            ShowArticlesButton.Click += (s, e) => { SwitchTab(ShowArticlesButton, ArticlesTab); };
+            ShowFamillesButton.Click += (s, e) => { SwitchTab(ShowFamillesButton, FamillesTab); };
+            ShowMaisonsButton.Click += (s, e) => { SwitchTab(ShowMaisonsButton, MaisonsTab); };
 
+        }
+       
         private void SwitchTab(Button newActiveTab, UserControl newContent)
         {
             // Mettre à jour l'état actif

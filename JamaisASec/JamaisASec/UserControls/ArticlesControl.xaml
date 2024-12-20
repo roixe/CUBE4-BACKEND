@@ -37,10 +37,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridEditButton}" Click="EditArticleButton_Click">
+                                <Button x:Name="edit" Style="{StaticResource gridEditButton}">
                                     <iconPacks:PackIconBootstrapIcons Kind="Pencil" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
-                                <Button Style="{StaticResource gridRemoveButton}" Click="RemoveArticleButton_Click">
+                                <Button x:Name="remove" Style="{StaticResource gridRemoveButton}">
                                     <iconPacks:PackIconBootstrapIcons Kind="Trash" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
                             </StackPanel>
