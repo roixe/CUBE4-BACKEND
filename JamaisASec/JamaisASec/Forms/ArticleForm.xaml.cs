@@ -47,7 +47,7 @@ namespace JamaisASec.Forms
             int stockMin = int.TryParse(articleStockMin.Text, out int parsedStockMin) ? parsedStockMin : 0;
             int colisage = int.TryParse(articleColisage.Text, out int parsedColisage) ? parsedColisage : 1;
             int prix = int.TryParse(articlePrix.Text, out int parsedPrix) ? parsedPrix : 0;
-            string famille = ((Famille)articleFamille.SelectedItem)?.Nom ?? string.Empty;
+            string famille = ((Famille)articleFamille.SelectedItem)?.nom ?? string.Empty;
             int annee = int.TryParse(articleAnnee.Text, out int parsedAnnee) ? parsedAnnee : 0;
 
             if (ArticleEnCours != null)

@@ -40,16 +40,6 @@ namespace JamaisASec
                 }
             }
 
-            Familles = 
-            [
-                new("Vin Rouge"), 
-                new("Vin Blanc"),
-                new("Vin Rosé"),
-                new("Champagne"),
-                new("Vin Doux")
-
-            ];
-
             MenuButtons =
             [
                 DashboardButton,
@@ -84,8 +74,13 @@ namespace JamaisASec
 
         private void ArticlesButton_Click(object sender, RoutedEventArgs e)
         {
-
-            MainFrame.Navigate(new PageArticles(Articles, Familles));
+            var familleTask = Task.Run(() => Client.GetAsync<List<Famille>>("Familles/get/all"));
+            familleTask.Wait();
+            var familles = familleTask.Result;
+            var maisonTask = Task.Run(() => Client.GetAsync<List<Maison>>("Maisons/get/all"));
+            maisonTask.Wait();
+            var maisons = maisonTask.Result;
+            MainFrame.Navigate(new PageArticles(Articles, familles, maisons));
             SetActiveButton(ArticlesButton);
         }
 

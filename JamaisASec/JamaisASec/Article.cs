@@ -16,9 +16,8 @@ namespace JamaisASec
         public int colisage { get; set; } 
         public int prix_unitaire { get; set; } 
         public int annee { get; set; } 
-        public int familles_id { get; set; } 
-        public int maisons_id { get; set; }
-        public string image { get; set; }
+        public Famille famille { get; set; }
+        public Maison maison { get; set; }
         public bool IsSelected { get; set; }
     }
 

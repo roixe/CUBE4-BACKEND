@@ -82,7 +82,7 @@ namespace JamaisASec.UserControls
         private void FilterFamilles(string searchText)
         {
             var filteredFamilles = Familles
-                .Where(f => f.Nom.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+                .Where(f => f.nom.Contains(searchText, StringComparison.OrdinalIgnoreCase))
                 .ToList();
             FamillesGrid.ItemsSource = filteredFamilles;
         }
