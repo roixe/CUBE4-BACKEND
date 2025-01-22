@@ -3,7 +3,7 @@ using JamaisASec.Models;
 using System.Windows.Input;
 using JamaisASec.Services;
 
-namespace JamaisASec.ViewModels
+namespace JamaisASec.ViewModels.Pages
 {
 
     class PageClientsViewModel : BaseViewModel

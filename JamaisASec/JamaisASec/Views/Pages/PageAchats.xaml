@@ -1,17 +1,17 @@
-﻿<Page x:Class="JamaisASec.Views.PageCommandes"
+﻿<Page x:Class="JamaisASec.Views.Pages.PageAchats"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:vm="clr-namespace:JamaisASec.ViewModels"
+      xmlns:vm="clr-namespace:JamaisASec.ViewModels.Pages"
       xmlns:userControls="clr-namespace:JamaisASec.Views.UserControls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="PageCommandes">
+      Title="PageAchats">
 
     <Page.DataContext>
-        <vm:PageCommandesViewModel/>
+        <vm:PageAchatsViewModel/>
     </Page.DataContext>
     <Grid>
         <Grid.RowDefinitions>
@@ -26,8 +26,8 @@
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
                   RowStyle="{DynamicResource DataGridRowStyle1}" 
                   Grid.Row="1" 
-                  Name="CommandesGrid"
-                  ItemsSource="{Binding Commandes}">
+                  Name="AchatsGrid"
+                  ItemsSource="{Binding Achats}">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}" Binding="{Binding IsSelected}">
                     <DataGridCheckBoxColumn.HeaderTemplate>
@@ -38,7 +38,7 @@
                 </DataGridCheckBoxColumn>
                 <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding id}"/>
                 <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding date, StringFormat=d}"/>
-                <DataGridTextColumn Header="Client" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding client.nom}"/>
+                <DataGridTextColumn Header="Fournisseur" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding fournisseur.nom}"/>
                 <!--<DataGridTextColumn Header="Montant" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding Montant, StringFormat=N2}"/>-->
                 <DataGridTemplateColumn Header="Statut" IsReadOnly="True" CanUserResize="False" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>

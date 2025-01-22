@@ -1,10 +1,10 @@
-﻿<Page x:Class="JamaisASec.Views.PageAccueil"
+﻿<Page x:Class="JamaisASec.Views.Pages.PageAccueil"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:vm="clr-namespace:JamaisASec.ViewModels"
+      xmlns:vm="clr-namespace:JamaisASec.ViewModels.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DashBoard">
@@ -49,9 +49,24 @@
                       RowStyle="{DynamicResource DataGridRowStyle1}" 
                       ItemsSource="{Binding Commandes}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding id}"/>
+                    <DataGridTextColumn Header="Référence" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding reference}"/>
                     <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding date, StringFormat=d}"/>
                     <DataGridTextColumn Header="Client" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding client.nom}"/>
+                    <DataGridTemplateColumn Header="Statut" IsReadOnly="True" CanUserResize="False" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border Background="{Binding status, Converter={StaticResource StatusToColorConverter}}" 
+                                        CornerRadius="5" 
+                                        Padding="5" 
+                                        Margin="2"
+                                        Width="120"
+                                        HorizontalAlignment="Left">
+                                    <TextBlock Text="{Binding status}" 
+                                                Foreground="White"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
@@ -66,9 +81,24 @@
                       RowStyle="{DynamicResource DataGridRowStyle1}" 
                       ItemsSource="{Binding Achats}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding id}"/>
-                    <DataGridTextColumn Header="Fournisseur" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding fournisseur.nom}"/>
+                    <DataGridTextColumn Header="Référence" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding reference}"/>
                     <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding date, StringFormat=d}"/>
+                    <DataGridTextColumn Header="Fournisseur" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding fournisseur.nom}"/>
+                    <DataGridTemplateColumn Header="Statut" IsReadOnly="True" CanUserResize="False" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border Background="{Binding status, Converter={StaticResource StatusToColorConverter}}" 
+                                        CornerRadius="5" 
+                                        Padding="5" 
+                                        Margin="2"
+                                        Width="120"
+                                        HorizontalAlignment="Left">     
+                                    <TextBlock Text="{Binding status}" 
+                                                Foreground="White"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using JamaisASec.Models;
 
-namespace JamaisASec.Views
+namespace JamaisASec.Views.Pages
 {
     /// <summary>
     /// Interaction logic for PageAccueil.xaml

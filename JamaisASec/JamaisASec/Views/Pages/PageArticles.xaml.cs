@@ -1,9 +1,6 @@
 ﻿using System.Windows.Controls;
-using System.Windows.Media;
-using JamaisASec.Models;
-using JamaisASec.Views.UserControls;
 
-namespace JamaisASec.Views
+namespace JamaisASec.Views.Pages
 {
     public partial class PageArticles : Page
     {

@@ -2,10 +2,8 @@
 using JamaisASec.Models;
 using JamaisASec.Services;
 using System.Windows.Input;
-using System.Windows;
-using System.ComponentModel.Design;
 
-namespace JamaisASec.ViewModels
+namespace JamaisASec.ViewModels.Pages
 {
     public class PageAccueilViewModel : BaseViewModel
     {

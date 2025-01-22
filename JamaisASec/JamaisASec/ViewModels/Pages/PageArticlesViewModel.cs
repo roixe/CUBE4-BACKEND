@@ -1,11 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
-using JamaisASec.Models;
 using JamaisASec.Services;
 using JamaisASec.Views.UserControls;
 
-namespace JamaisASec.ViewModels
+namespace JamaisASec.ViewModels.Pages
 {
     class PageArticlesViewModel : BaseViewModel
     {

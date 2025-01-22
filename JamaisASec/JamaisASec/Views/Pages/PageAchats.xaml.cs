@@ -1,8 +1,6 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using JamaisASec.Models;
+﻿using System.Windows.Controls;
 
-namespace JamaisASec.Views
+namespace JamaisASec.Views.Pages
 {
     /// <summary>
     /// Logique d'interaction pour PageAchats.xaml

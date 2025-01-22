@@ -1,4 +1,4 @@
-﻿using JamaisASec.Views;
+﻿using JamaisASec.Views.Pages;
 using JamaisASec.Services;
 using System.Windows.Input;
 using System.Windows;
