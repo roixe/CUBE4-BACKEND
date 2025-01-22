@@ -10,7 +10,7 @@
       Title="PageClients" av:DesignHeight="484.51" av:DesignWidth="850.816">
 
     <Page.DataContext>
-        <vm:PageClientViewModel/>
+        <vm:PageClientsViewModel/>
     </Page.DataContext>
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVis"/>

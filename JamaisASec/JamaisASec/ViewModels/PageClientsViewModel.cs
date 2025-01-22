@@ -6,12 +6,12 @@ using JamaisASec.Services;
 namespace JamaisASec.ViewModels
 {
 
-    class PageClientViewModel : BaseViewModel
+    class PageClientsViewModel : BaseViewModel
     {
         public ObservableCollection<Client> Clients { get; set; }
         public ICommand LoadDataCommand { get; }
 
-        public PageClientViewModel() { 
+        public PageClientsViewModel() { 
             Clients = new ObservableCollection<Client>();
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
 
