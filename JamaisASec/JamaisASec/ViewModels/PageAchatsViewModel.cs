@@ -24,7 +24,7 @@ namespace JamaisASec.ViewModels
             LoadDataCommand.Execute(null);
         }
 
-        public async Task LoadData()
+        private async Task LoadData()
         {
             var (_, achats) = await _commandeService.GetCommandesAndAchatsAsync();
             Achats.Clear();

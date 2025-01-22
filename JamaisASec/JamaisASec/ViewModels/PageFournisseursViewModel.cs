@@ -22,7 +22,7 @@ namespace JamaisASec.ViewModels
             LoadDataCommand.Execute(null);
         }
 
-        public async Task LoadData()
+        private async Task LoadData()
         {
             var fournisseurs = await _apiService.GetFournisseursAsync();
             Fournisseurs.Clear();

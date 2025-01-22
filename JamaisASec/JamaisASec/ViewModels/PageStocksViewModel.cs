@@ -1,30 +1,29 @@
 ﻿using System.Collections.ObjectModel;
-using JamaisASec.Models;
 using System.Windows.Input;
+using JamaisASec.Models;
 using JamaisASec.Services;
 
 namespace JamaisASec.ViewModels
 {
-
-    class PageClientsViewModel : BaseViewModel
+    class PageStocksViewModel : BaseViewModel
     {
-        public ObservableCollection<Client> Clients { get; set; }
+        public ObservableCollection<Article> Stocks { get; set; }
         public ICommand LoadDataCommand { get; }
 
-        public PageClientsViewModel() { 
-            Clients = new ObservableCollection<Client>();
+        public PageStocksViewModel()
+        {
+            Stocks = new ObservableCollection<Article>();
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-
             LoadDataCommand.Execute(null);
         }
 
         private async Task LoadData()
         {
-            var clients = await _apiService.GetClientsAsync();
-            Clients.Clear();
-            foreach (var client in clients)
+            var stocks = await _apiService.GetArticlesAsync();
+            Stocks.Clear();
+            foreach (var stock in stocks)
             {
-                Clients.Add(client);
+                Stocks.Add(stock);
             }
         }
     }

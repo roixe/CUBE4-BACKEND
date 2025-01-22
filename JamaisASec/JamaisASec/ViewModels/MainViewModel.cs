@@ -174,6 +174,7 @@ namespace JamaisASec.ViewModels
                         IsAchatsActive = true;
                         break;
                     case "Stocks":
+                        _pagesCache[pageTag] = new PageStocks();
                         IsStocksActive = true;
                         break;
                     default:
