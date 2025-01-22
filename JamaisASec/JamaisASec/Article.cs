@@ -18,6 +18,7 @@ namespace JamaisASec
         public int annee { get; set; } 
         public Famille famille { get; set; }
         public Maison maison { get; set; }
+        public Fournisseur? fournisseur { get; set; }
         public bool IsSelected { get; set; }
     }
 
