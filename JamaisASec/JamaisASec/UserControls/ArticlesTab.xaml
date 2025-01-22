@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="JamaisASec.UserControls.ArticlesControl"
+﻿<UserControl x:Class="JamaisASec.UserControls.ArticlesTab"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -31,6 +31,7 @@
                 <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="2*" Binding="{Binding nom}"/>
                 <DataGridTextColumn Header="Famille" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding famille.nom}"/>
                 <DataGridTextColumn Header="Maison" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding maison.nom}"/>
+                <DataGridTextColumn Header="Fournisseur" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding fournisseur.nom}"/>
                 <DataGridTextColumn Header="Annee" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding annee}"/>
                 <DataGridTextColumn Header="Prix" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding prix_unitaire}"/>
                 <DataGridTemplateColumn Header="Opérations" IsReadOnly="True" Width="auto">

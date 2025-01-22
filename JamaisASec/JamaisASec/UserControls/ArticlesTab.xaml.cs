@@ -18,13 +18,13 @@ namespace JamaisASec.UserControls
     /// <summary>
     /// Logique d'interaction pour ArticlesControl.xaml
     /// </summary>
-    public partial class ArticlesControl : UserControl
+    public partial class ArticlesTab : UserControl
     {
         public List<Article> Articles { get; private set; }
         public event EventHandler<Article> EditClicked;
 
 
-        public ArticlesControl(List<Article> articles)
+        public ArticlesTab(List<Article> articles)
         {
             InitializeComponent();
             Articles = articles;

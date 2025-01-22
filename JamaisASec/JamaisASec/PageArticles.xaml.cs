@@ -12,7 +12,7 @@ namespace JamaisASec
         private List<Article> Articles { get; set; }
         private List<Famille> Familles { get; set; }
         private List<Maison> Maisons { get; set; }
-        private ArticlesControl ArticlesTab { get; set; }
+        private ArticlesTab ArticlesTab { get; set; }
         private FamillesControl FamillesTab { get; set; }
         private MaisonsControl MaisonsTab { get; set; }
 
@@ -24,11 +24,11 @@ namespace JamaisASec
             Articles = articles;
             Familles = familles;
             Maisons = maisons;
-            ArticlesTab = new ArticlesControl(Articles);
+            ArticlesTab = new ArticlesTab(Articles);
             FamillesTab = new FamillesControl(Familles);
             MaisonsTab = new MaisonsControl(Maisons);
 
-            var articlesControl = new ArticlesControl(Articles);
+            var articlesControl = new ArticlesTab(Articles);
 
             activeTab = ShowArticlesButton;
             UpdateTabVisuals();
