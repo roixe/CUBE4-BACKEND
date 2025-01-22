@@ -19,9 +19,12 @@
 
         <!-- Boutons de navigation -->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="5">
-            <Button x:Name="ShowArticlesButton" Content="Articles" Style="{StaticResource tabButton}" Command="{Binding NavigateCommand}" CommandParameter="Articles"/>
-            <Button x:Name="ShowFamillesButton" Content="Familles" Style="{StaticResource tabButton}" Command="{Binding NavigateCommand}" CommandParameter="Familles"/>
-            <Button x:Name="ShowMaisonsButton" Content="Maisons" Style="{StaticResource tabButton}" Command="{Binding NavigateCommand}" CommandParameter="Maisons"/>
+            <Button x:Name="ShowArticlesButton" Content="Articles" Style="{StaticResource tabButton}" Command="{Binding NavigateCommand}" CommandParameter="Articles"
+                    BorderBrush="{Binding ActiveTab, Converter={StaticResource TabActiveConverter}, ConverterParameter=Articles}" />
+            <Button x:Name="ShowFamillesButton" Content="Familles" Style="{StaticResource tabButton}" Command="{Binding NavigateCommand}" CommandParameter="Familles"
+                    BorderBrush="{Binding ActiveTab, Converter={StaticResource TabActiveConverter}, ConverterParameter=Familles}" />
+            <Button x:Name="ShowMaisonsButton" Content="Maisons" Style="{StaticResource tabButton}" Command="{Binding NavigateCommand}" CommandParameter="Maisons"
+                    BorderBrush="{Binding ActiveTab, Converter={StaticResource TabActiveConverter}, ConverterParameter=Maisons}" />
         </StackPanel>
 
         <!-- ContentControl -->

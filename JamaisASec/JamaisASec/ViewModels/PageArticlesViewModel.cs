@@ -10,7 +10,6 @@ namespace JamaisASec.ViewModels
     class PageArticlesViewModel : BaseViewModel
     {
         private readonly Dictionary<string, UserControl> _tabCache = new();
-
         private UserControl _currentContent;
         public UserControl CurrentContent
         {
@@ -21,6 +20,19 @@ namespace JamaisASec.ViewModels
                 {
                     _currentContent = value;
                     OnPropertyChanged(nameof(CurrentContent));
+                }
+            }
+        }
+        private string _activeTab;
+        public string ActiveTab
+        {
+            get => _activeTab;
+            set
+            {
+                if (_activeTab != value)
+                {
+                    _activeTab = value;
+                    OnPropertyChanged(nameof(ActiveTab));
                 }
             }
         }
@@ -40,7 +52,6 @@ namespace JamaisASec.ViewModels
         {
             if (!_tabCache.ContainsKey(tab))
             {
-                
                 switch (tab)
                 {
                     case "Articles":
@@ -55,6 +66,8 @@ namespace JamaisASec.ViewModels
                 }
             }
             CurrentContent = _tabCache[tab];
+            ActiveTab = tab;
+
         }
     }
 }
