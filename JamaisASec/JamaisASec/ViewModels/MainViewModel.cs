@@ -2,12 +2,15 @@
 using JamaisASec.Services;
 using System.Windows.Input;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace JamaisASec.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
         private object _currentPage;
+
+        private readonly Dictionary<string, Page> _pagesCache = new();
 
         // Propriétés de navigation
         public object CurrentPage
@@ -141,33 +144,56 @@ namespace JamaisASec.ViewModels
             IsFournisseursActive = false;
             IsAchatsActive = false;
             IsStocksActive = false;
-            switch (pageTag)
+            // Vérifier si la page est déjà dans le cache
+            if (!_pagesCache.ContainsKey(pageTag))
             {
-                case "Dashboard":
-                    CurrentPage = new PageAccueil();
-                    IsDashboardActive = true;
-                    break;
-                case "Articles":
-                    IsArticlesActive = true;
-                    break;
-                case "Clients":
-                    IsClientsActive = true;
-                    break;
-                case "Commandes":
-                    IsCommandesActive = true;
-                    break;
-                case "Fournisseurs":
-                    IsFournisseursActive = true;
-                    break;
-                case "Achats":
-                    IsAchatsActive = true;
-                    break;
-                case "Stocks":
-                    IsStocksActive = true;
-                    break;
-                default:
-                    break;
+                // Si la page n'est pas dans le cache, la créer et l'ajouter
+                switch (pageTag)
+                {
+                    case "Dashboard":
+                        _pagesCache[pageTag] = new PageAccueil();
+                        IsDashboardActive = true;
+                        break;
+                    case "Articles":
+                        IsArticlesActive = true;
+                        break;
+                    case "Clients":
+                        IsClientsActive = true;
+                        break;
+                    case "Commandes":
+                        IsCommandesActive = true;
+                        break;
+                    case "Fournisseurs":
+                        IsFournisseursActive = true;
+                        break;
+                    case "Achats":
+                        _pagesCache[pageTag] = new PageAchats();
+                        IsAchatsActive = true;
+                        break;
+                    case "Stocks":
+                        IsStocksActive = true;
+                        break;
+                    default:
+                        break;
+                }
             }
+            else
+            {
+                // La page existe déjà dans le cache, définir son état
+                switch (pageTag)
+                {
+                    case "Dashboard": IsDashboardActive = true; break;
+                    case "Articles": IsArticlesActive = true; break;
+                    case "Clients": IsClientsActive = true; break;
+                    case "Commandes": IsCommandesActive = true; break;
+                    case "Fournisseurs": IsFournisseursActive = true; break;
+                    case "Achats": IsAchatsActive = true; break;
+                    case "Stocks": IsStocksActive = true; break;
+                }
+            }
+
+            // Naviguer vers la page existante ou nouvellement créée
+            CurrentPage = _pagesCache[pageTag];
         }
     }
 }

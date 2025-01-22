@@ -9,7 +9,6 @@ namespace JamaisASec.ViewModels
 {
     public class PageAccueilViewModel : BaseViewModel
     {
-
         public ObservableCollection<Article> Articles { get; set; }
         public ObservableCollection<Commande> Commandes { get; set; }
         public ObservableCollection<Commande> Achats { get; set; }
@@ -30,24 +29,26 @@ namespace JamaisASec.ViewModels
 
         private async Task LoadData()
         {
+            //Charger les articles
             var articles = await _apiService.GetArticlesAsync();
-            var commandes = await _apiService.GetCommandesAsync();
-            
-
             Articles.Clear();
             foreach (var article in articles)
             {
                 Articles.Add(article);
             }
 
+            // Charger les commandes et les achats
+            var (commandes, achats) = await _commandeService.GetCommandesAndAchatsAsync();
             Commandes.Clear();
-            Achats.Clear();
             foreach (var commande in commandes)
             {
-                if (commande.fournisseur != null)
-                    Achats.Add(commande);
-                else if (commande.client != null)
-                    Commandes.Add(commande);
+                Commandes.Add(commande);
+            }
+
+            Achats.Clear();
+            foreach (var achat in achats)
+            {
+                Achats.Add(achat);
             }
         }
     }
