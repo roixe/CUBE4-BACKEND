@@ -24,7 +24,7 @@ namespace JamaisASec.ViewModels
 
         private async Task LoadData()
         {
-            var fournisseurs = await _apiService.GetFournisseursAsync();
+            var fournisseurs = await _dataService.GetFournisseursAsync();
             Fournisseurs.Clear();
             foreach (var fournisseur in fournisseurs)
             {

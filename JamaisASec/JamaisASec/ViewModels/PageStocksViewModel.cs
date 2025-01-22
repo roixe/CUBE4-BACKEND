@@ -19,7 +19,7 @@ namespace JamaisASec.ViewModels
 
         private async Task LoadData()
         {
-            var stocks = await _apiService.GetArticlesAsync();
+            var stocks = await _dataService.GetArticlesAsync();
             Stocks.Clear();
             foreach (var stock in stocks)
             {

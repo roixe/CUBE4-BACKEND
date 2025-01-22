@@ -20,7 +20,7 @@ namespace JamaisASec.ViewModels
 
         private async Task LoadData()
         {
-            var clients = await _apiService.GetClientsAsync();
+            var clients = await _dataService.GetClientsAsync();
             Clients.Clear();
             foreach (var client in clients)
             {

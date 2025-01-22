@@ -13,11 +13,13 @@ namespace JamaisASec.ViewModels
         public event PropertyChangedEventHandler? PropertyChanged;
         protected readonly ApiService _apiService;
         protected readonly CommandeService _commandeService;
+        protected readonly DataService _dataService;
 
         public BaseViewModel()
         {
             _apiService = new ApiService();
             _commandeService = new CommandeService(_apiService);
+            _dataService = new DataService(_apiService);
         }
 
         protected void OnPropertyChanged(string propertyName)

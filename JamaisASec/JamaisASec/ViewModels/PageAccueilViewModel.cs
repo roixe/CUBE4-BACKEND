@@ -30,7 +30,7 @@ namespace JamaisASec.ViewModels
         private async Task LoadData()
         {
             //Charger les articles
-            var articles = await _apiService.GetArticlesAsync();
+            var articles = await _dataService.GetArticlesAsync();
             Articles.Clear();
             foreach (var article in articles)
             {

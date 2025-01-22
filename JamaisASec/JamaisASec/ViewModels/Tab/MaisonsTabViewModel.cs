@@ -4,33 +4,31 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JamaisASec.Models;
 using System.Windows.Input;
+using JamaisASec.Models;
 using JamaisASec.Services;
 
-namespace JamaisASec.ViewModels
+namespace JamaisASec.ViewModels.Tab
 {
-
-    class PageCommandesViewModel : BaseViewModel
+    class MaisonsTabViewModel : BaseViewModel
     {
-        public ObservableCollection<Commande> Commandes { get; set; }
+        public ObservableCollection<Maison> Maisons { get; set; }
         public ICommand LoadDataCommand { get; }
 
-        public PageCommandesViewModel()
+        public MaisonsTabViewModel()
         {
-            Commandes = new ObservableCollection<Commande>();
+            Maisons = new ObservableCollection<Maison>();
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-
             LoadDataCommand.Execute(null);
         }
 
         private async Task LoadData()
         {
-            var (commandes, _) = await _dataService.GetCommandesAndAchatsAsync();
-            Commandes.Clear();
-            foreach (var commande in commandes)
+            var maisons = await _dataService.GetMaisonsAsync();
+            Maisons.Clear();
+            foreach (var maison in maisons)
             {
-                Commandes.Add(commande);
+                Maisons.Add(maison);
             }
         }
     }

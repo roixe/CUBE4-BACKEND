@@ -155,6 +155,7 @@ namespace JamaisASec.ViewModels
                         IsDashboardActive = true;
                         break;
                     case "Articles":
+                        _pagesCache[pageTag] = new PageArticles();
                         IsArticlesActive = true;
                         break;
                     case "Clients":
