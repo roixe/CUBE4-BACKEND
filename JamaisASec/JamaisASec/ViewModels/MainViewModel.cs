@@ -161,6 +161,7 @@ namespace JamaisASec.ViewModels
                         IsClientsActive = true;
                         break;
                     case "Commandes":
+                        _pagesCache[pageTag] = new PageCommandes();
                         IsCommandesActive = true;
                         break;
                     case "Fournisseurs":

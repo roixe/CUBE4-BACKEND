@@ -49,11 +49,9 @@
                       RowStyle="{DynamicResource DataGridRowStyle1}" 
                       ItemsSource="{Binding Commandes}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding ID}"/>
-                    <DataGridTextColumn Header="Client" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Client}"/>
-                    <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Date}"/>
-                    <DataGridTextColumn Header="Montant" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Montant}"/>
-                    <DataGridTextColumn Header="Nombre articles" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding TotalArticle}"/>
+                    <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding id}"/>
+                    <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding date, StringFormat=d}"/>
+                    <DataGridTextColumn Header="Client" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding client.nom}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
@@ -68,11 +66,9 @@
                       RowStyle="{DynamicResource DataGridRowStyle1}" 
                       ItemsSource="{Binding Achats}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding ID}"/>
-                    <DataGridTextColumn Header="Fournisseur" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Fournisseur}"/>
-                    <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Date}"/>
-                    <DataGridTextColumn Header="Montant" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding MontantFormate}"/>
-                    <DataGridTextColumn Header="Nombre articles" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding TotalArticle}"/>
+                    <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding id}"/>
+                    <DataGridTextColumn Header="Fournisseur" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding fournisseur.nom}"/>
+                    <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding date, StringFormat=d}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
