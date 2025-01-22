@@ -1,0 +1,29 @@
+﻿<Window x:Class="JamaisASec.Views.Forms.ClientForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JamaisASec"
+        xmlns:uc="clr-namespace:JamaisASec.Views.UserControls"
+        mc:Ignorable="d"
+        Style="{StaticResource FormWindowStyle}"
+        WindowStartupLocation="CenterScreen">
+    <Border Style="{StaticResource FormContent}">
+        <StackPanel Margin="20">
+            <uc:CustomTextBox x:Name="clientName" Caption="Nom" Hint="Entrez le nom"/>
+            <uc:CustomTextBox x:Name="clientAddress" Caption="Adresse" Hint="Entrez l'adresse"/>
+            <uc:CustomTextBox x:Name="clientMail" Caption="Mail" Hint="Entrez le mail"/>
+            <uc:CustomTextBox x:Name="clientPhoneNumber" Caption="N° téléphone" Hint="Entrez le n° téléphone"/>
+            <Button x:Name="formButton"
+                    Content="{Binding IsEditMode, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToTextConverter}}"
+                    Width="100" Margin="0,10,0,0"
+                    HorizontalAlignment="Right"
+                    Style="{StaticResource FormButton}" Click="FormButton_Click">
+                <Button.Effect>
+                    <DropShadowEffect ShadowDepth="5" BlurRadius="10" Color="#5c1111" Opacity="0.3" Direction="-120"/>
+                </Button.Effect>
+            </Button>
+        </StackPanel>
+    </Border>
+</Window>

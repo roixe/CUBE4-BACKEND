@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="JamaisASec.Views.UserControls.TabControls"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:local="clr-namespace:JamaisASec"
+             mc:Ignorable="d">
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <Button Grid.Row="0" Style="{StaticResource topButton}" Click="AddButton_Click">
+                <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="20" Height="20"/>
+            </Button>
+            <Button Grid.Row="0" Style="{StaticResource topButton}">
+                <iconPacks:PackIconBootstrapIcons Kind="Trash" Width="20" Height="20"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

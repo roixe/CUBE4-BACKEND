@@ -2,9 +2,13 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:vm="clr-namespace:JamaisASec.ViewModels"
         WindowState="Maximized"
         Title="Jamais à sec" Width="683" Height="618">
 
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
     <!-- Conteneur principal -->
     <Grid Background="{StaticResource WindowBackground}">
         <Grid.RowDefinitions>
@@ -22,31 +26,31 @@
             <StackPanel>
                 <TextBlock Text="Jamais à sec" FontWeight="Bold" FontSize="20" Style="{StaticResource MenuText}" Margin="20,15,10,20"/>
 
-                <ToggleButton x:Name="DashboardButton" Tag="Dashboard" Click="DashboardButton_Click" Style="{StaticResource MenuButton}" IsChecked="True">
+                <ToggleButton x:Name="DashboardButton" Tag="Dashboard" IsChecked="{Binding IsDashboardActive}" Style="{StaticResource MenuButton}" Command="{Binding NavigateCommand}" CommandParameter="Dashboard">
                     <iconPacks:PackIconBootstrapIcons Kind="House" Width="30" Height="30" Margin="0 0 10 0"/>
                 </ToggleButton>
 
-                <ToggleButton x:Name="ArticlesButton" Tag="Articles et Familles" Click="ArticlesButton_Click" Style="{StaticResource MenuButton}">
+                <ToggleButton x:Name="ArticlesButton" Tag="Articles et Familles" IsChecked="{Binding IsArticlesActive}" Style="{StaticResource MenuButton}" Command="{Binding NavigateCommand}" CommandParameter="Articles">
                     <iconPacks:PackIconBootstrapIcons Kind="Box" Width="30" Height="30" Margin="0 0 10 0"/>
                 </ToggleButton>
 
-                <ToggleButton x:Name="ClientsButton" Tag="Clients" Click="ClientsButton_Click" Style="{StaticResource MenuButton}">
+                <ToggleButton x:Name="ClientsButton" Tag="Clients" IsChecked="{Binding IsClientsActive}" Style="{StaticResource MenuButton}" Command="{Binding NavigateCommand}" CommandParameter="Clients">
                     <iconPacks:PackIconBootstrapIcons Kind="People" Width="30" Height="30" Margin="0 0 10 0"/>
                 </ToggleButton>
 
-                <ToggleButton x:Name="CommandesButton" Tag="Commandes" Click="CommandesButton_Click" Style="{StaticResource MenuButton}">
+                <ToggleButton x:Name="CommandesButton" Tag="Commandes" IsChecked="{Binding IsCommandesActive}" Style="{StaticResource MenuButton}" Command="{Binding NavigateCommand}" CommandParameter="Commandes">
                     <iconPacks:PackIconBootstrapIcons Kind="Clipboard" Width="30" Height="30" Margin="0 0 10 0"/>
                 </ToggleButton>
 
-                <ToggleButton x:Name="FournisseursButton" Tag="Fournisseurs" Click="FournisseursButton_Click" Style="{StaticResource MenuButton}">
+                <ToggleButton x:Name="FournisseursButton" Tag="Fournisseurs" IsChecked="{Binding IsFournisseursActive}" Style="{StaticResource MenuButton}" Command="{Binding NavigateCommand}" CommandParameter="Fournisseurs">
                     <iconPacks:PackIconBootstrapIcons Kind="Truck" Width="30" Height="30" Margin="0 0 10 0"/>
                 </ToggleButton>
 
-                <ToggleButton x:Name="AchatsButton" Tag="Achats" Click="AchatsButton_Click" Style="{StaticResource MenuButton}">
+                <ToggleButton x:Name="AchatsButton" Tag="Achats" IsChecked="{Binding IsAchatsActive}" Style="{StaticResource MenuButton}" Command="{Binding NavigateCommand}" CommandParameter="Achats">
                     <iconPacks:PackIconBootstrapIcons Kind="Cart" Width="30" Height="30" Margin="0 0 10 0"/>
                 </ToggleButton>
 
-                <ToggleButton x:Name="StocksButton" Tag="Stocks" Click="StocksButton_Click" Style="{StaticResource MenuButton}">
+                <ToggleButton x:Name="StocksButton" Tag="Stocks" IsChecked="{Binding IsStocksActive}" Style="{StaticResource MenuButton}" Command="{Binding NavigateCommand}" CommandParameter="Stocks">
                     <iconPacks:PackIconBootstrapIcons Kind="Boxes" Width="30" Height="30" Margin="0 0 10 0"/>
                 </ToggleButton>
             </StackPanel>
@@ -54,7 +58,7 @@
 
         <!-- Contenu principal -->
         <Grid Grid.Column="1" Margin="10">
-            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
+            <Frame x:Name="CurrentPage" NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}"/>
         </Grid>
     </Grid>
 </Window>
