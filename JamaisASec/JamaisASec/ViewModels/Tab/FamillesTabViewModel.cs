@@ -16,6 +16,8 @@ namespace JamaisASec.ViewModels.Tab
         private readonly ObservableCollection<Famille> _allFamilles;
         public ObservableCollection<Famille> Familles { get; }
         public ICommand LoadDataCommand { get; }
+        public ICommand AddCommand { get; }
+        public ICommand DeleteCommand { get; }
         private string _searchText;
         public string SearchText
         {
@@ -43,13 +45,16 @@ namespace JamaisASec.ViewModels.Tab
                 }
             }
         }
-
         public FamillesTabViewModel()
         {
             _allFamilles = new ObservableCollection<Famille>();
             Familles = new ObservableCollection<Famille>(_allFamilles);
+
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             LoadDataCommand.Execute(null);
+
+            AddCommand = new RelayCommand<object>(Add);
+            DeleteCommand = new RelayCommand<object>(DeleteSelected);
         }
 
         private async Task LoadData()
@@ -72,6 +77,28 @@ namespace JamaisASec.ViewModels.Tab
             foreach (var famille in filtered)
             {
                 Familles.Add(famille);
+            }
+        }
+
+        private void Add(object obj)
+        {
+            var famille = new Famille("Nouvelle famille");
+            famille.id = _allFamilles.Count + 1;
+            _allFamilles.Add(famille);
+            Filter();
+        }
+        private void DeleteSelected(object obj)
+        {
+            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les familles sélectionnées ?",
+                        "Confirmation",
+                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                var selectedFamilles = Familles.Where(a => a.IsSelected).ToList();
+                foreach (var article in selectedFamilles)
+                {
+                    _allFamilles.Remove(article);
+                }
+                Filter();
             }
         }
     }
