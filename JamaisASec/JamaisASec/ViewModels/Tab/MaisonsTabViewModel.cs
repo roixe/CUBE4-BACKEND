@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using JamaisASec.Models;
 using JamaisASec.Services;
@@ -10,6 +11,8 @@ namespace JamaisASec.ViewModels.Tab
         private readonly ObservableCollection<Maison> _allMaisons;
         public ObservableCollection<Maison> Maisons { get; set; }
         public ICommand LoadDataCommand { get; }
+        public ICommand AddCommand { get; }
+        public ICommand DeleteCommand { get; }
         private string _searchText;
         public string SearchText
         {
@@ -38,13 +41,16 @@ namespace JamaisASec.ViewModels.Tab
             }
         }
 
-
         public MaisonsTabViewModel()
         {
             _allMaisons = new ObservableCollection<Maison>();
             Maisons = new ObservableCollection<Maison>(_allMaisons);
+
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             LoadDataCommand.Execute(null);
+
+            AddCommand = new RelayCommand<object>(Add);
+            DeleteCommand = new RelayCommand<object>(DeleteSelected);
         }
 
         private async Task LoadData()
@@ -68,6 +74,27 @@ namespace JamaisASec.ViewModels.Tab
             foreach (var maison in filtered)
             {
                 Maisons.Add(maison);
+            }
+        }
+
+        private void Add(object obj)
+        {
+            var maison = new Maison("Nouvelle maison");
+            _allMaisons.Add(maison);
+            Filter();
+        }
+        private void DeleteSelected(object obj)
+        {
+            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les maisons sélectionnés ?",
+                        "Confirmation",
+                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                var selectedMaisons = Maisons.Where(a => a.IsSelected).ToList();
+                foreach (var maison in selectedMaisons)
+                {
+                    _allMaisons.Remove(maison);
+                }
+                Filter();
             }
         }
     }

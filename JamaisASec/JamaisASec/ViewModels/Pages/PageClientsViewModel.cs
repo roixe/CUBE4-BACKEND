@@ -2,6 +2,7 @@
 using JamaisASec.Models;
 using System.Windows.Input;
 using JamaisASec.Services;
+using System.Windows;
 
 namespace JamaisASec.ViewModels.Pages
 {
@@ -11,6 +12,8 @@ namespace JamaisASec.ViewModels.Pages
         private readonly ObservableCollection<Client> _allClients;
         public ObservableCollection<Client> Clients { get; set; }
         public ICommand LoadDataCommand { get; }
+        public ICommand AddCommand { get; }
+        public ICommand DeleteCommand { get; }
         private string _searchText;
         public string SearchText
         {
@@ -46,6 +49,9 @@ namespace JamaisASec.ViewModels.Pages
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             LoadDataCommand.Execute(null);
+
+            AddCommand = new RelayCommand<object>(Add);
+            DeleteCommand = new RelayCommand<object>(DeleteSelected);
         }
 
         private async Task LoadData()
@@ -66,6 +72,29 @@ namespace JamaisASec.ViewModels.Pages
             foreach (var client in filtered)
             {
                 Clients.Add(client);
+            }
+        }
+
+        private void Add(object obj)
+        {
+            var client = new Client();
+            client.id = _allClients.Count + 1;
+            client.nom = "Nouveau client";
+            _allClients.Add(client);
+            Filter();
+        }
+        private void DeleteSelected(object obj)
+        {
+            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les clients sélectionnés ?",
+                        "Confirmation",
+                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                var selectedClients = _allClients.Where(a => a.IsSelected).ToList();
+                foreach (var client in selectedClients)
+                {
+                    _allClients.Remove(client);
+                }
+                Filter();
             }
         }
     }

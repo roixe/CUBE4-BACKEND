@@ -19,7 +19,14 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal">
-            <uc:TabControls Grid.Row="0" x:Name="controlsFournisseur"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Grid.Row="0" Style="{StaticResource topButton}" Command="{Binding AddCommand}" CommandParameter="null" >
+                    <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="20" Height="20"/>
+                </Button>
+                <Button Grid.Row="0" Style="{StaticResource topButton}" Command="{Binding DeleteCommand}" CommandParameter="null">
+                    <iconPacks:PackIconBootstrapIcons Kind="Trash" Width="20" Height="20"/>
+                </Button>
+            </StackPanel>
             <Rectangle VerticalAlignment="Stretch" Fill="{StaticResource Taupe}" Width="1" Margin="20 10 25 10"/>
             <uc:SearchBox Grid.Row="0" Width="300" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
@@ -33,7 +40,7 @@
                   Name="FournisseursGrid"
                   ItemsSource="{Binding Fournisseurs}">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}" Binding="{Binding IsSelected}">
+                <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}" Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}">
                     <DataGridCheckBoxColumn.HeaderTemplate>
                         <DataTemplate>
                             <CheckBox IsChecked="{Binding DataContext.IsHeaderCheckBoxChecked, RelativeSource={RelativeSource AncestorType=Page}}" Style="{StaticResource CheckBoxStyle1}"/>

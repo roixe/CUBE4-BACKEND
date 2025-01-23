@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using JamaisASec.Models;
 using JamaisASec.Services;
@@ -10,6 +11,8 @@ namespace JamaisASec.ViewModels.Pages
         private readonly ObservableCollection<Fournisseur> _allFournisseurs;
         public ObservableCollection<Fournisseur> Fournisseurs { get; set; }
         public ICommand LoadDataCommand { get; }
+        public ICommand AddCommand { get; }
+        public ICommand DeleteCommand { get; }
         private string _searchText;
         public string SearchText
         {
@@ -42,8 +45,12 @@ namespace JamaisASec.ViewModels.Pages
         {
             _allFournisseurs = new ObservableCollection<Fournisseur>();
             Fournisseurs = new ObservableCollection<Fournisseur>();
+
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             LoadDataCommand.Execute(null);
+
+            AddCommand = new RelayCommand<object>(Add);
+            DeleteCommand = new RelayCommand<object>(DeleteSelected);
         }
 
         private async Task LoadData()
@@ -65,6 +72,29 @@ namespace JamaisASec.ViewModels.Pages
             foreach (var fournisseur in filtered)
             {
                 Fournisseurs.Add(fournisseur);
+            }
+        }
+
+        private void Add(object obj)
+        {
+            var fournisseur = new Fournisseur();
+            fournisseur.id = _allFournisseurs.Count + 1;
+            fournisseur.nom = "Nouveau fournisseur";
+            _allFournisseurs.Add(fournisseur);
+            Filter();
+        }
+        private void DeleteSelected(object obj)
+        {
+            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les fournisseurs sélectionnés ?",
+                        "Confirmation",
+                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                var selectedFournisseurs = _allFournisseurs.Where(a => a.IsSelected).ToList();
+                foreach (var fournisseur in selectedFournisseurs)
+                {
+                    _allFournisseurs.Remove(fournisseur);
+                }
+                Filter();
             }
         }
     }
