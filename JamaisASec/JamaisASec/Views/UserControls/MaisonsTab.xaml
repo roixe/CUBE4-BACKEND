@@ -16,7 +16,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0">
             <uc:TabControls x:Name="controlsMaison"/>
             <Rectangle VerticalAlignment="Stretch" Fill="{StaticResource Taupe}" Width="1" Margin="20 10 25 10"/>
-            <uc:SearchBox x:Name="searchMaison" Width="300"/>
+            <uc:SearchBox Width="300" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <DataGrid Name="MaisonsGrid" Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{DynamicResource DataGridCellStyle1}" 

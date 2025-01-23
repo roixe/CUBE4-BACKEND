@@ -8,7 +8,7 @@
              mc:Ignorable="d">
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <Button Grid.Row="0" Style="{StaticResource topButton}" Click="AddButton_Click">
+            <Button Grid.Row="0" Style="{StaticResource topButton}">
                 <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="20" Height="20"/>
             </Button>
             <Button Grid.Row="0" Style="{StaticResource topButton}">

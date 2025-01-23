@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       xmlns:vm="clr-namespace:JamaisASec.ViewModels.Pages"
-      xmlns:userControls="clr-namespace:JamaisASec.Views.UserControls"
+      xmlns:uc="clr-namespace:JamaisASec.Views.UserControls"
       xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="av"
@@ -17,7 +17,11 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <userControls:SearchBox Grid.Row="0" x:Name="searchStock" Width="300" HorizontalAlignment="Left"/>
+        <uc:SearchBox 
+            Grid.Row="0" 
+            Width="300"
+            HorizontalAlignment="Left"
+            Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
 
         <DataGrid Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{DynamicResource DataGridCellStyle1}" 

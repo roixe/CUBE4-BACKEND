@@ -8,8 +8,21 @@ namespace JamaisASec.ViewModels.Pages
 
     class PageCommandesViewModel : BaseViewModel
     {
+        private readonly ObservableCollection<Commande> _allCommandes;
         public ObservableCollection<Commande> Commandes { get; set; }
         public ICommand LoadDataCommand { get; }
+        private string _searchText;
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                if (SetProperty(ref _searchText, value, nameof(SearchText)))
+                {
+                    Filter();
+                }
+            }
+        }
         private bool _isHeaderCheckBoxChecked;
         public bool IsHeaderCheckBoxChecked
         {
@@ -28,9 +41,9 @@ namespace JamaisASec.ViewModels.Pages
             }
         }
 
-
         public PageCommandesViewModel()
         {
+            _allCommandes = new ObservableCollection<Commande>();
             Commandes = new ObservableCollection<Commande>();
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
 
@@ -40,8 +53,22 @@ namespace JamaisASec.ViewModels.Pages
         private async Task LoadData()
         {
             var (commandes, _) = await _dataService.GetCommandesAndAchatsAsync();
-            Commandes.Clear();
+            _allCommandes.Clear();
             foreach (var commande in commandes)
+            {
+                _allCommandes.Add(commande);
+            }
+            Filter();
+        }
+
+        private void Filter()
+        {
+            var filtered = _allCommandes
+                .Where(m => m.reference.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase) ||
+                       m.client.nom.Contains(SearchText?? string.Empty, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            Commandes.Clear();
+            foreach (var commande in filtered)
             {
                 Commandes.Add(commande);
             }

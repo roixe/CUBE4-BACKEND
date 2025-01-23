@@ -8,17 +8,28 @@ namespace JamaisASec.ViewModels.Pages
 {
     class PageAchatsViewModel : BaseViewModel
     {
+        private readonly ObservableCollection<Commande> _allAchats;
         public ObservableCollection<Commande> Achats { get; set; }
+        private string _searchText;
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                if (SetProperty(ref _searchText, value, nameof(SearchText)))
+                {
+                    Filter();
+                }
+            }
+        }
         private bool _isHeaderCheckBoxChecked;
         public bool IsHeaderCheckBoxChecked
         {
             get => _isHeaderCheckBoxChecked;
             set
             {
-                if (_isHeaderCheckBoxChecked != value)
+                if (SetProperty(ref _isHeaderCheckBoxChecked, value, nameof(IsHeaderCheckBoxChecked)))
                 {
-                    _isHeaderCheckBoxChecked = value;
-                    OnPropertyChanged(nameof(IsHeaderCheckBoxChecked));
                     foreach (var achat in Achats)
                     {
                         achat.IsSelected = _isHeaderCheckBoxChecked;
@@ -31,6 +42,7 @@ namespace JamaisASec.ViewModels.Pages
 
         public PageAchatsViewModel()
         {
+            _allAchats = new ObservableCollection<Commande>();
             Achats = new ObservableCollection<Commande>();
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
 
@@ -40,8 +52,22 @@ namespace JamaisASec.ViewModels.Pages
         private async Task LoadData()
         {
             var (_, achats) = await _dataService.GetCommandesAndAchatsAsync();
-            Achats.Clear();
+            _allAchats.Clear();
             foreach (var achat in achats)
+            {
+                _allAchats.Add(achat);
+            }
+            Filter();
+        }
+
+        private void Filter()
+        {
+            var filtered = _allAchats
+                .Where(m => m.reference.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase) ||
+                            m.fournisseur.nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            Achats.Clear();
+            foreach (var achat in filtered)
             {
                 Achats.Add(achat);
             }
