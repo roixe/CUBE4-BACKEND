@@ -25,7 +25,7 @@
                 <Button Grid.Row="0" Style="{StaticResource topButton}" Command="{Binding AddCommand}" CommandParameter="null" >
                     <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="20" Height="20"/>
                 </Button>
-                <Button Grid.Row="0" Style="{StaticResource topButton}" Command="{Binding DeleteCommand}" CommandParameter="null">
+                <Button Grid.Row="0" Style="{StaticResource topButton}" Command="{Binding DeleteSelectedCommand}" CommandParameter="null">
                     <iconPacks:PackIconBootstrapIcons Kind="Trash" Width="20" Height="20"/>
                 </Button>
             </StackPanel>
@@ -60,7 +60,9 @@
                                 <Button Style="{StaticResource gridEditButton}">
                                     <iconPacks:PackIconBootstrapIcons Kind="Pencil" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
-                                <Button Style="{StaticResource gridRemoveButton}">
+                                <Button Style="{StaticResource gridRemoveButton}"
+                                        Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
+                                        CommandParameter="{Binding}">
                                     <iconPacks:PackIconBootstrapIcons Kind="Trash" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
                             </StackPanel>
