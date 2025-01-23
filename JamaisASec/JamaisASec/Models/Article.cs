@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JamaisASec.Models
 {
-    public class Article
+    public class Article : BaseModel
     {
         public int id {  get; set; }
         public string nom { get; set; }
@@ -19,7 +19,6 @@ namespace JamaisASec.Models
         public Famille famille { get; set; }
         public Maison maison { get; set; }
         public Fournisseur? fournisseur { get; set; }
-        public bool IsSelected { get; set; }
     }
 
 }

@@ -20,15 +20,9 @@ namespace JamaisASec.Views.UserControls
     /// </summary>
     public partial class TabControls : UserControl
     {
-        public event RoutedEventHandler? AddItem; // Allow null value for the event
         public TabControls()
         {
             InitializeComponent();
-        }
-
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddItem?.Invoke(this, e);
         }
     }
 }

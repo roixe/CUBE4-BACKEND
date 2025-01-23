@@ -5,7 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:vm="clr-namespace:JamaisASec.ViewModels.Pages"
-      xmlns:userControls="clr-namespace:JamaisASec.Views.UserControls"
+      xmlns:uc="clr-namespace:JamaisASec.Views.UserControls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PageCommandes">
@@ -18,8 +18,10 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <userControls:SearchBox Grid.Row="0" x:Name="searchAchat" Width="300" HorizontalAlignment="Left"/>
-
+        <uc:SearchBox Grid.Row="0" 
+                      HorizontalAlignment="Left"
+                      Width="300" 
+                      Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
         <!-- Table des achats -->
         <DataGrid Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{DynamicResource DataGridCellStyle1}" 
@@ -32,12 +34,12 @@
                 <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}" Binding="{Binding IsSelected}">
                     <DataGridCheckBoxColumn.HeaderTemplate>
                         <DataTemplate>
-                            <CheckBox Style="{StaticResource CheckBoxStyle1}"/>
+                            <CheckBox IsChecked="{Binding DataContext.IsHeaderCheckBoxChecked, RelativeSource={RelativeSource AncestorType=Page}}" Style="{StaticResource CheckBoxStyle1}"/>
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding id}"/>
-                <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding date, StringFormat=d}"/>
+                <DataGridTextColumn Header="Référence" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding reference}"/>
+                <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding date, StringFormat={}{0:dd/MM/yyyy}}"/>
                 <DataGridTextColumn Header="Client" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding client.nom}"/>
                 <!--<DataGridTextColumn Header="Montant" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding Montant, StringFormat=N2}"/>-->
                 <DataGridTemplateColumn Header="Statut" IsReadOnly="True" CanUserResize="False" Width="auto">

@@ -1,7 +1,9 @@
 ﻿
+using System.ComponentModel;
+
 namespace JamaisASec.Models
 {
-    public class Commande
+    public class Commande : BaseModel
     {
         public int id { get; set; }
         public string? reference { get; set; }
@@ -10,8 +12,8 @@ namespace JamaisASec.Models
         public Client? client { get; set; }
         public Fournisseur? fournisseur { get; set; }
         public double Montant { get; private set; }
-        public bool IsSelected { get; set; }
         public List<ArticlesCommandes>? ArticlesCommandes { get; set; } = new List<ArticlesCommandes>();
+
 
     }
 }

@@ -23,20 +23,19 @@ namespace JamaisASec.Views.UserControls
         public SearchBox()
         {
             InitializeComponent();
-            txtSearch.TextChanged += TxtSearch_TextChanged;
         }
 
-        public event RoutedEventHandler TextChanged;
-
-        private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextChanged?.Invoke(this, new RoutedEventArgs());
-        }
+        public static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register(
+                nameof(Text),
+                typeof(string),
+                typeof(SearchBox),
+                new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public string Text
         {
-            get { return txtSearch.Text; }
-            set { txtSearch.Text = value; }
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
         }
     }
 }

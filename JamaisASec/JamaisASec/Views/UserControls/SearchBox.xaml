@@ -10,9 +10,13 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVis"/>
     </UserControl.Resources>
     <Grid>
-        <TextBlock Margin="20,0,35,0" VerticalAlignment="Center" Foreground="{StaticResource LightGray}" IsHitTestVisible="False"
+        <Grid>
+            <TextBlock Margin="20,0,35,0" VerticalAlignment="Center" Foreground="{StaticResource LightGray}" IsHitTestVisible="False"
                    Panel.ZIndex="1" Text="Recherche..." Visibility="{Binding ElementName=txtSearch, Path=Text.IsEmpty, Converter={StaticResource BooleanToVis}}"/>
-        <TextBox Name="txtSearch" Style="{StaticResource textboxSearch}"/>
-        <iconPacks:PackIconBootstrapIcons Kind="Search" Foreground="{StaticResource Burgundy}" Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 15 0"/>
+            <TextBox Name="txtSearch" 
+                 Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                 Style="{StaticResource textboxSearch}"/>
+            <iconPacks:PackIconBootstrapIcons Kind="Search" Foreground="{StaticResource Burgundy}" Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 15 0"/>
+        </Grid>
     </Grid>
 </UserControl>

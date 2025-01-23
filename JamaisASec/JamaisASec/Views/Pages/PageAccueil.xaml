@@ -52,21 +52,6 @@
                     <DataGridTextColumn Header="Référence" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding reference}"/>
                     <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding date, StringFormat=d}"/>
                     <DataGridTextColumn Header="Client" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding client.nom}"/>
-                    <DataGridTemplateColumn Header="Statut" IsReadOnly="True" CanUserResize="False" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border Background="{Binding status, Converter={StaticResource StatusToColorConverter}}" 
-                                        CornerRadius="5" 
-                                        Padding="5" 
-                                        Margin="2"
-                                        Width="120"
-                                        HorizontalAlignment="Left">
-                                    <TextBlock Text="{Binding status}" 
-                                                Foreground="White"/>
-                                </Border>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
@@ -84,21 +69,6 @@
                     <DataGridTextColumn Header="Référence" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding reference}"/>
                     <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding date, StringFormat=d}"/>
                     <DataGridTextColumn Header="Fournisseur" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding fournisseur.nom}"/>
-                    <DataGridTemplateColumn Header="Statut" IsReadOnly="True" CanUserResize="False" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border Background="{Binding status, Converter={StaticResource StatusToColorConverter}}" 
-                                        CornerRadius="5" 
-                                        Padding="5" 
-                                        Margin="2"
-                                        Width="120"
-                                        HorizontalAlignment="Left">     
-                                    <TextBlock Text="{Binding status}" 
-                                                Foreground="White"/>
-                                </Border>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
