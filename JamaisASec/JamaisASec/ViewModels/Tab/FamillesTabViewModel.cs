@@ -17,6 +17,7 @@ namespace JamaisASec.ViewModels.Tab
         public ObservableCollection<Famille> Familles { get; }
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
+        public ICommand DeleteSelectedCommand { get; }
         public ICommand DeleteCommand { get; }
         private string _searchText;
         public string SearchText
@@ -54,7 +55,8 @@ namespace JamaisASec.ViewModels.Tab
             LoadDataCommand.Execute(null);
 
             AddCommand = new RelayCommand<object>(Add);
-            DeleteCommand = new RelayCommand<object>(DeleteSelected);
+            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            DeleteCommand = new RelayCommand<Famille>(Delete);
         }
 
         private async Task LoadData()
@@ -100,6 +102,12 @@ namespace JamaisASec.ViewModels.Tab
                 }
                 Filter();
             }
+        }
+
+        private void Delete(Famille famille)
+        {
+            _allFamilles.Remove(famille);
+            Filter();
         }
     }
 }

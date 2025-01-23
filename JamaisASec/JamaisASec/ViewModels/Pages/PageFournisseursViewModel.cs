@@ -12,6 +12,7 @@ namespace JamaisASec.ViewModels.Pages
         public ObservableCollection<Fournisseur> Fournisseurs { get; set; }
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
+        public ICommand DeleteSelectedCommand { get; }
         public ICommand DeleteCommand { get; }
         private string _searchText;
         public string SearchText
@@ -50,7 +51,8 @@ namespace JamaisASec.ViewModels.Pages
             LoadDataCommand.Execute(null);
 
             AddCommand = new RelayCommand<object>(Add);
-            DeleteCommand = new RelayCommand<object>(DeleteSelected);
+            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            DeleteCommand = new RelayCommand<Fournisseur>(Delete);
         }
 
         private async Task LoadData()
@@ -96,6 +98,12 @@ namespace JamaisASec.ViewModels.Pages
                 }
                 Filter();
             }
+        }
+
+        private void Delete(Fournisseur fournisseur)
+        {
+            _allFournisseurs.Remove(fournisseur);
+            Filter();
         }
     }
 }

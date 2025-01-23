@@ -12,6 +12,7 @@ namespace JamaisASec.ViewModels.Tab
         public ObservableCollection<Maison> Maisons { get; set; }
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
+        public ICommand DeleteSelectedCommand { get; }
         public ICommand DeleteCommand { get; }
         private string _searchText;
         public string SearchText
@@ -50,7 +51,8 @@ namespace JamaisASec.ViewModels.Tab
             LoadDataCommand.Execute(null);
 
             AddCommand = new RelayCommand<object>(Add);
-            DeleteCommand = new RelayCommand<object>(DeleteSelected);
+            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            DeleteCommand = new RelayCommand<Maison>(Delete);
         }
 
         private async Task LoadData()
@@ -96,6 +98,12 @@ namespace JamaisASec.ViewModels.Tab
                 }
                 Filter();
             }
+        }
+
+        private void Delete(Maison maison)
+        {
+            _allMaisons.Remove(maison);
+            Filter();
         }
     }
 }
