@@ -9,6 +9,24 @@ namespace JamaisASec.ViewModels.Tab
     {
         public ObservableCollection<Article> Articles { get; }
         public ICommand LoadDataCommand { get; }
+        private bool _isHeaderCheckBoxChecked;
+        public bool IsHeaderCheckBoxChecked
+        {
+            get => _isHeaderCheckBoxChecked;
+            set
+            {
+                if (_isHeaderCheckBoxChecked != value)
+                {
+                    _isHeaderCheckBoxChecked = value;
+                    OnPropertyChanged(nameof(IsHeaderCheckBoxChecked));
+                    foreach (var article in Articles)
+                    {
+                        article.IsSelected = _isHeaderCheckBoxChecked;
+                    }
+                }
+            }
+        }
+
 
         public ArticlesTabViewModel()
         {

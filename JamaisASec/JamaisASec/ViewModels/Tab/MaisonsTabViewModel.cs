@@ -14,6 +14,24 @@ namespace JamaisASec.ViewModels.Tab
     {
         public ObservableCollection<Maison> Maisons { get; set; }
         public ICommand LoadDataCommand { get; }
+        private bool _isHeaderCheckBoxChecked;
+        public bool IsHeaderCheckBoxChecked
+        {
+            get => _isHeaderCheckBoxChecked;
+            set
+            {
+                if (_isHeaderCheckBoxChecked != value)
+                {
+                    _isHeaderCheckBoxChecked = value;
+                    OnPropertyChanged(nameof(IsHeaderCheckBoxChecked));
+                    foreach (var maison in Maisons)
+                    {
+                        maison.IsSelected = _isHeaderCheckBoxChecked;
+                    }
+                }
+            }
+        }
+
 
         public MaisonsTabViewModel()
         {

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using JamaisASec.Models;
 using JamaisASec.Services;
@@ -14,6 +15,24 @@ namespace JamaisASec.ViewModels.Tab
     {
         public ObservableCollection<Famille> Familles { get; }
         public ICommand LoadDataCommand { get; }
+        private bool _isHeaderCheckBoxChecked;
+        public bool IsHeaderCheckBoxChecked
+        {
+            get => _isHeaderCheckBoxChecked;
+            set
+            {
+                if (_isHeaderCheckBoxChecked != value)
+                {
+                    _isHeaderCheckBoxChecked = value;
+                    OnPropertyChanged(nameof(IsHeaderCheckBoxChecked));
+                    foreach (var famille in Familles)
+                    {
+                        famille.IsSelected = _isHeaderCheckBoxChecked;
+                    }
+                }
+            }
+        }
+
 
         public FamillesTabViewModel()
         {

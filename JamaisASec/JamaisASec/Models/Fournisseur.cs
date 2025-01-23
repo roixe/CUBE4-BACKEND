@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JamaisASec.Models
 {
-    public class Fournisseur
+    public class Fournisseur : BaseModel
     {
         public int id { get; set; }
         public string nom { get; set; } = string.Empty;
@@ -14,6 +14,5 @@ namespace JamaisASec.Models
         public string mail { get; set; } = string.Empty;
         public string telephone { get; set; } = string.Empty;
         public string siret { get; set; } = string.Empty;
-        public bool IsSelected { get; set; }
     }
 }

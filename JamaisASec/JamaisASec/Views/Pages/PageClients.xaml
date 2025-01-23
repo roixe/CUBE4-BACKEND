@@ -38,7 +38,7 @@
                 <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}" Binding="{Binding IsSelected}">
                     <DataGridCheckBoxColumn.HeaderTemplate>
                         <DataTemplate>
-                            <CheckBox Style="{StaticResource CheckBoxStyle1}"/>
+                            <CheckBox IsChecked="{Binding DataContext.IsHeaderCheckBoxChecked, RelativeSource={RelativeSource AncestorType=Page}}" Style="{StaticResource CheckBoxStyle1}"/>
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>

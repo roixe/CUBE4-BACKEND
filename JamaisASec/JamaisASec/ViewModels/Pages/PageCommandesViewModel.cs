@@ -10,6 +10,24 @@ namespace JamaisASec.ViewModels.Pages
     {
         public ObservableCollection<Commande> Commandes { get; set; }
         public ICommand LoadDataCommand { get; }
+        private bool _isHeaderCheckBoxChecked;
+        public bool IsHeaderCheckBoxChecked
+        {
+            get => _isHeaderCheckBoxChecked;
+            set
+            {
+                if (_isHeaderCheckBoxChecked != value)
+                {
+                    _isHeaderCheckBoxChecked = value;
+                    OnPropertyChanged(nameof(IsHeaderCheckBoxChecked));
+                    foreach (var commande in Commandes)
+                    {
+                        commande.IsSelected = _isHeaderCheckBoxChecked;
+                    }
+                }
+            }
+        }
+
 
         public PageCommandesViewModel()
         {

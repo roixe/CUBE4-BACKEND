@@ -40,13 +40,19 @@ namespace JamaisASec.ViewModels.Pages
             Commandes.Clear();
             foreach (var commande in commandes)
             {
-                Commandes.Add(commande);
+                if (commande?.status?.Equals("en cours", StringComparison.CurrentCultureIgnoreCase) == true)
+                {
+                    Commandes.Add(commande);
+                }
             }
 
             Achats.Clear();
             foreach (var achat in achats)
             {
-                Achats.Add(achat);
+                if (achat?.status?.Equals("en attente", StringComparison.CurrentCultureIgnoreCase) == true)
+                {
+                    Achats.Add(achat);
+                }
             }
         }
     }

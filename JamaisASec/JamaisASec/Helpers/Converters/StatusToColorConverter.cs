@@ -19,13 +19,11 @@ namespace JamaisASec.Helpers.Converters
                 switch (statut.ToLower())
                 {
                     case "en cours":
-                        return Application.Current.Resources["OceanBlue"] as SolidColorBrush;
+                        return Application.Current.Resources["Mandarine"] as SolidColorBrush;
                     case "livree":
                         return Application.Current.Resources["ForestGreen"] as SolidColorBrush;
-                    case "confirmee":
-                        return Application.Current.Resources["Mandarine"] as SolidColorBrush;
                     case "en attente":
-                        return Application.Current.Resources["OceanBlue"] as SolidColorBrush;
+                        return Application.Current.Resources["Mandarine"] as SolidColorBrush;
                     case "receptionnee":
                         return Application.Current.Resources["ForestGreen"] as SolidColorBrush;
                     case "annulee":
