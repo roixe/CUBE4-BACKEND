@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Page Remove="Styles\DataGridStyles.xaml" />
-    <Page Remove="Styles\MenuStyles.xaml" />
+    <Page Remove="Resources\DataGridStyles.xaml" />
+    <Page Remove="Resources\MenuStyles.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Styles\MenuStyles.xaml" />
-    <Resource Include="Styles\DataGridStyles.xaml" />
+    <Resource Include="Resources\MenuStyles.xaml" />
+    <Resource Include="Resources\DataGridStyles.xaml" />
   </ItemGroup>
 
 </Project>
