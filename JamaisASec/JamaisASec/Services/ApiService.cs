@@ -65,5 +65,13 @@ namespace JamaisASec.Services
             var content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<Maison>>(content) ?? new List<Maison>();
         }
+
+        public async Task<List<Commande>> GetClientsCommandesAsync(int clientId)
+        {
+            var response = await _httpClient.GetAsync($"Commandes/get/byClient/{clientId}");
+            response.EnsureSuccessStatusCode();
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<Commande>>(content) ?? new List<Commande>();
+        }
     }
 }

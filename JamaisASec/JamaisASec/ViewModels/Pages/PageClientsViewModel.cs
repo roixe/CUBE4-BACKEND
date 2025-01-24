@@ -2,116 +2,66 @@
 using JamaisASec.Models;
 using System.Windows.Input;
 using JamaisASec.Services;
-using System.Windows;
+using System.Windows.Controls;
+using JamaisASec.Views.Contents;
+using JamaisASec.ViewModels.Contents;
 
 namespace JamaisASec.ViewModels.Pages
 {
 
     class PageClientsViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Client> _allClients;
-        public ObservableCollection<Client> Clients { get; set; }
-        public ICommand LoadDataCommand { get; }
-        public ICommand AddCommand { get; }
-        public ICommand EditCommand { get; }
-        public ICommand DeleteSelectedCommand { get; }
-        public ICommand DeleteCommand { get; }
-        private string _searchText="";
-        public string SearchText
+        private UserControl _currentContent = new();
+        public UserControl CurrentContent
         {
-            get => _searchText;
+            get => _currentContent;
             set
             {
-                if (SetProperty(ref _searchText, value, nameof(SearchText)))
+                if (_currentContent != value)
                 {
-                    Filter();
+                    _currentContent = value;
+                    OnPropertyChanged(nameof(CurrentContent));
                 }
             }
         }
-        private bool _isHeaderCheckBoxChecked;
-        public bool IsHeaderCheckBoxChecked
+        public ICommand NavigateCommand { get; }
+
+        public PageClientsViewModel()
         {
-            get => _isHeaderCheckBoxChecked;
-            set
+            NavigateCommand = new RelayCommand<object>(param =>
             {
-                if (SetProperty(ref _isHeaderCheckBoxChecked, value, nameof(IsHeaderCheckBoxChecked)))
+                if (param is Client client)
                 {
-                    foreach (var client in Clients)
+                    Navigate("ClientView", client);
+                }
+                else if (param is string tab)
+                {
+                    Navigate(tab);
+                }
+            });
+            Navigate("ClientsGrid");
+        }
+
+        private void Navigate(string tab, Client? client = null)
+        {
+            switch (tab)
+            {
+                case "ClientsGrid":
+                    CurrentContent = new ClientsGrid();
+                    break;
+                case "ClientView":
+                    if(client != null)
                     {
-                        client.IsSelected = _isHeaderCheckBoxChecked;
+                        var clientViewModel = new ClientViewModel(client);
+                        var clientView = new ClientView
+                        {
+                            DataContext = clientViewModel
+                        };
+                        CurrentContent = clientView;
                     }
-                }
+                    break;
             }
         }
 
-        public PageClientsViewModel() 
-        {
-            _allClients = new ObservableCollection<Client>();
-            Clients = new ObservableCollection<Client>();
-
-            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            LoadDataCommand.Execute(null);
-
-            AddCommand = new RelayCommand<object>(Add);
-            EditCommand = new RelayCommand<Client>(Edit);
-            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
-            DeleteCommand = new RelayCommand<Client>(Delete);
-        }
-
-        private async Task LoadData()
-        {
-            var clients = await _dataService.GetClientsAsync();
-            _allClients.Clear();
-            foreach (var client in clients)
-            {
-                _allClients.Add(client);
-            }
-            Filter();
-        }
-        private void Filter()
-        {
-            var filtered = _allClients
-                .Where(m => m.nom != null && m.nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase)).ToList();
-            Clients.Clear();
-            foreach (var client in filtered)
-            {
-                Clients.Add(client);
-            }
-        }
-
-        private void Add(object obj)
-        {
-            var client = new Client();
-            client.id = _allClients.Count + 1;
-            client.nom = "Nouveau client";
-            _allClients.Add(client);
-            Filter();
-        }
-
-        private void Edit(Client client)
-        {
-            MessageBox.Show("Édition du client " + client.nom);
-        }
-
-        private void DeleteSelected(object obj)
-        {
-            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les clients sélectionnés ?",
-                        "Confirmation",
-                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                var selectedClients = _allClients.Where(a => a.IsSelected).ToList();
-                foreach (var client in selectedClients)
-                {
-                    _allClients.Remove(client);
-                }
-                Filter();
-            }
-        }
-
-        private void Delete(Client client)
-        {
-            _allClients.Remove(client);
-            Filter();
-        }
     }
 }

@@ -4,7 +4,6 @@
       xmlns:vm="clr-namespace:JamaisASec.ViewModels.Pages"
       xmlns:uc="clr-namespace:JamaisASec.Views.UserControls"
       xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="av"
       Title="PageClients" av:DesignHeight="484.51" av:DesignWidth="850.816">
@@ -12,66 +11,7 @@
     <Page.DataContext>
         <vm:PageClientsViewModel/>
     </Page.DataContext>
-    <Page.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVis"/>
-    </Page.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
-            <StackPanel Orientation="Horizontal">
-                <Button Grid.Row="0" Style="{StaticResource topButton}" Command="{Binding AddCommand}" CommandParameter="null" >
-                    <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="20" Height="20"/>
-                </Button>
-                <Button Grid.Row="0" Style="{StaticResource topButton}" Command="{Binding DeleteSelectedCommand}" CommandParameter="null">
-                    <iconPacks:PackIconBootstrapIcons Kind="Trash" Width="20" Height="20"/>
-                </Button>
-            </StackPanel>
-            <Rectangle VerticalAlignment="Stretch" Fill="{StaticResource Taupe}" Width="1" Margin="20 10 25 10"/>
-            <uc:SearchBox Grid.Row="0" Width="300" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
-        </StackPanel>
-
-        <!-- Table des clients -->
-        <DataGrid Style="{StaticResource DataGridStyle1}" 
-                  CellStyle="{DynamicResource DataGridCellStyle1}" 
-                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
-                  RowStyle="{DynamicResource DataGridRowStyle1}" 
-                  Grid.Row="1" 
-                  Name="ClientsGrid"
-                  ItemsSource="{Binding Clients}">
-            <DataGrid.Columns>
-                <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}" Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}">
-                    <DataGridCheckBoxColumn.HeaderTemplate>
-                        <DataTemplate>
-                            <CheckBox IsChecked="{Binding DataContext.IsHeaderCheckBoxChecked, RelativeSource={RelativeSource AncestorType=Page}}" Style="{StaticResource CheckBoxStyle1}"/>
-                        </DataTemplate>
-                    </DataGridCheckBoxColumn.HeaderTemplate>
-                </DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding nom}"/>
-                <DataGridTextColumn Header="Adresse" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding adresse}"/>
-                <DataGridTextColumn Header="Mail" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding mail}"/>
-                <DataGridTextColumn Header="Téléphone" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding telephone}"/>
-                <DataGridTemplateColumn Header="Opérations" IsReadOnly="True" Width="auto">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridEditButton}"
-                                        Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
-                                        CommandParameter="{Binding}">
-                                    <iconPacks:PackIconBootstrapIcons Kind="Pencil" Width="12" Height="12" VerticalAlignment="Center"/>
-                                </Button>
-                                <Button Style="{StaticResource gridRemoveButton}"
-                                        Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
-                                        CommandParameter="{Binding}">
-                                    <iconPacks:PackIconBootstrapIcons Kind="Trash" Width="12" Height="12" VerticalAlignment="Center"/>
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+    <StackPanel>
+        <ContentControl Content="{Binding CurrentContent}"/>
+    </StackPanel>
 </Page>
