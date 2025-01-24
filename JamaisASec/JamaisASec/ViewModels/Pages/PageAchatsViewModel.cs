@@ -10,10 +10,10 @@ namespace JamaisASec.ViewModels.Pages
     {
         private readonly ObservableCollection<Commande> _allAchats;
         public ObservableCollection<Commande> Achats { get; set; }
-        private string _searchText;
-        public string SearchText
+        private string? _searchText;
+        public string? SearchText
         {
-            get => _searchText;
+            get => _searchText ?? string.Empty;
             set
             {
                 if (SetProperty(ref _searchText, value, nameof(SearchText)))
@@ -63,8 +63,8 @@ namespace JamaisASec.ViewModels.Pages
         private void Filter()
         {
             var filtered = _allAchats
-                .Where(m => m.reference.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase) ||
-                            m.fournisseur.nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase))
+                .Where(m => (m.reference?.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                            (m.fournisseur?.nom?.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase) ?? false))
                 .ToList();
             Achats.Clear();
             foreach (var achat in filtered)

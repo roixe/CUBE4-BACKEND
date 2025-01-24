@@ -3,6 +3,8 @@ using System.Windows;
 using System.Windows.Input;
 using JamaisASec.Models;
 using JamaisASec.Services;
+using JamaisASec.ViewModels.Modals;
+using JamaisASec.Views.Modals;
 
 namespace JamaisASec.ViewModels.Tab
 {
@@ -12,12 +14,13 @@ namespace JamaisASec.ViewModels.Tab
         public ObservableCollection<Article> Articles { get; }
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
+        public ICommand EditCommand { get; }
         public ICommand DeleteSelectedCommand { get; }
         public ICommand DeleteCommand { get; }
-        private string _searchText;
+        private string? _searchText;
         public string SearchText
         {
-            get => _searchText;
+            get => _searchText ?? String.Empty;
             set
             {
                 if (SetProperty(ref _searchText, value, nameof(SearchText)))
@@ -52,6 +55,7 @@ namespace JamaisASec.ViewModels.Tab
             LoadDataCommand.Execute(null);
 
             AddCommand = new RelayCommand<object>(Add);
+            EditCommand = new RelayCommand<Article>(Edit);
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             DeleteCommand = new RelayCommand<Article>(Delete);
         }
@@ -69,7 +73,7 @@ namespace JamaisASec.ViewModels.Tab
         private void Filter()
         {
             var filtered = _allArticles
-                .Where(m => m.nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase)).ToList();
+                .Where(m => m.nom != null && m.nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase)).ToList();
 
             Articles.Clear();
             foreach (var article in filtered)
@@ -78,13 +82,32 @@ namespace JamaisASec.ViewModels.Tab
             }
         }
 
-        private void Add(object obj)
+        private async void Add(object obj)
         {
+            var modal = new ArticleModal();
             var article = new Article();
-            article.id = _allArticles.Count + 1;
-            article.nom = "Nouvel article";
-            _allArticles.Add(article);
-            Filter();
+            var modalVM = new ArticleModalViewModel(article, modal);
+            modal.DataContext = modalVM;
+            var result = modal.ShowDialog();
+            if (result == true)
+            {
+                await _dataService.AddArticleAsync(modalVM.Article);
+                LoadDataCommand.Execute(null);
+            }
+        }
+
+        private async void Edit(Article article)
+        {
+            var modal = new ArticleModal();
+            var modalVM = new ArticleModalViewModel(article, modal);
+            modal.DataContext = modalVM;
+            var result = modal.ShowDialog();
+            if (result == true)
+            {
+                MessageBox.Show(modalVM.Article.nom);
+                await _dataService.UpdateArticleAsync(modalVM.Article);
+                LoadDataCommand.Execute(null);
+            }   
         }
         private void DeleteSelected(object obj)
         {

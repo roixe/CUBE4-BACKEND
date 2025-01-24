@@ -8,11 +8,11 @@ namespace JamaisASec.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        private object _currentPage;
 
         private readonly Dictionary<string, Page> _pagesCache = new();
 
         // Propriétés de navigation
+        private object _currentPage = new();
         public object CurrentPage
         {
             get => _currentPage;

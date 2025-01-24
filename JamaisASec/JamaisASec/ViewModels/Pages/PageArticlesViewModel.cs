@@ -8,7 +8,7 @@ namespace JamaisASec.ViewModels.Pages
     class PageArticlesViewModel : BaseViewModel
     {
         private readonly Dictionary<string, UserControl> _tabCache = new();
-        private UserControl _currentContent;
+        private UserControl _currentContent = new();
         public UserControl CurrentContent
         {
             get => _currentContent;
@@ -21,7 +21,7 @@ namespace JamaisASec.ViewModels.Pages
                 }
             }
         }
-        private string _activeTab;
+        private string _activeTab = "";
         public string ActiveTab
         {
             get => _activeTab;
@@ -34,8 +34,6 @@ namespace JamaisASec.ViewModels.Pages
                 }
             }
         }
-
-        public ICommand LoadCommand { get; }
         public ICommand NavigateCommand { get; }
 
         public PageArticlesViewModel()
