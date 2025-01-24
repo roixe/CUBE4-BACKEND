@@ -30,7 +30,6 @@ namespace JamaisASec.Views.UserControls
         public static readonly DependencyProperty DynamicHeightProperty =
             DependencyProperty.Register("DynamicHeight", typeof(double), typeof(CustomTextBox), new PropertyMetadata(30.0));
 
-        // CLR Wrappers
         public string Text
         {
             get => (string)GetValue(TextProperty);
@@ -51,14 +50,14 @@ namespace JamaisASec.Views.UserControls
 
         public string ErrorMessage
         {
-            get => (string)GetValue(ErrorMessageProperty);
-            set => SetValue(ErrorMessageProperty, value);
+            get { return (string)GetValue(ErrorMessageProperty); }
+            set { SetValue(ErrorMessageProperty, value); }
         }
 
-        public Visibility ErrorMessageVisibility
+        public string ErrorMessageVisibility
         {
-            get => (Visibility)GetValue(ErrorMessageVisibilityProperty);
-            set => SetValue(ErrorMessageVisibilityProperty, value);
+            get { return (string)GetValue(ErrorMessageVisibilityProperty); }
+            set { SetValue(ErrorMessageVisibilityProperty, value); }
         }
 
         public TextWrapping TextWrapping
