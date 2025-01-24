@@ -18,12 +18,6 @@ namespace JamaisASec.Views.UserControls
         public static readonly DependencyProperty HintProperty =
             DependencyProperty.Register("Hint", typeof(string), typeof(CustomTextBox), new PropertyMetadata(string.Empty));
 
-        public static readonly DependencyProperty ErrorMessageProperty =
-            DependencyProperty.Register("ErrorMessage", typeof(string), typeof(CustomTextBox), new PropertyMetadata(string.Empty));
-
-        public static readonly DependencyProperty ErrorMessageVisibilityProperty =
-            DependencyProperty.Register("ErrorMessageVisibility", typeof(Visibility), typeof(CustomTextBox), new PropertyMetadata(Visibility.Collapsed));
-
         public static readonly DependencyProperty TextWrappingProperty =
             DependencyProperty.Register("TextWrapping", typeof(TextWrapping), typeof(CustomTextBox), new PropertyMetadata(TextWrapping.NoWrap));
 
@@ -46,18 +40,6 @@ namespace JamaisASec.Views.UserControls
         {
             get => (string)GetValue(HintProperty);
             set => SetValue(HintProperty, value);
-        }
-
-        public string ErrorMessage
-        {
-            get { return (string)GetValue(ErrorMessageProperty); }
-            set { SetValue(ErrorMessageProperty, value); }
-        }
-
-        public string ErrorMessageVisibility
-        {
-            get { return (string)GetValue(ErrorMessageVisibilityProperty); }
-            set { SetValue(ErrorMessageVisibilityProperty, value); }
         }
 
         public TextWrapping TextWrapping

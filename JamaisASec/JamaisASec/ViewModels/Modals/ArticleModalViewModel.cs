@@ -2,12 +2,15 @@
 using JamaisASec.Services;
 using System.Windows.Input;
 using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace JamaisASec.ViewModels.Modals
 {
     public class ArticleModalViewModel : BaseViewModel
     {
         public Article Article { get; }
+        public ObservableCollection<Famille> Familles { get; set; }
+        public ObservableCollection<Maison> Maisons { get; set; }
         private string? _nom;
         public string Nom
         {
@@ -46,40 +49,111 @@ namespace JamaisASec.ViewModels.Modals
             get => _annee;
             set => SetProperty(ref _annee, value, nameof(Annee));
         }
+        private Famille? _selectedFamille;
+        public Famille? SelectedFamille
+        {
+            get => _selectedFamille;
+            set => SetProperty(ref _selectedFamille, value, nameof(SelectedFamille));
+        }
 
+        private Maison? _selectedMaison;
+        public Maison? SelectedMaison
+        {
+            get => _selectedMaison;
+            set => SetProperty(ref _selectedMaison, value, nameof(SelectedMaison));
+        }
         private int _prix;
         public int Prix
         {
             get => _prix;
             set => SetProperty(ref _prix, value, nameof(Prix));
         }
+        public ICommand LoadDataCommand { get; }
         public ICommand SaveCommand { get; }
         private readonly Window _window;
 
         public ArticleModalViewModel(Article article, Window window)
         {
             _window = window;
+            Maisons = new ObservableCollection<Maison>();
+            Familles = new ObservableCollection<Famille>();
+
+            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
+            LoadDataCommand.Execute(null);
+
             Article = article ?? new Article();
             _nom = Article.nom;
             _description = Article.description;
             _quantite = Article.quantite;
             _quantiteMin = Article.quantite_Min;
+            _colisage = Article.colisage;
             _annee = Article.annee;
             _prix = Article.prix_unitaire;
+
             SaveCommand = new RelayCommand<object>(_ => Save());
+        }
+
+        private async Task LoadData()
+        {
+            var maisons = await _dataService.GetMaisonsAsync();
+            Maisons.Clear();
+            foreach (var maison in maisons)
+            {
+                Maisons.Add(maison);
+                if (maison.nom == Article.maison?.nom)
+                {
+                    SelectedMaison = maison;
+                }
+            }
+            var familles = await _dataService.GetFamillesAsync();
+            Familles.Clear();
+            foreach (var famille in familles)
+            {
+                if(famille.nom == Article.famille?.nom)
+                {
+                    SelectedFamille = famille;
+                }
+                Familles.Add(famille);
+            }
         }
 
         private void Save()
         {
+            if (!Validate())
+            {
+                return;
+            }
             Article.nom = Nom;
             Article.description = Description;
             Article.quantite = Quantite;
             Article.quantite_Min = QuantiteMin;
+            Article.colisage = Colisage;
             Article.annee = Annee;
             Article.prix_unitaire = Prix;
-            MessageBox.Show(Article.nom);
+            Article.famille = Familles.FirstOrDefault(f => f.nom == SelectedFamille?.nom);
+            Article.maison = Maisons.FirstOrDefault(m => m.nom == SelectedMaison?.nom);
+
             _window.DialogResult = true;
             _window.Close();
+        }
+
+        private bool Validate()
+        {
+            bool isValid = true;
+
+            // Validation pour le nom
+            if (string.IsNullOrEmpty(Nom))
+            {
+                isValid = false;
+            }
+
+            // Validation pour la description
+            if (string.IsNullOrEmpty(Description))
+            {
+                isValid = false;
+            }
+
+            return isValid;
         }
     }
 }
