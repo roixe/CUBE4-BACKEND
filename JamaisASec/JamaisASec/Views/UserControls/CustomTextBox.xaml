@@ -8,15 +8,26 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVis"/>
     </UserControl.Resources>
     <StackPanel Margin="10,5,10,5">
-        <TextBlock Text="{Binding ElementName=customTextBox, Path=Caption}" Foreground="Gray" FontSize="13" Margin="0 0 0 8"/>
+        <!-- Caption -->
+        <TextBlock Text="{Binding Caption, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                   Foreground="Gray" FontSize="13" Margin="0 0 0 8"/>
+
+        <!-- TextBox with Hint -->
         <Grid>
-            <TextBlock Margin="13 0" VerticalAlignment="Center" Foreground="{StaticResource LightGray}" IsHitTestVisible="False"
-                       Panel.ZIndex="1" FontSize="14" Text="{Binding ElementName=customTextBox, Path=Hint}"
-                       Visibility="{Binding ElementName=textBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVis}}"/>
-            <TextBox x:Name="textBox" Text="{Binding ElementName=customTextBox, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Margin="13 0" VerticalAlignment="Center" Foreground="LightGray" IsHitTestVisible="False"
+                       Panel.ZIndex="1" FontSize="14" 
+                       Text="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       Visibility="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BooleanToVis}}"/>
+            <TextBox x:Name="textBox"
+                     Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"
+                     TextWrapping="{Binding TextWrapping, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                     VerticalScrollBarVisibility="Auto"
+                     Height="{Binding DynamicHeight, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
         </Grid>
-        <TextBlock Text="{Binding ElementName=customTextBox, Path=ErrorMessage}" 
+
+        <!-- Error Message -->
+        <TextBlock Text="{Binding ErrorMessage, RelativeSource={RelativeSource AncestorType=UserControl}}" 
                    Foreground="Red" FontSize="11" Margin="5,3,0,0"
-                   Visibility="{Binding ElementName=customTextBox, Path=ErrorMessageVisibility}"/>
+                   Visibility="{Binding ErrorMessageVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
     </StackPanel>
 </UserControl>

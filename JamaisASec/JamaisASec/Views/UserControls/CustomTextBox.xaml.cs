@@ -4,41 +4,50 @@ using System.Windows.Controls;
 namespace JamaisASec.Views.UserControls
 {
     /// <summary>
-    /// Logique d'interaction pour Input_Form.xaml
+    /// Logique d'interaction pour CustomTextBox.xaml
     /// </summary>
     public partial class CustomTextBox : UserControl
     {
-        public CustomTextBox()
-        {
-            InitializeComponent();
-        }
-
-        public string Hint
-        {
-            get { return (string)GetValue(HintProperty); }
-            set { SetValue(HintProperty, value); }
-        }
-
-        public static readonly DependencyProperty HintProperty =
-            DependencyProperty.Register("Hint", typeof(string), typeof(CustomTextBox), new PropertyMetadata(""));
-        public string Caption
-        {
-            get { return (string)GetValue(CaptionProperty); }
-            set { SetValue(CaptionProperty, value); }
-        }
+        // Dependency Properties
+        public static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register("Text", typeof(string), typeof(CustomTextBox), new PropertyMetadata(string.Empty));
 
         public static readonly DependencyProperty CaptionProperty =
-            DependencyProperty.Register("Caption", typeof(string), typeof(CustomTextBox), new PropertyMetadata(""));
+            DependencyProperty.Register("Caption", typeof(string), typeof(CustomTextBox), new PropertyMetadata(string.Empty));
 
+        public static readonly DependencyProperty HintProperty =
+            DependencyProperty.Register("Hint", typeof(string), typeof(CustomTextBox), new PropertyMetadata(string.Empty));
+
+        public static readonly DependencyProperty ErrorMessageProperty =
+            DependencyProperty.Register("ErrorMessage", typeof(string), typeof(CustomTextBox), new PropertyMetadata(string.Empty));
+
+        public static readonly DependencyProperty ErrorMessageVisibilityProperty =
+            DependencyProperty.Register("ErrorMessageVisibility", typeof(Visibility), typeof(CustomTextBox), new PropertyMetadata(Visibility.Collapsed));
+
+        public static readonly DependencyProperty TextWrappingProperty =
+            DependencyProperty.Register("TextWrapping", typeof(TextWrapping), typeof(CustomTextBox), new PropertyMetadata(TextWrapping.NoWrap));
+
+        public static readonly DependencyProperty DynamicHeightProperty =
+            DependencyProperty.Register("DynamicHeight", typeof(double), typeof(CustomTextBox), new PropertyMetadata(30.0));
+
+        // CLR Wrappers
         public string Text
         {
             get => (string)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
         }
 
-        public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(CustomTextBox),
-                new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public string Caption
+        {
+            get => (string)GetValue(CaptionProperty);
+            set => SetValue(CaptionProperty, value);
+        }
+
+        public string Hint
+        {
+            get => (string)GetValue(HintProperty);
+            set => SetValue(HintProperty, value);
+        }
 
         public string ErrorMessage
         {
@@ -46,29 +55,27 @@ namespace JamaisASec.Views.UserControls
             set => SetValue(ErrorMessageProperty, value);
         }
 
-        // Propriété pour le message d'erreur
-        public static readonly DependencyProperty ErrorMessageProperty =
-            DependencyProperty.Register("ErrorMessage", typeof(string), typeof(CustomTextBox),
-                new PropertyMetadata(string.Empty, OnErrorMessageChanged));
-
-        // Méthode appelée quand ErrorMessage change
-        private static void OnErrorMessageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = (CustomTextBox)d;
-            control.ErrorMessageVisibility = string.IsNullOrEmpty(control.ErrorMessage) ? Visibility.Collapsed : Visibility.Visible;
-        }
-
-        // Propriété pour la visibilité de l'erreur
-        public static readonly DependencyProperty ErrorMessageVisibilityProperty =
-            DependencyProperty.Register("ErrorMessageVisibility", typeof(Visibility), typeof(CustomTextBox),
-                new PropertyMetadata(Visibility.Collapsed));
-
         public Visibility ErrorMessageVisibility
         {
             get => (Visibility)GetValue(ErrorMessageVisibilityProperty);
             set => SetValue(ErrorMessageVisibilityProperty, value);
         }
 
-    }
+        public TextWrapping TextWrapping
+        {
+            get => (TextWrapping)GetValue(TextWrappingProperty);
+            set => SetValue(TextWrappingProperty, value);
+        }
 
+        public double DynamicHeight
+        {
+            get => (double)GetValue(DynamicHeightProperty);
+            set => SetValue(DynamicHeightProperty, value);
+        }
+
+        public CustomTextBox()
+        {
+            InitializeComponent();
+        }
+    }
 }

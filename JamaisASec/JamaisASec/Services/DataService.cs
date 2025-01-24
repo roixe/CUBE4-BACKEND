@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using JamaisASec.Models;
 
 namespace JamaisASec.Services
@@ -11,12 +12,12 @@ namespace JamaisASec.Services
         private readonly ApiService _apiService;
 
         // Cache des données
-        private List<Article> _cachedArticles;
-        private List<Client> _cachedClients;
-        private List<Fournisseur> _cachedFournisseurs;
-        private List<Commande> _cachedCommandes;
-        private List<Maison> _cachedMaisons;
-        private List<Famille> _cachedFamilles;
+        private List<Article>? _cachedArticles;
+        private List<Client>? _cachedClients;
+        private List<Fournisseur>? _cachedFournisseurs;
+        private List<Commande>? _cachedCommandes;
+        private List<Maison>? _cachedMaisons;
+        private List<Famille>? _cachedFamilles;
 
         public DataService(ApiService apiService)
         {
@@ -115,5 +116,37 @@ namespace JamaisASec.Services
             }
             return _cachedFamilles;
         }
+
+        public async Task AddArticleAsync(Article Article)
+        {
+            // Appel à l'API pour ajouter l'article
+            //var addedArticle = await _apiService.AddArticleAsync(Article);
+            // Vérification si l'article est bien ajouté dans la réponse
+            if (Article != null)
+            {
+                //Mettre à jour le cache
+                //_cachedArticles = await _apiService.GetArticlesAsync();
+                _cachedArticles.Add(Article);
+            }
+        }
+
+        public async Task UpdateArticleAsync(Article article)
+        {
+            // Appel à l'API pour mettre à jour l'article
+            //var updatedArticle = await _apiService.UpdateArticleAsync(article);
+
+            // Vérification si l'article est bien mis à jour dans la réponse
+            if (article != null)
+            {
+                //Mettre à jour le cache
+                //_cachedArticles = await _apiService.GetArticlesAsync();
+                var index = _cachedArticles.FindIndex(a => a.id == article.id);
+                if (index != -1)
+                {
+                    _cachedArticles[index] = article;
+                }
+            }
+        }
+
     }
 }

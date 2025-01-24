@@ -13,9 +13,10 @@ namespace JamaisASec.ViewModels.Pages
         public ObservableCollection<Client> Clients { get; set; }
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
+        public ICommand EditCommand { get; }
         public ICommand DeleteSelectedCommand { get; }
         public ICommand DeleteCommand { get; }
-        private string _searchText;
+        private string _searchText="";
         public string SearchText
         {
             get => _searchText;
@@ -52,6 +53,7 @@ namespace JamaisASec.ViewModels.Pages
             LoadDataCommand.Execute(null);
 
             AddCommand = new RelayCommand<object>(Add);
+            EditCommand = new RelayCommand<Client>(Edit);
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             DeleteCommand = new RelayCommand<Client>(Delete);
         }
@@ -69,7 +71,7 @@ namespace JamaisASec.ViewModels.Pages
         private void Filter()
         {
             var filtered = _allClients
-                .Where(m => m.nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase)).ToList();
+                .Where(m => m.nom != null && m.nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase)).ToList();
             Clients.Clear();
             foreach (var client in filtered)
             {
@@ -85,6 +87,12 @@ namespace JamaisASec.ViewModels.Pages
             _allClients.Add(client);
             Filter();
         }
+
+        private void Edit(Client client)
+        {
+            MessageBox.Show("Édition du client " + client.nom);
+        }
+
         private void DeleteSelected(object obj)
         {
             if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les clients sélectionnés ?",

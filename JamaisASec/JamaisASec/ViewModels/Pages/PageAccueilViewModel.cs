@@ -15,9 +15,9 @@ namespace JamaisASec.ViewModels.Pages
 
         public PageAccueilViewModel()
         {
-            Articles = new ObservableCollection<Article>();
-            Commandes = new ObservableCollection<Commande>();
-            Achats = new ObservableCollection<Commande>();
+            Articles = [];
+            Commandes = [];
+            Achats = [];
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
 
