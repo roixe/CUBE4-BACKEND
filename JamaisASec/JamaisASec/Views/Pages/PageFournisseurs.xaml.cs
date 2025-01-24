@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using JamaisASec.Models;
-using JamaisASec.Views.Forms;
+﻿using System.Windows.Controls;
 
 namespace JamaisASec.Views.Pages
 { 

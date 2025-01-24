@@ -104,7 +104,6 @@ namespace JamaisASec.ViewModels.Tab
             var result = modal.ShowDialog();
             if (result == true)
             {
-                MessageBox.Show(modalVM.Article.nom);
                 await _dataService.UpdateArticleAsync(modalVM.Article);
                 LoadDataCommand.Execute(null);
             }   
