@@ -63,7 +63,6 @@ namespace JamaisASec.ViewModels.Pages
             }
             CurrentContent = _tabCache[tab];
             ActiveTab = tab;
-
         }
     }
 }
