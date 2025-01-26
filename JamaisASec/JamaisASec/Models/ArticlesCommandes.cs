@@ -8,13 +8,8 @@ namespace JamaisASec.Models
 {
     public class ArticlesCommandes
     {
-        public Article Article { get; set; }
-        public int Quantite { get; set; }
-
-        public ArticlesCommandes(Article article, int quantite)
-        {
-            Article = article;
-            Quantite = quantite;
-        }
+        public int id { get; set; }
+        public Article article { get; set; }
+        public int quantite { get; set; }
     }
 }

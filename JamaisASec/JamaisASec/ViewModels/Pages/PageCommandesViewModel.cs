@@ -2,75 +2,63 @@
 using JamaisASec.Models;
 using System.Windows.Input;
 using JamaisASec.Services;
+using JamaisASec.ViewModels.Contents;
+using JamaisASec.Views.Contents;
+using System.Windows.Controls;
 
 namespace JamaisASec.ViewModels.Pages
 {
 
     class PageCommandesViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Commande> _allCommandes;
-        public ObservableCollection<Commande> Commandes { get; set; }
-        public ICommand LoadDataCommand { get; }
-        private string _searchText;
-        public string SearchText
+        private UserControl _currentContent = new();
+        public UserControl CurrentContent
         {
-            get => _searchText;
+            get => _currentContent;
             set
             {
-                if (SetProperty(ref _searchText, value, nameof(SearchText)))
+                if (_currentContent != value)
                 {
-                    Filter();
+                    _currentContent = value;
+                    OnPropertyChanged(nameof(CurrentContent));
                 }
             }
         }
-        private bool _isHeaderCheckBoxChecked;
-        public bool IsHeaderCheckBoxChecked
-        {
-            get => _isHeaderCheckBoxChecked;
-            set
-            {
-                if (_isHeaderCheckBoxChecked != value)
-                {
-                    _isHeaderCheckBoxChecked = value;
-                    OnPropertyChanged(nameof(IsHeaderCheckBoxChecked));
-                    foreach (var commande in Commandes)
-                    {
-                        commande.IsSelected = _isHeaderCheckBoxChecked;
-                    }
-                }
-            }
-        }
-
+        public ICommand NavigateCommand { get; }
         public PageCommandesViewModel()
         {
-            _allCommandes = new ObservableCollection<Commande>();
-            Commandes = new ObservableCollection<Commande>();
-            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-
-            LoadDataCommand.Execute(null);
+            NavigateCommand = new RelayCommand<object>(param =>
+            {
+                if (param is Commande commande)
+                {
+                    Navigate("CommandeView", commande);
+                }
+                else if (param is string tab)
+                {
+                    Navigate(tab);
+                }
+            });
+            Navigate("CommandesGrid");
         }
 
-        private async Task LoadData()
+        private void Navigate(string tab, Commande? commande = null)
         {
-            var (commandes, _) = await _dataService.GetCommandesAndAchatsAsync();
-            _allCommandes.Clear();
-            foreach (var commande in commandes)
+            switch (tab)
             {
-                _allCommandes.Add(commande);
-            }
-            Filter();
-        }
-
-        private void Filter()
-        {
-            var filtered = _allCommandes
-                .Where(m => m.reference.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase) ||
-                       m.client.nom.Contains(SearchText?? string.Empty, StringComparison.OrdinalIgnoreCase))
-                .ToList();
-            Commandes.Clear();
-            foreach (var commande in filtered)
-            {
-                Commandes.Add(commande);
+                case "CommandesGrid":
+                    CurrentContent = new CommandesGrid();
+                    break;
+                case "CommandeView":
+                    if (commande != null)
+                    {
+                        var commandeViewModel = new CommandeViewModel(commande);
+                        var commandeView = new CommandeView
+                        {
+                            DataContext = commandeViewModel
+                        };
+                        CurrentContent = commandeView;
+                    }
+                    break;
             }
         }
     }

@@ -18,6 +18,7 @@
             <conv:BoolToTextConverter x:Key="BoolToTextConverter" />
             <conv:StatusToColorConverter x:Key="StatusToColorConverter"/>
             <conv:TabActiveConverter x:Key="TabActiveConverter"/>
+            <conv:TotalPriceConverter x:Key="TotalPriceConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
