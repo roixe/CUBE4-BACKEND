@@ -73,5 +73,13 @@ namespace JamaisASec.Services
             var content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<Commande>>(content) ?? new List<Commande>();
         }
+
+        public async Task<List<Commande>> GetFournisseursAchatsAsync(int fournisseurId)
+        {
+            var response = await _httpClient.GetAsync($"Commandes/get/byFournisseur/{fournisseurId}");
+            response.EnsureSuccessStatusCode();
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<Commande>>(content) ?? new List<Commande>();
+        }
     }
 }

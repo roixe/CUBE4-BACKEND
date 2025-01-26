@@ -22,26 +22,29 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Button Style="{StaticResource topButton}"
-                Margin="5 10 0 0"
+                Margin="5 10 0 5"
                 Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
                 CommandParameter="ClientsGrid"
                 HorizontalAlignment="Left">       
             <iconPacks:PackIconBootstrapIcons Kind="ArrowLeft" Width="20" Height="20"/>
         </Button>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Nom:" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Nom:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Client.nom}" Margin="5" VerticalAlignment="Center"/>
 
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Adresse:" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Adresse:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Client.adresse}" Margin="5" VerticalAlignment="Center"/>
 
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Email:" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Email:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Client.mail}" Margin="5" VerticalAlignment="Center"/>
 
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Téléphone:" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Téléphone:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Client.telephone}" Margin="5" VerticalAlignment="Center"/>
 
-        <TextBlock Grid.Row="5" Grid.Column="0" Text="Historique de commande" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" 
+                   Text="Historique de commande" 
+                   FontWeight="Bold" FontSize="17" 
+                   Margin="0 20 0 0"/>
         <DataGrid Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{DynamicResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
@@ -68,6 +71,5 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
     </Grid>
 </UserControl>
