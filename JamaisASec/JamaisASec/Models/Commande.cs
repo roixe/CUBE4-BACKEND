@@ -11,9 +11,5 @@ namespace JamaisASec.Models
         public string? status { get; set; }
         public Client? client { get; set; }
         public Fournisseur? fournisseur { get; set; }
-        public double Montant { get; private set; }
-        public List<ArticlesCommandes>? ArticlesCommandes { get; set; } = new List<ArticlesCommandes>();
-
-
     }
 }

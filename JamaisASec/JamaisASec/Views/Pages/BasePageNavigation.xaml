@@ -1,16 +1,10 @@
-﻿<Page x:Class="JamaisASec.Views.Pages.PageClients"
+﻿<Page x:Class="JamaisASec.Views.Pages.BasePageNavigation"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:vm="clr-namespace:JamaisASec.ViewModels.Pages"
-      xmlns:uc="clr-namespace:JamaisASec.Views.UserControls"
       xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      mc:Ignorable="av"
-      Title="PageClients" av:DesignHeight="484.51" av:DesignWidth="850.816">
+      mc:Ignorable="av">
 
-    <Page.DataContext>
-        <vm:PageClientsViewModel/>
-    </Page.DataContext>
     <StackPanel>
         <ContentControl Content="{Binding CurrentContent}"/>
     </StackPanel>

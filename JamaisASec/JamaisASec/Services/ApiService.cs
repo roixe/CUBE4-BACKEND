@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Text.Json;
+using System.Windows;
 using JamaisASec.Models;
 
 namespace JamaisASec.Services
@@ -32,6 +33,14 @@ namespace JamaisASec.Services
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<Commande>>(content) ?? new List<Commande>();
+        }
+
+        public async Task<List<ArticlesCommandes>> GetArticlesCommandesById(int commandeId)
+        {
+            var response = await _httpClient.GetAsync($"ArticlesCommandes/get/command/{commandeId}");
+            response.EnsureSuccessStatusCode();
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<ArticlesCommandes>>(content) ?? new List<ArticlesCommandes>();
         }
 
         public async Task<List<Client>> GetClientsAsync()

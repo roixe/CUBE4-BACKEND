@@ -3,6 +3,10 @@ using JamaisASec.Services;
 using System.Windows.Input;
 using System.Windows;
 using System.Windows.Controls;
+using JamaisASec.Models;
+using JamaisASec.ViewModels.Contents;
+using JamaisASec.Views.Contents;
+using JamaisASec.ViewModels.Pages;
 
 namespace JamaisASec.ViewModels
 {
@@ -159,15 +163,30 @@ namespace JamaisASec.ViewModels
                         IsArticlesActive = true;
                         break;
                     case "Clients":
-                        _pagesCache[pageTag] = new PageClients();
+                        var pageClientViewModel = new PageClientsViewModel();
+                        var pageClients = new BasePageNavigation
+                        {
+                            DataContext = pageClientViewModel
+                        };
+                        _pagesCache[pageTag] = pageClients;
                         IsClientsActive = true;
                         break;
                     case "Commandes":
-                        _pagesCache[pageTag] = new PageCommandes();
+                        var pageCommandesViewModel = new PageCommandesViewModel();
+                        var pageCommandes = new BasePageNavigation
+                        {
+                            DataContext = pageCommandesViewModel
+                        };
+                        _pagesCache[pageTag] = pageCommandes;
                         IsCommandesActive = true;
                         break;
                     case "Fournisseurs":
-                        _pagesCache[pageTag] = new PageFournisseurs();
+                        var pageFournisseurViewModel = new PageFournisseursViewModel();
+                        var pageFournisseurs = new BasePageNavigation
+                        {
+                            DataContext = pageFournisseurViewModel
+                        };
+                        _pagesCache[pageTag] = pageFournisseurs;
                         IsFournisseursActive = true;
                         break;
                     case "Achats":
