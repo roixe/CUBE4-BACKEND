@@ -3,25 +3,30 @@ using JamaisASec.Services;
 using System.Windows.Input;
 using System.Windows;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace JamaisASec.ViewModels.Modals
 {
     public class ArticleModalViewModel : BaseViewModel
     {
+        private readonly DataService _dataService;
+        private readonly Window _window;
+
         public Article Article { get; }
         public ObservableCollection<Famille> Familles { get; set; }
         public ObservableCollection<Maison> Maisons { get; set; }
+
         private string? _nom;
         public string Nom
         {
-            get => _nom ?? String.Empty;
+            get => _nom ?? string.Empty;
             set => SetProperty(ref _nom, value, nameof(Nom));
         }
 
         private string? _description;
         public string Description
         {
-            get => _description ?? String.Empty;
+            get => _description ?? string.Empty;
             set => SetProperty(ref _description, value, nameof(Description));
         }
 
@@ -31,24 +36,28 @@ namespace JamaisASec.ViewModels.Modals
             get => _quantite;
             set => SetProperty(ref _quantite, value, nameof(Quantite));
         }
+
         private int _quantiteMin;
         public int QuantiteMin
         {
             get => _quantiteMin;
             set => SetProperty(ref _quantiteMin, value, nameof(QuantiteMin));
         }
+
         private int _colisage;
         public int Colisage
         {
             get => _colisage;
             set => SetProperty(ref _colisage, value, nameof(Colisage));
         }
+
         private int _annee;
         public int Annee
         {
             get => _annee;
             set => SetProperty(ref _annee, value, nameof(Annee));
         }
+
         private Famille? _selectedFamille;
         public Famille? SelectedFamille
         {
@@ -62,19 +71,21 @@ namespace JamaisASec.ViewModels.Modals
             get => _selectedMaison;
             set => SetProperty(ref _selectedMaison, value, nameof(SelectedMaison));
         }
+
         private int _prix;
         public int Prix
         {
             get => _prix;
             set => SetProperty(ref _prix, value, nameof(Prix));
         }
+
         public ICommand LoadDataCommand { get; }
         public ICommand SaveCommand { get; }
-        private readonly Window _window;
 
-        public ArticleModalViewModel(Article article, Window window)
+        public ArticleModalViewModel(Article article, Window window, DataService dataService)
         {
             _window = window;
+            _dataService = dataService;
             Maisons = new ObservableCollection<Maison>();
             Familles = new ObservableCollection<Famille>();
 
@@ -90,7 +101,7 @@ namespace JamaisASec.ViewModels.Modals
             _annee = Article.annee;
             _prix = Article.prix_unitaire;
 
-            SaveCommand = new RelayCommand<object>(_ => Save());
+            SaveCommand = new RelayCommand<object>(_ => Save(null));
         }
 
         private async Task LoadData()
@@ -105,11 +116,12 @@ namespace JamaisASec.ViewModels.Modals
                     SelectedMaison = maison;
                 }
             }
+
             var familles = await _dataService.GetFamillesAsync();
             Familles.Clear();
             foreach (var famille in familles)
             {
-                if(famille.nom == Article.famille?.nom)
+                if (famille.nom == Article.famille?.nom)
                 {
                     SelectedFamille = famille;
                 }
@@ -117,12 +129,13 @@ namespace JamaisASec.ViewModels.Modals
             }
         }
 
-        private void Save()
+        private async void Save(object parameter)
         {
             if (!Validate())
             {
                 return;
             }
+
             Article.nom = Nom;
             Article.description = Description;
             Article.quantite = Quantite;
@@ -133,8 +146,17 @@ namespace JamaisASec.ViewModels.Modals
             Article.famille = Familles.FirstOrDefault(f => f.nom == SelectedFamille?.nom);
             Article.maison = Maisons.FirstOrDefault(m => m.nom == SelectedMaison?.nom);
 
-            _window.DialogResult = true;
-            _window.Close();
+            try
+            {
+                await _dataService.AddArticleAsync(Article);
+                _window.DialogResult = true;
+                _window.Close();
+            }
+            catch (Exception ex)
+            {
+                // Handle exception (e.g., show a message to the user)
+                MessageBox.Show("Erreur article non sauvegardé: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private bool Validate()
