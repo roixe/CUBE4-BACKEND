@@ -5,6 +5,7 @@ namespace JamaisASec.Services
     interface IApiService
     {
         Task<List<Article>> GetArticlesAsync();
+        Task<List<Article>>AddArticleAsync(Article article);
         Task<List<Commande>> GetCommandesAsync();
         Task<List<Client>> GetClientsAsync();
         Task<List<Fournisseur>> GetFournisseursAsync();
