@@ -3,7 +3,8 @@ using JamaisASec.Services;
 using System.Windows.Input;
 using System.Windows;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+using JamaisASec.Views.Modals;
+
 
 namespace JamaisASec.ViewModels.Modals
 {
@@ -73,6 +74,8 @@ namespace JamaisASec.ViewModels.Modals
         }
 
         private int _prix;
+        private ArticleModal modal;
+
         public int Prix
         {
             get => _prix;
@@ -84,15 +87,30 @@ namespace JamaisASec.ViewModels.Modals
 
         public ArticleModalViewModel(Article article, Window window, DataService dataService)
         {
-            _window = window;
-            _dataService = dataService;
-            Maisons = new ObservableCollection<Maison>();
-            Familles = new ObservableCollection<Famille>();
+            _dataService = dataService ?? throw new ArgumentNullException(nameof(dataService));
+            _window = window ?? throw new ArgumentNullException(nameof(window));
 
-            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            LoadDataCommand.Execute(null);
+            Familles = new ObservableCollection<Famille>();
+            Maisons = new ObservableCollection<Maison>();
 
             Article = article ?? new Article();
+            InitializeFieldsFromArticle();
+
+            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
+            SaveCommand = new RelayCommand<object>(_ => Save());
+
+            // Charger les données au démarrage
+            LoadDataCommand.Execute(null);
+        }
+
+        public ArticleModalViewModel(Article article, ArticleModal modal)
+        {
+            Article = article;
+            this.modal = modal;
+        }
+
+        private void InitializeFieldsFromArticle()
+        {
             _nom = Article.nom;
             _description = Article.description;
             _quantite = Article.quantite;
@@ -100,42 +118,71 @@ namespace JamaisASec.ViewModels.Modals
             _colisage = Article.colisage;
             _annee = Article.annee;
             _prix = Article.prix_unitaire;
-
-            SaveCommand = new RelayCommand<object>(_ => Save(null));
         }
 
         private async Task LoadData()
         {
-            var maisons = await _dataService.GetMaisonsAsync();
-            Maisons.Clear();
-            foreach (var maison in maisons)
+            try
             {
-                Maisons.Add(maison);
-                if (maison.nom == Article.maison?.nom)
+                // Charger les maisons
+                var maisons = await _dataService.GetMaisonsAsync();
+                Maisons.Clear();
+                foreach (var maison in maisons)
                 {
-                    SelectedMaison = maison;
+                    Maisons.Add(maison);
+                    if (maison.nom == Article.maison?.nom)
+                    {
+                        SelectedMaison = maison;
+                    }
+                }
+
+                // Charger les familles
+                var familles = await _dataService.GetFamillesAsync();
+                Familles.Clear();
+                foreach (var famille in familles)
+                {
+                    Familles.Add(famille);
+                    if (famille.nom == Article.famille?.nom)
+                    {
+                        SelectedFamille = famille;
+                    }
                 }
             }
-
-            var familles = await _dataService.GetFamillesAsync();
-            Familles.Clear();
-            foreach (var famille in familles)
+            catch (Exception ex)
             {
-                if (famille.nom == Article.famille?.nom)
-                {
-                    SelectedFamille = famille;
-                }
-                Familles.Add(famille);
+                MessageBox.Show($"Erreur lors du chargement des données : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private async void Save(object parameter)
+        private async void Save()
         {
             if (!Validate())
             {
+                MessageBox.Show("Les données saisies ne sont pas valides. Veuillez vérifier tous les champs obligatoires.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
+            try
+            {
+                UpdateArticleFromFields();
+
+                // Sauvegarder l'article via le service
+                await _dataService.AddArticleAsync(Article);
+
+                MessageBox.Show("Article ajouté avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                // Fermer la fenêtre
+                _window.DialogResult = true;
+                _window.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Une erreur est survenue lors de la sauvegarde : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void UpdateArticleFromFields()
+        {
             Article.nom = Nom;
             Article.description = Description;
             Article.quantite = Quantite;
@@ -143,39 +190,27 @@ namespace JamaisASec.ViewModels.Modals
             Article.colisage = Colisage;
             Article.annee = Annee;
             Article.prix_unitaire = Prix;
-            Article.famille = Familles.FirstOrDefault(f => f.nom == SelectedFamille?.nom);
-            Article.maison = Maisons.FirstOrDefault(m => m.nom == SelectedMaison?.nom);
-
-            try
-            {
-                await _dataService.AddArticleAsync(Article);
-                _window.DialogResult = true;
-                _window.Close();
-            }
-            catch (Exception ex)
-            {
-                // Handle exception (e.g., show a message to the user)
-                MessageBox.Show("Erreur article non sauvegardé: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            Article.famille = SelectedFamille;
+            Article.maison = SelectedMaison;
         }
 
         private bool Validate()
         {
-            bool isValid = true;
-
-            // Validation pour le nom
-            if (string.IsNullOrEmpty(Nom))
+            // Validation des champs obligatoires
+            if (string.IsNullOrWhiteSpace(Nom) ||
+                string.IsNullOrWhiteSpace(Description) ||
+                SelectedFamille == null ||
+                SelectedMaison == null ||
+                Quantite < 0 ||
+                QuantiteMin < 0 ||
+                Colisage < 0 ||
+                Prix <= 0 ||
+                Annee <= 0)
             {
-                isValid = false;
+                return false;
             }
 
-            // Validation pour la description
-            if (string.IsNullOrEmpty(Description))
-            {
-                isValid = false;
-            }
-
-            return isValid;
+            return true;
         }
     }
 }

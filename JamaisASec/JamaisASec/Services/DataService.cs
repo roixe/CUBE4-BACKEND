@@ -117,16 +117,30 @@ namespace JamaisASec.Services
             return _cachedFamilles;
         }
 
-        public async Task AddArticleAsync(Article Article)
+        public async Task AddArticleAsync(Article article)
         {
-            // Appel à l'API pour ajouter l'article
-            //var addedArticle = await _apiService.AddArticleAsync(Article);
-            // Vérification si l'article est bien ajouté dans la réponse
-            if (Article != null)
+            if (article == null)
             {
-                //Mettre à jour le cache
-                //_cachedArticles = await _apiService.GetArticlesAsync();
-                _cachedArticles.Add(Article);
+                throw new ArgumentNullException(nameof(article), "L'article ne peut pas être null.");
+            }
+
+            try
+            {
+                // Appel à l'API pour ajouter l'article
+                var addedArticle = await _apiService.AddArticleAsync(article);
+
+                // Vérification de la réponse de l'API
+                if (addedArticle != null)
+                {
+                    // Mettre à jour le cache local
+                    _cachedArticles ??= new List<Article>();
+                    _cachedArticles.Add(addedArticle);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Gérer les erreurs de l'appel API
+                throw new Exception("Une erreur est survenue lors de l'ajout de l'article via l'API.", ex);
             }
         }
 

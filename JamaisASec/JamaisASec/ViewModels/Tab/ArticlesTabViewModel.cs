@@ -86,7 +86,7 @@ namespace JamaisASec.ViewModels.Tab
         {
             var modal = new ArticleModal();
             var article = new Article();
-            var modalVM = new ArticleModalViewModel(article, modal);
+            var modalVM = new ArticleModalViewModel(article, modal, _dataService);
             modal.DataContext = modalVM;
             var result = modal.ShowDialog();
             if (result == true)

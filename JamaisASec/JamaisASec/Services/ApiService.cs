@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Windows;
 using JamaisASec.Models;
@@ -89,6 +90,26 @@ namespace JamaisASec.Services
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<Commande>>(content) ?? new List<Commande>();
+        }
+
+        public async Task<Article> AddArticleAsync(Article article)
+        {
+            if (article == null)
+            {
+                throw new ArgumentNullException(nameof(article));
+            }
+
+            // Sérialisation en JSON
+            var json = JsonSerializer.Serialize(article);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            // Envoi de la requête POST
+            var response = await _httpClient.PostAsync("api/Article/create", content);
+            response.EnsureSuccessStatusCode();
+
+            // Désérialisation de la réponse en Article
+            var responseContent = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Article>(responseContent);
         }
     }
 }
