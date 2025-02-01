@@ -73,7 +73,7 @@ namespace JamaisASec.ViewModels.Tab
         private void Filter()
         {
             var filtered = _allArticles
-                .Where(m => m.nom != null && m.nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase)).ToList();
+                .Where(m => m.Nom != null && m.Nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase)).ToList();
 
             Articles.Clear();
             foreach (var article in filtered)

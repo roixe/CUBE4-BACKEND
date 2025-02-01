@@ -25,7 +25,7 @@ namespace JamaisASec.Services
             return parameter is T param && _canExecute(param);
         }
 
-        public void Execute(object? parameter)
+        public async void Execute(object? parameter)
         {
             if (parameter is T param)
             {

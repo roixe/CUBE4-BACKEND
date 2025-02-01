@@ -111,13 +111,15 @@ namespace JamaisASec.ViewModels.Modals
 
         private void InitializeFieldsFromArticle()
         {
-            _nom = Article.nom;
-            _description = Article.description;
-            _quantite = Article.quantite;
-            _quantiteMin = Article.quantite_Min;
-            _colisage = Article.colisage;
-            _annee = Article.annee;
-            _prix = Article.prix_unitaire;
+            _nom = Article.Nom;
+            _description = Article.Description;
+            _quantite = Article.Quantite;
+            _quantiteMin = Article.Quantite_Min;
+            _colisage = Article.Colisage;
+            _annee = Article.Annee;
+            _prix = Article.Prix_Unitaire;
+            _selectedFamille = Familles.FirstOrDefault(f => f.id == Article.Familles_ID);
+            _selectedMaison = Maisons.FirstOrDefault(m => m.id == Article.Maisons_ID);
         }
 
         private async Task LoadData()
@@ -130,7 +132,7 @@ namespace JamaisASec.ViewModels.Modals
                 foreach (var maison in maisons)
                 {
                     Maisons.Add(maison);
-                    if (maison.nom == Article.maison?.nom)
+                    if (maison.id == Article.Maisons_ID)
                     {
                         SelectedMaison = maison;
                     }
@@ -142,7 +144,7 @@ namespace JamaisASec.ViewModels.Modals
                 foreach (var famille in familles)
                 {
                     Familles.Add(famille);
-                    if (famille.nom == Article.famille?.nom)
+                    if (famille.id == Article.Familles_ID)
                     {
                         SelectedFamille = famille;
                     }
@@ -183,15 +185,15 @@ namespace JamaisASec.ViewModels.Modals
 
         private void UpdateArticleFromFields()
         {
-            Article.nom = Nom;
-            Article.description = Description;
-            Article.quantite = Quantite;
-            Article.quantite_Min = QuantiteMin;
-            Article.colisage = Colisage;
-            Article.annee = Annee;
-            Article.prix_unitaire = Prix;
-            Article.famille = SelectedFamille;
-            Article.maison = SelectedMaison;
+            Article.Nom = Nom;
+            Article.Description = Description;
+            Article.Quantite = Quantite;
+            Article.Quantite_Min = QuantiteMin;
+            Article.Colisage = Colisage;
+            Article.Annee = Annee;
+            Article.Prix_Unitaire = Prix;
+            Article.Familles_ID = SelectedFamille?.id ?? 0;
+            Article.Maisons_ID = SelectedMaison?.id ?? 0;
         }
 
         private bool Validate()

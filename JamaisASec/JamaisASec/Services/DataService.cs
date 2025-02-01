@@ -128,17 +128,22 @@ namespace JamaisASec.Services
             {
                 // Appel à l'API pour ajouter l'article
                 var addedArticle = await _apiService.AddArticleAsync(article);
+                
 
                 // Vérification de la réponse de l'API
                 if (addedArticle != null)
                 {
                     // Mettre à jour le cache local
                     _cachedArticles ??= new List<Article>();
+
                     _cachedArticles.Add(addedArticle);
+                    //MessageBox.Show($"Nom de l'article : {addedArticle}");
                 }
             }
             catch (Exception ex)
             {
+                MessageBox.Show($"Erreur dans DataService.AddArticleAsync : {ex.Message}");
+                //Console.WriteLine($"Erreur dans DataService.AddArticleAsync : {ex.Message}");
                 // Gérer les erreurs de l'appel API
                 throw new Exception("Une erreur est survenue lors de l'ajout de l'article via l'API.", ex);
             }
@@ -154,7 +159,7 @@ namespace JamaisASec.Services
             {
                 //Mettre à jour le cache
                 //_cachedArticles = await _apiService.GetArticlesAsync();
-                var index = _cachedArticles.FindIndex(a => a.id == article.id);
+                var index = _cachedArticles.FindIndex(a => a.ID == article.ID);
                 if (index != -1)
                 {
                     _cachedArticles[index] = article;

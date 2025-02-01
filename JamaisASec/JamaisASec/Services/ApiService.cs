@@ -96,6 +96,38 @@ namespace JamaisASec.Services
         {
             if (article == null)
             {
+                throw new ArgumentNullException(nameof(article), "L'article ne peut pas être null.");
+            }
+
+            if (article.Fournisseurs_ID == 0)
+            {
+                article.Fournisseurs_ID = 1; 
+            }
+
+           
+            var json = JsonSerializer.Serialize(article);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("Articles/create", content);
+            var jsoncontent = JsonSerializer.Serialize(article);
+            
+   
+            if (!response.IsSuccessStatusCode)
+            {
+                
+                var errorContent = await response.Content.ReadAsStringAsync();
+                throw new HttpRequestException($"Error in API response: {response.StatusCode} - {errorContent}");
+            }
+
+            response.EnsureSuccessStatusCode();
+            var responseContent = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Article>(responseContent);
+        }
+
+
+        public async Task<Article> UpdateArticleAsync(Article article)
+        {
+            if (article == null)
+            {
                 throw new ArgumentNullException(nameof(article));
             }
 
@@ -103,13 +135,15 @@ namespace JamaisASec.Services
             var json = JsonSerializer.Serialize(article);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
-            // Envoi de la requête POST
-            var response = await _httpClient.PostAsync("api/Article/create", content);
+            // Envoi de la requête PUT
+            var response = await _httpClient.PutAsync($"api/Article/{article.ID}", content);
             response.EnsureSuccessStatusCode();
 
             // Désérialisation de la réponse en Article
             var responseContent = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<Article>(responseContent);
         }
+
+       
     }
 }

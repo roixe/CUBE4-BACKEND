@@ -15,7 +15,7 @@ namespace JamaisASec.Helpers.Converters
         {
             if (value is ArticlesCommandes articleCommande)
             {
-                return articleCommande.quantite * articleCommande.article.prix_unitaire;
+                return articleCommande.quantite * articleCommande.article.Prix_Unitaire;
             }
             return null;
         }
