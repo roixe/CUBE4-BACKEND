@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using System.Text.Json;
-using System.Windows;
+using System.Windows.Input;
 using JamaisASec.Models;
 
 namespace JamaisASec.Services
@@ -18,77 +18,116 @@ namespace JamaisASec.Services
             }
             _httpClient = new HttpClient { BaseAddress = new Uri(apiBaseUrl) };
         }
+        private async Task<T> RunWithLoadingCursor<T>(Func<Task<T>> apiCall)
+        {
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                return await apiCall();
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
+            }
+        }
 
         public async Task<List<Article>> GetArticlesAsync()
         {
-            var response = await _httpClient.GetAsync("Articles/get/all");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<Article>>(content) ?? new List<Article>();
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.GetAsync("Articles/get/all");
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<Article>>(content) ?? new List<Article>();
+            });
         }
 
         public async Task<List<Commande>> GetCommandesAsync()
         {
-            var response = await _httpClient.GetAsync("Commandes/get/all");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<Commande>>(content) ?? new List<Commande>();
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.GetAsync("Commandes/get/all");
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<Commande>>(content) ?? new List<Commande>();
+            });
         }
 
         public async Task<List<ArticlesCommandes>> GetArticlesCommandesById(int commandeId)
         {
-            var response = await _httpClient.GetAsync($"ArticlesCommandes/get/command/{commandeId}");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<ArticlesCommandes>>(content) ?? new List<ArticlesCommandes>();
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.GetAsync($"ArticlesCommandes/get/command/{commandeId}");
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<ArticlesCommandes>>(content) ?? new List<ArticlesCommandes>();
+            });
         }
 
         public async Task<List<Client>> GetClientsAsync()
         {
-            var response = await _httpClient.GetAsync("Clients/get/all");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<Client>>(content) ?? new List<Client>();
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.GetAsync("Clients/get/all");
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<Client>>(content) ?? new List<Client>();
+            });
         }
 
         public async Task<List<Fournisseur>> GetFournisseursAsync()
         {
-            var response = await _httpClient.GetAsync("Fournisseurs/get/all");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<Fournisseur>>(content) ?? new List<Fournisseur>();
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.GetAsync("Fournisseurs/get/all");
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<Fournisseur>>(content) ?? new List<Fournisseur>();
+            });
         }
 
         public async Task<List<Famille>> GetFamillesAsync()
         {
-            var response = await _httpClient.GetAsync("Familles/get/all");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<Famille>>(content) ?? new List<Famille>();
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.GetAsync("Familles/get/all");
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<Famille>>(content) ?? new List<Famille>();
+            });
         }
 
         public async Task<List<Maison>> GetMaisonsAsync()
         {
-            var response = await _httpClient.GetAsync("Maisons/get/all");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<Maison>>(content) ?? new List<Maison>();
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.GetAsync("Maisons/get/all");
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<Maison>>(content) ?? new List<Maison>();
+            });
         }
 
         public async Task<List<Commande>> GetClientsCommandesAsync(int clientId)
         {
-            var response = await _httpClient.GetAsync($"Commandes/get/byClient/{clientId}");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<Commande>>(content) ?? new List<Commande>();
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.GetAsync($"Commandes/get/byClient/{clientId}");
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<Commande>>(content) ?? new List<Commande>();
+            });
         }
 
         public async Task<List<Commande>> GetFournisseursAchatsAsync(int fournisseurId)
         {
-            var response = await _httpClient.GetAsync($"Commandes/get/byFournisseur/{fournisseurId}");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<Commande>>(content) ?? new List<Commande>();
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.GetAsync($"Commandes/get/byFournisseur/{fournisseurId}");
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<Commande>>(content) ?? new List<Commande>();
+            });
         }
     }
 }
