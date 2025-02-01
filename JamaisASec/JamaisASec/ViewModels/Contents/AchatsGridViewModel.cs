@@ -1,14 +1,19 @@
-﻿using System.Windows.Input;
-using JamaisASec.Services;
-using JamaisASec.Models;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using JamaisASec.Models;
+using JamaisASec.Services;
+using System.Windows.Input;
 
 namespace JamaisASec.ViewModels.Contents
 {
-    class CommandesGridViewModel : BaseViewModel
+    class AchatsGridViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Commande> _allCommandes;
-        public ObservableCollection<Commande> Commandes { get; set; }
+        private readonly ObservableCollection<Commande> _allAchats;
+        public ObservableCollection<Commande> Achats { get; set; }
         public ICommand LoadDataCommand { get; }
         private string? _searchText;
         public string SearchText
@@ -32,7 +37,7 @@ namespace JamaisASec.ViewModels.Contents
                 {
                     _isHeaderCheckBoxChecked = value;
                     OnPropertyChanged(nameof(IsHeaderCheckBoxChecked));
-                    foreach (var commande in Commandes)
+                    foreach (var commande in Achats)
                     {
                         commande.IsSelected = _isHeaderCheckBoxChecked;
                     }
@@ -40,39 +45,37 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        public CommandesGridViewModel()
+        public AchatsGridViewModel()
         {
-            _allCommandes = new ObservableCollection<Commande>();
-            Commandes = new ObservableCollection<Commande>();
+            _allAchats = new ObservableCollection<Commande>();
+            Achats = new ObservableCollection<Commande>();
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             LoadDataCommand.Execute(null);
-            
         }
 
         private async Task LoadData()
         {
-            var (commandes, _) = await _dataService.GetCommandesAndAchatsAsync();
-            _allCommandes.Clear();
-            foreach (var commande in commandes)
+            var (_, achats) = await _dataService.GetCommandesAndAchatsAsync();
+            _allAchats.Clear();
+            foreach (var achat in achats)
             {
-                _allCommandes.Add(commande);
+                _allAchats.Add(achat);
             }
             Filter();
         }
 
         private void Filter()
         {
-            var filtered = _allCommandes
+            var filtered = _allAchats
                 .Where(m => (m.reference?.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase) ?? false) ||
-                            (m.client?.nom?.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase) ?? false))
+                            (m.fournisseur?.nom?.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase) ?? false))
                 .ToList();
-            Commandes.Clear();
-            foreach (var commande in filtered)
+            Achats.Clear();
+            foreach (var achat in filtered)
             {
-                Commandes.Add(commande);
+                Achats.Add(achat);
             }
         }
-
     }
 }
