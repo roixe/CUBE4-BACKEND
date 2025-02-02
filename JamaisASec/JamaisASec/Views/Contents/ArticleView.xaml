@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="JamaisASec.Views.Contents.ArticleView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JamaisASec.Views.Contents"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Button Style="{StaticResource topButton}"
+            Margin="5 10 0 5"
+            Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
+            CommandParameter="ArticlesGrid"
+            HorizontalAlignment="Left">
+            <iconPacks:PackIconBootstrapIcons Kind="ArrowLeft" Width="20" Height="20"/>
+        </Button>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Nom:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Article.nom}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Description:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="6" Text="{Binding Article.description}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Quantité en stock:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Article.quantite}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="2" Text="Quantité minimum:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding Article.quantite_Min}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="4" Text="Colisage:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="3" Grid.Column="5" Text="{Binding Article.colisage}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Prix unitaire:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Article.prix_unitaire, StringFormat=N2}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="Fournisseur:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding Article.fournisseur.nom}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="8" Grid.Column="0" Text="Famille:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding Article.famille.nom}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="9" Grid.Column="0" Text="Maison:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="9" Grid.Column="1" Text="{Binding Article.maison.nom}" Margin="5" VerticalAlignment="Center"/>
+    </Grid>
+</UserControl>

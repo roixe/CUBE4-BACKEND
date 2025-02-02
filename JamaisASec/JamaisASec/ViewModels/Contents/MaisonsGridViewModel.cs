@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using JamaisASec.Models;
 using JamaisASec.Services;
 
-namespace JamaisASec.ViewModels.Tab
+namespace JamaisASec.ViewModels.Contents
 {
-    class FamillesTabViewModel : BaseViewModel
+    class MaisonsGridViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Famille> _allFamilles;
-        public ObservableCollection<Famille> Familles { get; }
+        private readonly ObservableCollection<Maison> _allMaisons;
+        public ObservableCollection<Maison> Maisons { get; set; }
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
         public ICommand DeleteSelectedCommand { get; }
@@ -39,74 +34,75 @@ namespace JamaisASec.ViewModels.Tab
             {
                 if (SetProperty(ref _isHeaderCheckBoxChecked, value, nameof(IsHeaderCheckBoxChecked)))
                 {
-                    foreach (var famille in Familles)
+                    foreach (var maison in Maisons)
                     {
-                        famille.IsSelected = _isHeaderCheckBoxChecked;
+                        maison.IsSelected = _isHeaderCheckBoxChecked;
                     }
                 }
             }
         }
-        public FamillesTabViewModel()
+
+        public MaisonsGridViewModel()
         {
-            _allFamilles = new ObservableCollection<Famille>();
-            Familles = new ObservableCollection<Famille>(_allFamilles);
+            _allMaisons = new ObservableCollection<Maison>();
+            Maisons = new ObservableCollection<Maison>(_allMaisons);
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             LoadDataCommand.Execute(null);
 
             AddCommand = new RelayCommand<object>(Add);
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
-            DeleteCommand = new RelayCommand<Famille>(Delete);
+            DeleteCommand = new RelayCommand<Maison>(Delete);
         }
 
         private async Task LoadData()
         {
-            var familles = await _dataService.GetFamillesAsync();
-            _allFamilles.Clear();
-            foreach (var famille in familles)
+            var maisons = await _dataService.GetMaisonsAsync();
+            _allMaisons.Clear();
+            foreach (var maison in maisons)
             {
-                _allFamilles.Add(famille);
+                _allMaisons.Add(maison);
             }
             Filter();
         }
 
         private void Filter()
         {
-            var filtered = _allFamilles
+            var filtered = _allMaisons
                 .Where(m => m.nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase))
                 .ToList();
-            Familles.Clear();
-            foreach (var famille in filtered)
+
+            Maisons.Clear();
+            foreach (var maison in filtered)
             {
-                Familles.Add(famille);
+                Maisons.Add(maison);
             }
         }
 
         private void Add(object obj)
         {
-            var famille = new Famille("Nouvelle famille");
-            famille.id = _allFamilles.Count + 1;
-            _allFamilles.Add(famille);
+            var maison = new Maison("Nouvelle maison");
+            _allMaisons.Add(maison);
             Filter();
         }
         private void DeleteSelected(object obj)
         {
-            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les familles sélectionnées ?",
+            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les maisons sélectionnés ?",
                         "Confirmation",
                         MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                var selectedFamilles = Familles.Where(a => a.IsSelected).ToList();
-                foreach (var article in selectedFamilles)
+                var selectedMaisons = Maisons.Where(a => a.IsSelected).ToList();
+                foreach (var maison in selectedMaisons)
                 {
-                    _allFamilles.Remove(article);
+                    _allMaisons.Remove(maison);
                 }
                 Filter();
             }
         }
 
-        private void Delete(Famille famille)
+        private void Delete(Maison maison)
         {
-            _allFamilles.Remove(famille);
+            _allMaisons.Remove(maison);
             Filter();
         }
     }
