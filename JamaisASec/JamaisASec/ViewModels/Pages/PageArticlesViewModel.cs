@@ -2,6 +2,10 @@
 using System.Windows.Input;
 using JamaisASec.Services;
 using JamaisASec.Views.UserControls;
+using JamaisASec.Views.Contents;
+using JamaisASec.Models;
+using JamaisASec.ViewModels.Contents;
+using System.ComponentModel.Design;
 
 namespace JamaisASec.ViewModels.Pages
 {
@@ -38,30 +42,94 @@ namespace JamaisASec.ViewModels.Pages
 
         public PageArticlesViewModel()
         {
-            // Commandes pour changer l'onglet actif
-            NavigateCommand = new RelayCommand<string>(Navigate);
-            Navigate("Articles");
+            NavigateCommand = new RelayCommand<object>(param =>
+            {
+                switch (param)
+                {
+                    case Article article:
+                        Navigate("ArticleView", article);
+                        break;
+
+                    //case Famille famille:
+                    //    Navigate("FamilleView", famille);
+                    //    break;
+
+                    //case Maison maison:
+                    //    Navigate("MaisonView", maison);
+                    //    break;
+
+                    case string tab when tab == "ArticlesGrid" || tab == "MaisonsGrid" || tab == "FamillesGrid":
+                        Navigate(tab);
+                        break;
+                }
+            });
+            Navigate("ArticlesGrid");
         }
 
 
-        private void Navigate(string tab)
+        private void Navigate(string tab, Object? obj = null)
         {
-            if (!_tabCache.ContainsKey(tab))
+            if (tab.EndsWith("Grid"))
+            {
+                if (!_tabCache.ContainsKey(tab))
+                {
+                    switch (tab)
+                    {
+                        case "ArticlesGrid":
+                            _tabCache[tab] = new ArticlesGrid();
+                            break;
+                        case "MaisonsGrid":
+                            _tabCache[tab] = new MaisonsGrid();
+                            break;
+                        case "FamillesGrid":
+                            _tabCache[tab] = new FamillesGrid();
+                            break;
+                    }
+                }
+                CurrentContent = _tabCache[tab];
+            }
+            else
             {
                 switch (tab)
                 {
-                    case "Articles":
-                        _tabCache[tab] = new ArticlesTab();
+                    case "ArticleView":
+                        if (obj is Article article)
+                        {
+                            var articleViewModel = new ArticleViewModel(article);
+                            var articleView = new ArticleView
+                            {
+                                DataContext = articleViewModel
+                            };
+                            CurrentContent = articleView;
+                        }
                         break;
-                    case "Familles":
-                        _tabCache[tab] = new FamillesTab();
-                        break;
-                    case "Maisons":
-                        _tabCache[tab] = new MaisonsTab();
-                        break;
+
+                    //case "MaisonView":
+                    //    if (obj is Maison maison)
+                    //    {
+                    //        var maisonViewModel = new MaisonViewModel(maison);
+                    //        var maisonView = new MaisonView
+                    //        {
+                    //            DataContext = maisonViewModel
+                    //        };
+                    //        CurrentContent = maisonView;
+                    //    }
+                    //    break;
+
+                    //case "FamilleView":
+                    //    if (obj is Famille famille)
+                    //    {
+                    //        var familleViewModel = new FamilleViewModel(famille);
+                    //        var familleView = new FamilleView
+                    //        {
+                    //            DataContext = familleViewModel
+                    //        };
+                    //        CurrentContent = familleView;
+                    //    }
+                    //    break;
                 }
             }
-            CurrentContent = _tabCache[tab];
+
             ActiveTab = tab;
         }
     }

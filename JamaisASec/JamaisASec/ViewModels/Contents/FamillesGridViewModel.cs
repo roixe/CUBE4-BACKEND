@@ -4,12 +4,12 @@ using System.Windows.Input;
 using JamaisASec.Models;
 using JamaisASec.Services;
 
-namespace JamaisASec.ViewModels.Tab
+namespace JamaisASec.ViewModels.Contents
 {
-    class MaisonsTabViewModel : BaseViewModel
+    class FamillesGridViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Maison> _allMaisons;
-        public ObservableCollection<Maison> Maisons { get; set; }
+        private readonly ObservableCollection<Famille> _allFamilles;
+        public ObservableCollection<Famille> Familles { get; }
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
         public ICommand DeleteSelectedCommand { get; }
@@ -34,75 +34,74 @@ namespace JamaisASec.ViewModels.Tab
             {
                 if (SetProperty(ref _isHeaderCheckBoxChecked, value, nameof(IsHeaderCheckBoxChecked)))
                 {
-                    foreach (var maison in Maisons)
+                    foreach (var famille in Familles)
                     {
-                        maison.IsSelected = _isHeaderCheckBoxChecked;
+                        famille.IsSelected = _isHeaderCheckBoxChecked;
                     }
                 }
             }
         }
-
-        public MaisonsTabViewModel()
+        public FamillesGridViewModel()
         {
-            _allMaisons = new ObservableCollection<Maison>();
-            Maisons = new ObservableCollection<Maison>(_allMaisons);
+            _allFamilles = new ObservableCollection<Famille>();
+            Familles = new ObservableCollection<Famille>(_allFamilles);
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             LoadDataCommand.Execute(null);
 
             AddCommand = new RelayCommand<object>(Add);
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
-            DeleteCommand = new RelayCommand<Maison>(Delete);
+            DeleteCommand = new RelayCommand<Famille>(Delete);
         }
 
         private async Task LoadData()
         {
-            var maisons = await _dataService.GetMaisonsAsync();
-            _allMaisons.Clear();
-            foreach (var maison in maisons)
+            var familles = await _dataService.GetFamillesAsync();
+            _allFamilles.Clear();
+            foreach (var famille in familles)
             {
-                _allMaisons.Add(maison);
+                _allFamilles.Add(famille);
             }
             Filter();
         }
 
         private void Filter()
         {
-            var filtered = _allMaisons
+            var filtered = _allFamilles
                 .Where(m => m.nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase))
                 .ToList();
-
-            Maisons.Clear();
-            foreach (var maison in filtered)
+            Familles.Clear();
+            foreach (var famille in filtered)
             {
-                Maisons.Add(maison);
+                Familles.Add(famille);
             }
         }
 
         private void Add(object obj)
         {
-            var maison = new Maison("Nouvelle maison");
-            _allMaisons.Add(maison);
+            var famille = new Famille("Nouvelle famille");
+            famille.id = _allFamilles.Count + 1;
+            _allFamilles.Add(famille);
             Filter();
         }
         private void DeleteSelected(object obj)
         {
-            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les maisons sélectionnés ?",
+            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les familles sélectionnées ?",
                         "Confirmation",
                         MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                var selectedMaisons = Maisons.Where(a => a.IsSelected).ToList();
-                foreach (var maison in selectedMaisons)
+                var selectedFamilles = Familles.Where(a => a.IsSelected).ToList();
+                foreach (var article in selectedFamilles)
                 {
-                    _allMaisons.Remove(maison);
+                    _allFamilles.Remove(article);
                 }
                 Filter();
             }
         }
 
-        private void Delete(Maison maison)
+        private void Delete(Famille famille)
         {
-            _allMaisons.Remove(maison);
+            _allFamilles.Remove(famille);
             Filter();
         }
     }

@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="JamaisASec.Views.UserControls.MaisonsTab"
+﻿<UserControl x:Class="JamaisASec.Views.Contents.MaisonsGrid"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:vm="clr-namespace:JamaisASec.ViewModels.Tab"
+             xmlns:vm="clr-namespace:JamaisASec.ViewModels.Contents"
              xmlns:uc="clr-namespace:JamaisASec.Views.UserControls">
     <UserControl.DataContext>
-        <vm:MaisonsTabViewModel/>
+        <vm:MaisonsGridViewModel/>
     </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
@@ -25,7 +25,7 @@
             <Rectangle VerticalAlignment="Stretch" Fill="{StaticResource Taupe}" Width="1" Margin="20 10 25 10"/>
             <uc:SearchBox Width="300" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
-        <DataGrid Name="MaisonsGrid" Style="{StaticResource DataGridStyle1}" 
+        <DataGrid Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{DynamicResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
                   RowStyle="{DynamicResource DataGridRowStyle1}"

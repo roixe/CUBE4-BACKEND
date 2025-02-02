@@ -190,7 +190,12 @@ namespace JamaisASec.ViewModels
                         IsFournisseursActive = true;
                         break;
                     case "Achats":
-                        _pagesCache[pageTag] = new PageAchats();
+                        var pageAchatsViewModel = new PageAchatsViewModel();
+                        var pageAchats = new BasePageNavigation
+                        {
+                            DataContext = pageAchatsViewModel
+                        };
+                        _pagesCache[pageTag] = pageAchats;
                         IsAchatsActive = true;
                         break;
                     case "Stocks":

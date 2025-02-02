@@ -6,9 +6,9 @@ using JamaisASec.Services;
 using JamaisASec.ViewModels.Modals;
 using JamaisASec.Views.Modals;
 
-namespace JamaisASec.ViewModels.Tab
+namespace JamaisASec.ViewModels.Contents
 {
-    class ArticlesTabViewModel : BaseViewModel
+    class ArticlesGridViewModel : BaseViewModel
     {
         private readonly ObservableCollection<Article> _allArticles;
         public ObservableCollection<Article> Articles { get; }
@@ -20,7 +20,7 @@ namespace JamaisASec.ViewModels.Tab
         private string? _searchText;
         public string SearchText
         {
-            get => _searchText ?? String.Empty;
+            get => _searchText ?? string.Empty;
             set
             {
                 if (SetProperty(ref _searchText, value, nameof(SearchText)))
@@ -46,7 +46,7 @@ namespace JamaisASec.ViewModels.Tab
         }
 
 
-        public ArticlesTabViewModel()
+        public ArticlesGridViewModel()
         {
             _allArticles = new ObservableCollection<Article>();
             Articles = new ObservableCollection<Article>();
@@ -106,7 +106,7 @@ namespace JamaisASec.ViewModels.Tab
             {
                 await _dataService.UpdateArticleAsync(modalVM.Article);
                 LoadDataCommand.Execute(null);
-            }   
+            }
         }
         private void DeleteSelected(object obj)
         {
@@ -122,7 +122,7 @@ namespace JamaisASec.ViewModels.Tab
                 Filter();
             }
         }
-        
+
         private void Delete(Article article)
         {
             _allArticles.Remove(article);
