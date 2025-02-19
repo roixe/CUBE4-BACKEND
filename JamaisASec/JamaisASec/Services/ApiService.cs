@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Windows.Input;
 using JamaisASec.Models;
@@ -127,6 +128,32 @@ namespace JamaisASec.Services
                 response.EnsureSuccessStatusCode();
                 var content = await response.Content.ReadAsStringAsync();
                 return JsonSerializer.Deserialize<List<Commande>>(content) ?? new List<Commande>();
+            });
+        }
+
+        public async Task<bool> UpdateMaisonAsync(Maison maison)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(maison);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync($"Maisons/update/{maison.id}", content);
+
+                return response.IsSuccessStatusCode;
+            });
+        }
+
+        public async Task<bool> UpdateFamilleAsync(Famille famille)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(famille);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync($"Familles/update/{famille.id}", content);
+
+                return response.IsSuccessStatusCode;
             });
         }
     }

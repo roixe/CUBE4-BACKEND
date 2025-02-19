@@ -12,12 +12,13 @@ namespace JamaisASec.ViewModels.Contents
         public ObservableCollection<Maison> Maisons { get; set; }
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
+        public ICommand EditCommand { get; }
         public ICommand DeleteSelectedCommand { get; }
         public ICommand DeleteCommand { get; }
-        private string _searchText;
+        private string? _searchText;
         public string SearchText
         {
-            get => _searchText;
+            get => _searchText ?? string.Empty;
             set
             {
                 if (SetProperty(ref _searchText, value, nameof(SearchText)))
@@ -51,6 +52,7 @@ namespace JamaisASec.ViewModels.Contents
             LoadDataCommand.Execute(null);
 
             AddCommand = new RelayCommand<object>(Add);
+            EditCommand = new RelayCommand<Maison>(async (maison) => await Edit(maison));
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             DeleteCommand = new RelayCommand<Maison>(Delete);
         }
@@ -85,6 +87,18 @@ namespace JamaisASec.ViewModels.Contents
             _allMaisons.Add(maison);
             Filter();
         }
+
+        private async Task Edit(Maison maison)
+        {
+            if (maison == null) return;
+
+            bool success = await _dataService.UpdateMaisonAsync(maison);
+            if (!success)
+            {
+                MessageBox.Show("Erreur lors de la sauvegarde.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void DeleteSelected(object obj)
         {
             if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les maisons sélectionnés ?",

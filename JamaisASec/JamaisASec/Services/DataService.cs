@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows;
 using JamaisASec.Models;
 
 namespace JamaisASec.Services
@@ -126,7 +125,10 @@ namespace JamaisASec.Services
             {
                 //Mettre à jour le cache
                 //_cachedArticles = await _apiService.GetArticlesAsync();
-                _cachedArticles.Add(Article);
+                if (_cachedArticles != null)
+                {
+                    _cachedArticles.Add(Article);
+                }
             }
         }
 
@@ -140,12 +142,59 @@ namespace JamaisASec.Services
             {
                 //Mettre à jour le cache
                 //_cachedArticles = await _apiService.GetArticlesAsync();
-                var index = _cachedArticles.FindIndex(a => a.id == article.id);
-                if (index != -1)
+                if (_cachedArticles != null)
                 {
-                    _cachedArticles[index] = article;
+                    var index = _cachedArticles.FindIndex(a => a.id == article.id);
+                    if (index != -1)
+                    {
+                        _cachedArticles[index] = article;
+                    }
                 }
             }
+        }
+
+        public async Task<bool> UpdateMaisonAsync(Maison maison)
+        {
+            if (maison == null) return false;
+
+            var success = await _apiService.UpdateMaisonAsync(maison);
+
+            // Si l'appel est un succès, on met à jour le cache
+            if (success)
+            {
+                if (_cachedMaisons != null)
+                {
+                    var index = _cachedMaisons.FindIndex(m => m.id == maison.id);
+                    if (index != -1)
+                    {
+                        _cachedMaisons[index] = maison;
+                    }
+                }
+            }
+
+            return success;
+        }
+
+        public async Task<bool> UpdateFamilleAsync(Famille famille)
+        {
+            if (famille == null) return false;
+
+            var success = await _apiService.UpdateFamilleAsync(famille);
+
+            // Si l'appel est un succès, on met à jour le cache
+            if (success)
+            {
+                if (_cachedFamilles != null)
+                {
+                    var index = _cachedFamilles.FindIndex(m => m.id == famille.id);
+                    if (index != -1)
+                    {
+                        _cachedFamilles[index] = famille;
+                    }
+                }
+            }
+
+            return success;
         }
 
     }

@@ -6,6 +6,7 @@ using JamaisASec.Views.Contents;
 using JamaisASec.Models;
 using JamaisASec.ViewModels.Contents;
 using System.ComponentModel.Design;
+using System.Windows;
 
 namespace JamaisASec.ViewModels.Pages
 {
@@ -44,20 +45,24 @@ namespace JamaisASec.ViewModels.Pages
         {
             NavigateCommand = new RelayCommand<object>(param =>
             {
-                switch (param)
+                switch(param)
                 {
-                    case Article article:
-                        Navigate("ArticleView", article);
+                    //Si le commandParameter est un bouton (dans le dataGrid)
+                    case Button button:
+                        //Récupérer le datacontext du bouton (l'article)
+                        Article? article = button.DataContext as Article;
+                        string? tag = button.Tag.ToString();
+                        switch (tag)
+                        {
+                            case "View":
+                                Navigate("ArticleView", article);
+                                break;
+                            case "Edit":
+                                Navigate("ArticleEditView", article);
+                                break;
+                        }
                         break;
-
-                    //case Famille famille:
-                    //    Navigate("FamilleView", famille);
-                    //    break;
-
-                    //case Maison maison:
-                    //    Navigate("MaisonView", maison);
-                    //    break;
-
+                    //Si le commandParameter est un string (les onglets)
                     case string tab when tab == "ArticlesGrid" || tab == "MaisonsGrid" || tab == "FamillesGrid":
                         Navigate(tab);
                         break;
@@ -65,7 +70,6 @@ namespace JamaisASec.ViewModels.Pages
             });
             Navigate("ArticlesGrid");
         }
-
 
         private void Navigate(string tab, Object? obj = null)
         {
@@ -104,29 +108,17 @@ namespace JamaisASec.ViewModels.Pages
                         }
                         break;
 
-                    //case "MaisonView":
-                    //    if (obj is Maison maison)
-                    //    {
-                    //        var maisonViewModel = new MaisonViewModel(maison);
-                    //        var maisonView = new MaisonView
-                    //        {
-                    //            DataContext = maisonViewModel
-                    //        };
-                    //        CurrentContent = maisonView;
-                    //    }
-                    //    break;
-
-                    //case "FamilleView":
-                    //    if (obj is Famille famille)
-                    //    {
-                    //        var familleViewModel = new FamilleViewModel(famille);
-                    //        var familleView = new FamilleView
-                    //        {
-                    //            DataContext = familleViewModel
-                    //        };
-                    //        CurrentContent = familleView;
-                    //    }
-                    //    break;
+                    case "ArticleEditView":
+                        if (obj is Article articleEdit)
+                        {
+                            var articleEditViewModel = new ArticleEditViewModel(articleEdit);
+                            var articleEditView = new ArticleEditView
+                            {
+                                DataContext = articleEditViewModel
+                            };
+                            CurrentContent = articleEditView;
+                        }
+                        break;
                 }
             }
 

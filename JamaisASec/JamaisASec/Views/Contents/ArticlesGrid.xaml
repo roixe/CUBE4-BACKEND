@@ -43,24 +43,24 @@
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="2*" Binding="{Binding nom}"/>
-                <DataGridTextColumn Header="Famille" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding famille.nom}"/>
-                <DataGridTextColumn Header="Maison" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding maison.nom}"/>
-                <DataGridTextColumn Header="Fournisseur" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding fournisseur.nom}"/>
-                <DataGridTextColumn Header="Annee" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding annee}"/>
-                <DataGridTextColumn Header="Prix" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding prix_unitaire}"/>
-                <DataGridTemplateColumn Header="Opérations" IsReadOnly="True" Width="auto">
+                <DataGridTextColumn Header="Nom" IsReadOnly="True" Width="2*" Binding="{Binding nom}"/>
+                <DataGridTextColumn Header="Famille" IsReadOnly="True" Width="*" Binding="{Binding famille.nom}"/>
+                <DataGridTextColumn Header="Maison" IsReadOnly="True" Width="*" Binding="{Binding maison.nom}"/>
+                <DataGridTextColumn Header="Fournisseur" IsReadOnly="True" Width="*" Binding="{Binding fournisseur.nom}"/>
+                <DataGridTextColumn Header="Annee" IsReadOnly="True" Width="*" Binding="{Binding annee}"/>
+                <DataGridTextColumn Header="Prix" IsReadOnly="True" Width="*" Binding="{Binding prix_unitaire}"/>
+                <DataGridTemplateColumn IsReadOnly="True" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridButton}"
+                                <Button Style="{StaticResource gridButton}" Tag="View"
                                         Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
-                                        CommandParameter="{Binding}">
+                                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
                                     <iconPacks:PackIconBootstrapIcons Kind="Eye" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
-                                <Button Style="{StaticResource gridEditButton}"
-                                        Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                        CommandParameter="{Binding}">
+                                <Button Style="{StaticResource gridEditButton}" Tag="Edit"
+                                        Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
                                     <iconPacks:PackIconBootstrapIcons Kind="Pencil" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
                                 <Button Style="{StaticResource gridRemoveButton}" 

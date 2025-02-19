@@ -35,7 +35,7 @@
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
-                <DataGridTemplateColumn Header="Opérations" IsReadOnly="True" Width="Auto">
+                <DataGridTemplateColumn IsReadOnly="True" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -48,10 +48,10 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Référence" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding reference}"/>
-                <DataGridTextColumn Header="Date" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding date, StringFormat={}{0:dd/MM/yyyy}}"/>
-                <DataGridTextColumn Header="Client" IsReadOnly="True" CanUserResize="False" Width="Auto" Binding="{Binding client.nom}"/>
-                <DataGridTemplateColumn Header="Statut" IsReadOnly="True" CanUserResize="False" Width="auto">
+                <DataGridTextColumn Header="Référence" IsReadOnly="True" Width="Auto" Binding="{Binding reference}"/>
+                <DataGridTextColumn Header="Date" IsReadOnly="True" Width="Auto" Binding="{Binding date, StringFormat={}{0:dd/MM/yyyy}}"/>
+                <DataGridTextColumn Header="Client" IsReadOnly="True" Width="Auto" Binding="{Binding client.nom}"/>
+                <DataGridTemplateColumn Header="Statut" IsReadOnly="True" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Border Background="{Binding status, Converter={StaticResource StatusToColorConverter}}" 

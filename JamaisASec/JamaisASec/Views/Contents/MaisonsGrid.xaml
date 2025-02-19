@@ -30,7 +30,8 @@
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
                   RowStyle="{DynamicResource DataGridRowStyle1}"
                   Grid.Row="1"
-                  ItemsSource="{Binding Maisons}">
+                  ItemsSource="{Binding Maisons}"
+                  CellEditEnding="DataGrid_CellEditEnding">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}" Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}">
                     <DataGridCheckBoxColumn.HeaderTemplate>
@@ -39,14 +40,11 @@
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding nom}"/>
-                <DataGridTemplateColumn Header="Opérations" IsReadOnly="True" Width="auto">
+                <DataGridTextColumn Header="Nom" Width="*" Binding="{Binding nom, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTemplateColumn IsReadOnly="True" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridEditButton}">
-                                    <iconPacks:PackIconBootstrapIcons Kind="Pencil" Width="12" Height="12" VerticalAlignment="Center"/>
-                                </Button>
                                 <Button Style="{StaticResource gridRemoveButton}"
                                         Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
                                         CommandParameter="{Binding}">
