@@ -12,7 +12,8 @@ namespace JamaisASec.ViewModels
 
         public BaseViewModel()
         {
-            _apiService = new ApiService();
+            ApiService.Initialize();
+            _apiService = ApiService.Instance;
             _commandeService = new CommandeService(_apiService);
             DataService.Initialize(_apiService);
             _dataService = DataService.Instance;
