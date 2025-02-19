@@ -48,11 +48,11 @@
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding nom}"/>
-                <DataGridTextColumn Header="Adresse" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding adresse}"/>
-                <DataGridTextColumn Header="Mail" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding mail}"/>
-                <DataGridTextColumn Header="Téléphone" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding telephone}"/>
-                <DataGridTemplateColumn Header="Opérations" IsReadOnly="True" Width="*">
+                <DataGridTextColumn Header="Nom" IsReadOnly="True" Width="*" Binding="{Binding nom}"/>
+                <DataGridTextColumn Header="Adresse" IsReadOnly="True" Width="*" Binding="{Binding adresse}"/>
+                <DataGridTextColumn Header="Mail" IsReadOnly="True" Width="*" Binding="{Binding mail}"/>
+                <DataGridTextColumn Header="Téléphone" IsReadOnly="True" Width="*" Binding="{Binding telephone}"/>
+                <DataGridTemplateColumn IsReadOnly="True" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

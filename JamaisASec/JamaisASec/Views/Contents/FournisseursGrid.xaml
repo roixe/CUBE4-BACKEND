@@ -46,12 +46,12 @@
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding nom}"/>
-                <DataGridTextColumn Header="Adresse" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding adresse}"/>
-                <DataGridTextColumn Header="Mail" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding mail}"/>
-                <DataGridTextColumn Header="Téléphone" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding telephone}"/>
-                <DataGridTextColumn Header="SIRET" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding siret}"/>
-                <DataGridTemplateColumn Header="Opérations" IsReadOnly="True" Width="*">
+                <DataGridTextColumn Header="Nom" IsReadOnly="True" Width="*" Binding="{Binding nom}"/>
+                <DataGridTextColumn Header="Adresse" IsReadOnly="True" Width="*" Binding="{Binding adresse}"/>
+                <DataGridTextColumn Header="Mail" IsReadOnly="True" Width="*" Binding="{Binding mail}"/>
+                <DataGridTextColumn Header="Téléphone" IsReadOnly="True" Width="*" Binding="{Binding telephone}"/>
+                <DataGridTextColumn Header="SIRET" IsReadOnly="True" Width="*" Binding="{Binding siret}"/>
+                <DataGridTemplateColumn IsReadOnly="True" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

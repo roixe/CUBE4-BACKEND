@@ -39,8 +39,8 @@
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="Nom" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding nom}"/>
-                <DataGridTemplateColumn Header="Opérations" IsReadOnly="True" Width="auto">
+                <DataGridTextColumn Header="Nom" IsReadOnly="True" Width="*" Binding="{Binding nom}"/>
+                <DataGridTemplateColumn IsReadOnly="True" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

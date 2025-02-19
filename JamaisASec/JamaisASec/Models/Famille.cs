@@ -10,5 +10,20 @@ namespace JamaisASec.Models
     {
         public int id { get; set; }
         public string nom { get; set; } = nom;
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Famille);
+        }
+
+        public bool Equals(Famille other)
+        {
+            return other != null && id == other.id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(id, nom);
+        }
     }
 }
