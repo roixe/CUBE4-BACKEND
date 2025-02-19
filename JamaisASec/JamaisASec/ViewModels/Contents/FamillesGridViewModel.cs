@@ -12,12 +12,13 @@ namespace JamaisASec.ViewModels.Contents
         public ObservableCollection<Famille> Familles { get; }
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
+        public ICommand EditCommand { get; }
         public ICommand DeleteSelectedCommand { get; }
         public ICommand DeleteCommand { get; }
-        private string _searchText;
+        private string? _searchText;
         public string SearchText
         {
-            get => _searchText;
+            get => _searchText ?? string.Empty;
             set
             {
                 if (SetProperty(ref _searchText, value, nameof(SearchText)))
@@ -50,6 +51,7 @@ namespace JamaisASec.ViewModels.Contents
             LoadDataCommand.Execute(null);
 
             AddCommand = new RelayCommand<object>(Add);
+            EditCommand = new RelayCommand<Famille>(async (famille) => await Edit(famille));
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             DeleteCommand = new RelayCommand<Famille>(Delete);
         }
@@ -83,6 +85,17 @@ namespace JamaisASec.ViewModels.Contents
             famille.id = _allFamilles.Count + 1;
             _allFamilles.Add(famille);
             Filter();
+        }
+
+        private async Task Edit(Famille famille)
+        {
+            if (famille == null) return;
+
+            bool success = await _dataService.UpdateFamilleAsync(famille);
+            if (!success)
+            {
+                MessageBox.Show("Erreur lors de la sauvegarde.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void DeleteSelected(object obj)
         {

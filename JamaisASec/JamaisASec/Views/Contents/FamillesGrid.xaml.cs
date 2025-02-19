@@ -1,4 +1,6 @@
 ﻿using System.Windows.Controls;
+using JamaisASec.Models;
+using JamaisASec.ViewModels.Contents;
 
 namespace JamaisASec.Views.Contents
 {
@@ -10,6 +12,17 @@ namespace JamaisASec.Views.Contents
         public FamillesGrid()
         {
             InitializeComponent();
+        }
+
+        private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (e.Row.DataContext is Famille famille)
+            {
+                if (DataContext is FamillesGridViewModel vm)
+                {
+                    vm.EditCommand.Execute(famille);
+                }
+            }
         }
     }
 }

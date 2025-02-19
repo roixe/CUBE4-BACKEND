@@ -14,12 +14,12 @@ namespace JamaisASec.Models
         public string mail { get; set; } = string.Empty;
         public string telephone { get; set; } = string.Empty;
         public string siret { get; set; } = string.Empty;
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return Equals(obj as Fournisseur);
         }
 
-        public bool Equals(Fournisseur other)
+        public bool Equals(Fournisseur? other)
         {
             return other != null && id == other.id;
         }
