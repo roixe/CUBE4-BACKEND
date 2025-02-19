@@ -8,6 +8,8 @@ namespace JamaisASec.Services
     /// </summary>
     public class DataService
     {
+        private static DataService _instance;
+        
         private readonly ApiService _apiService;
 
         // Cache des données
@@ -21,6 +23,24 @@ namespace JamaisASec.Services
         public DataService(ApiService apiService)
         {
             _apiService = apiService;
+        }
+        public static DataService Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    throw new InvalidOperationException("DataService instance has not been initialized.");
+                }
+                return _instance;
+            }
+        }
+        public static void Initialize(ApiService apiService)
+        {
+            if (_instance == null)
+            {
+                _instance = new DataService(apiService);
+            }
         }
 
         /// <summary>

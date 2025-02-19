@@ -14,7 +14,8 @@ namespace JamaisASec.ViewModels
         {
             _apiService = new ApiService();
             _commandeService = new CommandeService(_apiService);
-            _dataService = new DataService(_apiService);
+            DataService.Initialize(_apiService);
+            _dataService = DataService.Instance;
         }
 
         protected void OnPropertyChanged(string propertyName)
