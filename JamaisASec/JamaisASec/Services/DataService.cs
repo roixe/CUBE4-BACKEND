@@ -20,6 +20,8 @@ namespace JamaisASec.Services
         private List<Maison>? _cachedMaisons;
         private List<Famille>? _cachedFamilles;
 
+        public event EventHandler<EventArgs> ArticlesUpdated;
+
         public DataService(ApiService apiService)
         {
             _apiService = apiService;
@@ -107,17 +109,6 @@ namespace JamaisASec.Services
             return (commandesClients, commandesFournisseurs);
         }
 
-        /// <summary>
-        /// Force un rechargement des données (utile pour actualiser depuis l'API).
-        /// </summary>
-        public async Task RefreshDataAsync()
-        {
-            _cachedArticles = await _apiService.GetArticlesAsync();
-            _cachedClients = await _apiService.GetClientsAsync();
-            _cachedFournisseurs = await _apiService.GetFournisseursAsync();
-            _cachedCommandes = await _apiService.GetCommandesAsync();
-        }
-
         public async Task<List<Maison>> GetMaisonsAsync()
         {
             if (_cachedMaisons == null)
@@ -190,6 +181,17 @@ namespace JamaisASec.Services
                         _cachedMaisons[index] = maison;
                     }
                 }
+                if (_cachedArticles != null)
+                {
+                    foreach (var article in _cachedArticles)
+                    {
+                        if (article.maison?.id == maison.id)
+                        {
+                            article.maison = maison;
+                        }
+                    }
+                    ArticlesUpdated?.Invoke(this, EventArgs.Empty);
+                }
             }
 
             return success;
@@ -211,6 +213,18 @@ namespace JamaisASec.Services
                     {
                         _cachedFamilles[index] = famille;
                     }
+                }
+                
+                if (_cachedArticles != null)
+                {
+                    foreach (var article in _cachedArticles)
+                    {
+                        if (article.famille?.id == famille.id)
+                        {
+                            article.famille = famille;
+                        }
+                    }
+                    ArticlesUpdated?.Invoke(this, EventArgs.Empty);
                 }
             }
 

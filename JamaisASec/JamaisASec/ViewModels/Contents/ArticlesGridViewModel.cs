@@ -54,10 +54,18 @@ namespace JamaisASec.ViewModels.Contents
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             LoadDataCommand.Execute(null);
 
+            _dataService.ArticlesUpdated += OnArticlesUpdated;
+
             AddCommand = new RelayCommand<object>(Add);
             EditCommand = new RelayCommand<Article>(Edit);
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             DeleteCommand = new RelayCommand<Article>(Delete);
+        }
+
+        private void OnArticlesUpdated(object? sender, EventArgs e)
+        {
+            // Mettre à jour les propriétés liées
+            _ = LoadData();
         }
 
         private async Task LoadData()
