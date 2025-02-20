@@ -21,6 +21,8 @@ namespace JamaisASec.Services
         private List<Famille>? _cachedFamilles;
 
         public event EventHandler<EventArgs> ArticlesUpdated;
+        public event EventHandler<EventArgs> CommandesUpdated;
+        public event EventHandler<EventArgs> ClientsUpdated;
 
         public DataService(ApiService apiService)
         {
@@ -223,11 +225,43 @@ namespace JamaisASec.Services
                         {
                             article.famille = famille;
                         }
+                        ArticlesUpdated?.Invoke(this, EventArgs.Empty);
                     }
-                    ArticlesUpdated?.Invoke(this, EventArgs.Empty);
                 }
             }
 
+            return success;
+        }
+
+        public async Task<bool> UpdateClientAsync(Client client)
+        {
+            if (client == null) return false;
+            var success = true;
+            //var success = await _apiService.UpdateClientAsync(client);
+            // Si l'appel est un succès, on met à jour le cache
+            if (success)
+            {
+                if (_cachedClients != null)
+                {
+                    var index = _cachedClients.FindIndex(c => c.id == client.id);
+                    if (index != -1)
+                    {
+                        _cachedClients[index] = client;
+                    }
+                    ClientsUpdated?.Invoke(this, EventArgs.Empty);
+                }
+                if(_cachedCommandes != null)
+                {
+                    foreach (var commande in _cachedCommandes)
+                    {
+                        if (commande.client?.id == client.id)
+                        {
+                            commande.client = client;
+                        }
+                    }
+                    CommandesUpdated?.Invoke(this, EventArgs.Empty);
+                }
+            }
             return success;
         }
 
