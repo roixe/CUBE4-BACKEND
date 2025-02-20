@@ -11,6 +11,7 @@ namespace JamaisASec.ViewModels.Pages
 
     class PageClientsViewModel : BaseViewModel
     {
+        private ClientsGrid _gridCache;
         private UserControl _currentContent = new();
         public UserControl CurrentContent
         {
@@ -30,13 +31,14 @@ namespace JamaisASec.ViewModels.Pages
         {
             NavigateCommand = new RelayCommand<object>(param =>
             {
-                if (param is Client client)
+                switch (param)
                 {
-                    Navigate("ClientView", client);
-                }
-                else if (param is string tab)
-                {
-                    Navigate(tab);
+                    case (Client client, bool isEditMode):
+                        Navigate(isEditMode ? "ClientEditView" : "ClientView", client);
+                        break;
+                    default:
+                        Navigate("ClientsGrid");
+                        break;
                 }
             });
             Navigate("ClientsGrid");
@@ -47,17 +49,32 @@ namespace JamaisASec.ViewModels.Pages
             switch (tab)
             {
                 case "ClientsGrid":
-                    CurrentContent = new ClientsGrid();
+                    if (_gridCache == null)
+                    {
+                        _gridCache = new ClientsGrid();
+                    }
+                    CurrentContent = _gridCache;
                     break;
                 case "ClientView":
                     if(client != null)
                     {
-                        var clientViewModel = new ClientViewModel(client);
+                        var clientViewModel = new ClientViewModel(client, NavigateCommand);
                         var clientView = new ClientView
                         {
                             DataContext = clientViewModel
                         };
                         CurrentContent = clientView;
+                    }
+                    break;
+                case "ClientEditView":
+                    if (client != null)
+                    {
+                        var clientViewModel = new ClientViewModel(client, NavigateCommand, isEditMode: true);
+                        var clientEditView = new ClientEditView
+                        {
+                            DataContext = clientViewModel
+                        };
+                        CurrentContent = clientEditView;
                     }
                     break;
             }

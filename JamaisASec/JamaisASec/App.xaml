@@ -19,6 +19,7 @@
             <conv:StatusToColorConverter x:Key="StatusToColorConverter"/>
             <conv:TabActiveConverter x:Key="TabActiveConverter"/>
             <conv:TotalPriceConverter x:Key="TotalPriceConverter"/>
+            <conv:ObjectEditModeConverter x:Key="ObjectEditModeConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

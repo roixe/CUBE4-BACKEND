@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Input;
 using JamaisASec.Models;
 using JamaisASec.Services;
 
@@ -11,7 +8,38 @@ namespace JamaisASec.ViewModels.Contents
 {
     public class ClientViewModel : BaseViewModel
     {
-        public Client Client { get; }
+        private Client _clientTemp;
+        private bool _isEditMode;
+
+        public Client Client { get; } // Client original, non modifié
+        public Client ClientTemp
+        {
+            get => _clientTemp;
+            set => SetProperty(ref _clientTemp, value, nameof(ClientTemp));
+        }
+
+        public bool IsEditMode
+        {
+            get => _isEditMode;
+            set
+            {
+                if (SetProperty(ref _isEditMode, value, nameof(IsEditMode)))
+                {
+                    if (_isEditMode)
+                    {
+                        // Copier les données du client dans ClientTemp pour l'édition
+                        ClientTemp = new Client
+                        {
+                            id = Client.id,
+                            nom = Client.nom,
+                            adresse = Client.adresse,
+                            mail = Client.mail,
+                            telephone = Client.telephone
+                        };
+                    }
+                }
+            }
+        }
 
         private ObservableCollection<Commande> _commandes = new();
         public ObservableCollection<Commande> Commandes
@@ -20,10 +48,20 @@ namespace JamaisASec.ViewModels.Contents
             set => SetProperty(ref _commandes, value, nameof(Commandes));
         }
 
-        public ClientViewModel(Client client)
+        public ICommand NavigateCommand { get; }
+        public ICommand SaveCommand { get; }
+
+        public ClientViewModel(Client client, ICommand navigateCommand, bool isEditMode = false)
         {
             Client = client;
-            LoadCommandesAsync();
+            ClientTemp = new Client(); // Valeur par défaut avant l'édition
+            IsEditMode = isEditMode;
+            NavigateCommand = navigateCommand;
+            if (!IsEditMode)
+            {
+                LoadCommandesAsync();
+            }
+            SaveCommand = new RelayCommand<object>(_ => SaveClient());
         }
 
         private async void LoadCommandesAsync()
@@ -35,9 +73,33 @@ namespace JamaisASec.ViewModels.Contents
             }
             catch (Exception ex)
             {
-                // Gérer les erreurs
                 System.Diagnostics.Debug.WriteLine($"Erreur lors du chargement des commandes : {ex.Message}");
             }
         }
+
+        private async void SaveClient()
+        {
+            if (!IsEditMode) return;
+
+            try
+            {
+                // Mise à jour du client avec les nouvelles valeurs
+                Client.nom = ClientTemp.nom;
+                Client.adresse = ClientTemp.adresse;
+                Client.mail = ClientTemp.mail;
+                Client.telephone = ClientTemp.telephone;
+
+                // Envoyer les modifications au serveur
+                await _dataService.UpdateClientAsync(Client);
+
+                NavigateCommand?.Execute((Client, false));
+
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erreur lors de la sauvegarde : {ex.Message}");
+            }
+        }
+
     }
 }

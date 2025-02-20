@@ -15,10 +15,10 @@ namespace JamaisASec.ViewModels.Contents
     {
         private readonly ObservableCollection<Client> _allClients;
         public ObservableCollection<Client> Clients { get; set; }
-        private string _searchText;
+        private string? _searchText;
         public string SearchText
         {
-            get => _searchText;
+            get => _searchText ?? string.Empty;
             set
             {
                 if (SetProperty(ref _searchText, value, nameof(SearchText)))
@@ -58,10 +58,18 @@ namespace JamaisASec.ViewModels.Contents
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             LoadDataCommand.Execute(null);
 
+            _dataService.ClientsUpdated += OnClientsUpdated;
+
             AddCommand = new RelayCommand<object>(Add);
             EditCommand = new RelayCommand<Client>(Edit);
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             DeleteCommand = new RelayCommand<Client>(Delete);
+        }
+
+        private void OnClientsUpdated(object? sender, EventArgs e)
+        {
+            // Mettre à jour les propriétés liées
+            _ = LoadData();
         }
 
         private async Task LoadData()

@@ -12,9 +12,11 @@ namespace JamaisASec.ViewModels
 
         public BaseViewModel()
         {
-            _apiService = new ApiService();
+            ApiService.Initialize();
+            _apiService = ApiService.Instance;
             _commandeService = new CommandeService(_apiService);
-            _dataService = new DataService(_apiService);
+            DataService.Initialize(_apiService);
+            _dataService = DataService.Instance;
         }
 
         protected void OnPropertyChanged(string propertyName)

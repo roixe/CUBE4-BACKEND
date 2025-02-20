@@ -8,6 +8,8 @@ namespace JamaisASec.Services
     /// </summary>
     public class DataService
     {
+        private static DataService _instance;
+        
         private readonly ApiService _apiService;
 
         // Cache des données
@@ -18,9 +20,31 @@ namespace JamaisASec.Services
         private List<Maison>? _cachedMaisons;
         private List<Famille>? _cachedFamilles;
 
+        public event EventHandler<EventArgs> ArticlesUpdated;
+        public event EventHandler<EventArgs> CommandesUpdated;
+        public event EventHandler<EventArgs> ClientsUpdated;
+
         public DataService(ApiService apiService)
         {
             _apiService = apiService;
+        }
+        public static DataService Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    throw new InvalidOperationException("DataService instance has not been initialized.");
+                }
+                return _instance;
+            }
+        }
+        public static void Initialize(ApiService apiService)
+        {
+            if (_instance == null)
+            {
+                _instance = new DataService(apiService);
+            }
         }
 
         /// <summary>
@@ -87,17 +111,6 @@ namespace JamaisASec.Services
             return (commandesClients, commandesFournisseurs);
         }
 
-        /// <summary>
-        /// Force un rechargement des données (utile pour actualiser depuis l'API).
-        /// </summary>
-        public async Task RefreshDataAsync()
-        {
-            _cachedArticles = await _apiService.GetArticlesAsync();
-            _cachedClients = await _apiService.GetClientsAsync();
-            _cachedFournisseurs = await _apiService.GetFournisseursAsync();
-            _cachedCommandes = await _apiService.GetCommandesAsync();
-        }
-
         public async Task<List<Maison>> GetMaisonsAsync()
         {
             if (_cachedMaisons == null)
@@ -150,6 +163,7 @@ namespace JamaisASec.Services
                         _cachedArticles[index] = article;
                     }
                 }
+                ArticlesUpdated?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -170,6 +184,17 @@ namespace JamaisASec.Services
                         _cachedMaisons[index] = maison;
                     }
                 }
+                if (_cachedArticles != null)
+                {
+                    foreach (var article in _cachedArticles)
+                    {
+                        if (article.maison?.id == maison.id)
+                        {
+                            article.maison = maison;
+                        }
+                    }
+                }
+                ArticlesUpdated?.Invoke(this, EventArgs.Empty);
             }
 
             return success;
@@ -192,8 +217,52 @@ namespace JamaisASec.Services
                         _cachedFamilles[index] = famille;
                     }
                 }
+                if (_cachedArticles != null)
+                {
+                    foreach (var article in _cachedArticles)
+                    {
+                        if (article.famille?.id == famille.id)
+                        {
+                            article.famille = famille;
+                        }
+                        
+                    }
+                }
+                ArticlesUpdated?.Invoke(this, EventArgs.Empty);
             }
 
+            return success;
+        }
+
+        public async Task<bool> UpdateClientAsync(Client client)
+        {
+            if (client == null) return false;
+            var success = true;
+            //var success = await _apiService.UpdateClientAsync(client);
+            // Si l'appel est un succès, on met à jour le cache
+            if (success)
+            {
+                if (_cachedClients != null)
+                {
+                    var index = _cachedClients.FindIndex(c => c.id == client.id);
+                    if (index != -1)
+                    {
+                        _cachedClients[index] = client;
+                    }
+                }
+                if(_cachedCommandes != null)
+                {
+                    foreach (var commande in _cachedCommandes)
+                    {
+                        if (commande.client?.id == client.id)
+                        {
+                            commande.client = client;
+                        }
+                    }
+                }
+                ClientsUpdated?.Invoke(this, EventArgs.Empty);
+                CommandesUpdated?.Invoke(this, EventArgs.Empty);
+            }
             return success;
         }
 

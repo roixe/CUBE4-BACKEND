@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Windows;
 using System.Windows.Input;
 using JamaisASec.Models;
 
@@ -8,6 +9,7 @@ namespace JamaisASec.Services
 {
     public class ApiService : IApiService
     {
+        private static ApiService _instance;
         private readonly HttpClient _httpClient;
 
         public ApiService()
@@ -18,6 +20,25 @@ namespace JamaisASec.Services
                 throw new ArgumentNullException(nameof(apiBaseUrl), "ApiBaseUrl cannot be null or empty.");
             }
             _httpClient = new HttpClient { BaseAddress = new Uri(apiBaseUrl) };
+        }
+        public static ApiService Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    throw new InvalidOperationException("DataService instance has not been initialized.");
+                }
+                return _instance;
+            }
+        }
+
+        public static void Initialize()
+        {
+            if (_instance == null)
+            {
+                _instance = new ApiService();
+            }
         }
         private async Task<T> RunWithLoadingCursor<T>(Func<Task<T>> apiCall)
         {
