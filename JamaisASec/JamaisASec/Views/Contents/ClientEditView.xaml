@@ -14,9 +14,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -40,7 +37,7 @@
             <Button Style="{StaticResource topButton}"
                     Margin="5 10 0 5"
                     Command="{Binding SaveCommand}" 
-                    CommandParameter="SaveClient"
+                    CommandParameter=""
                     HorizontalAlignment="Left">
                 <iconPacks:PackIconBootstrapIcons Kind="Floppy" Width="20" Height="20"/>
             </Button>

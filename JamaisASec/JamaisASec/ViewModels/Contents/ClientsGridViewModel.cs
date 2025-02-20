@@ -46,7 +46,6 @@ namespace JamaisASec.ViewModels.Contents
         }
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
-        public ICommand EditCommand { get; }
         public ICommand DeleteSelectedCommand { get; }
         public ICommand DeleteCommand { get; }
 
@@ -61,7 +60,6 @@ namespace JamaisASec.ViewModels.Contents
             _dataService.ClientsUpdated += OnClientsUpdated;
 
             AddCommand = new RelayCommand<object>(Add);
-            EditCommand = new RelayCommand<Client>(Edit);
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             DeleteCommand = new RelayCommand<Client>(Delete);
         }
@@ -101,11 +99,6 @@ namespace JamaisASec.ViewModels.Contents
             client.nom = "Nouveau client";
             _allClients.Add(client);
             Filter();
-        }
-
-        private void Edit(Client client)
-        {
-            MessageBox.Show("Édition du client " + client.nom);
         }
 
         private void DeleteSelected(object obj)

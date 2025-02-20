@@ -10,14 +10,6 @@ namespace JamaisASec.ViewModels.Contents
     {
         private Client _clientTemp;
         private bool _isEditMode;
-
-        public Client Client { get; } // Client original, non modifié
-        public Client ClientTemp
-        {
-            get => _clientTemp;
-            set => SetProperty(ref _clientTemp, value, nameof(ClientTemp));
-        }
-
         public bool IsEditMode
         {
             get => _isEditMode;
@@ -41,6 +33,13 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
+        public Client Client { get; } // Client original, non modifié
+        public Client ClientTemp
+        {
+            get => _clientTemp;
+            set => SetProperty(ref _clientTemp, value, nameof(ClientTemp));
+        }
+        
         private ObservableCollection<Commande> _commandes = new();
         public ObservableCollection<Commande> Commandes
         {
@@ -61,7 +60,7 @@ namespace JamaisASec.ViewModels.Contents
             {
                 LoadCommandesAsync();
             }
-            SaveCommand = new RelayCommand<object>(_ => SaveClient());
+            SaveCommand = new RelayCommand<object>(_ => Save());
         }
 
         private async void LoadCommandesAsync()
@@ -77,7 +76,7 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private async void SaveClient()
+        private async void Save()
         {
             if (!IsEditMode) return;
 

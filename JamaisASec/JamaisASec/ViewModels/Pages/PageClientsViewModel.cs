@@ -11,7 +11,7 @@ namespace JamaisASec.ViewModels.Pages
 
     class PageClientsViewModel : BaseViewModel
     {
-        private ClientsGrid _gridCache;
+        private ClientsGrid? _gridCache;
         private UserControl _currentContent = new();
         public UserControl CurrentContent
         {
