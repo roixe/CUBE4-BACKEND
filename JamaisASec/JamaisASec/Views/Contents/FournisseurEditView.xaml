@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="JamaisASec.Views.Contents.ClientEditView"
+﻿<UserControl x:Class="JamaisASec.Views.Contents.FournisseurEditView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -14,20 +14,21 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
             <Button Style="{StaticResource topButton}"
                     Margin="5 10 0 5"
                     Command="{Binding NavigateCommand}" 
                     HorizontalAlignment="Left">
                 <Button.CommandParameter>
                     <MultiBinding Converter="{StaticResource ObjectEditModeConverter}">
-                        <Binding Path="Client"/>
+                        <Binding Path="Fournisseur"/>
                         <Binding Source="False"/>
                         <!-- Mode Vue -->
                     </MultiBinding>
@@ -44,15 +45,18 @@
         </StackPanel>
 
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Nom:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ClientTemp.nom}" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FournisseurTemp.nom}" Margin="5" VerticalAlignment="Center"/>
 
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Adresse:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ClientTemp.adresse}" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding FournisseurTemp.adresse}" Margin="5" VerticalAlignment="Center"/>
 
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Email:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ClientTemp.mail}" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding FournisseurTemp.mail}" Margin="5" VerticalAlignment="Center"/>
 
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Téléphone:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ClientTemp.telephone}" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding FournisseurTemp.telephone}" Margin="5" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="SIRET:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding FournisseurTemp.siret}" Margin="5" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

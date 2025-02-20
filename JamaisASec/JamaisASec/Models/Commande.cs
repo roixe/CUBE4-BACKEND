@@ -1,6 +1,4 @@
 ﻿
-using System.ComponentModel;
-
 namespace JamaisASec.Models
 {
     public class Commande : BaseModel

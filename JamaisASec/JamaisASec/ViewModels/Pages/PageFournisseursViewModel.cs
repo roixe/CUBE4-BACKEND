@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
 using JamaisASec.Models;
 using JamaisASec.Services;
@@ -11,6 +9,7 @@ namespace JamaisASec.ViewModels.Pages
 {
     class PageFournisseursViewModel : BaseViewModel
     {
+        private FournisseursGrid? _gridCache;
         private UserControl _currentContent = new();
         public UserControl CurrentContent
         {
@@ -30,13 +29,14 @@ namespace JamaisASec.ViewModels.Pages
         {
             NavigateCommand = new RelayCommand<object>(param =>
             {
-                if (param is Fournisseur fournisseur)
+                switch(param)
                 {
-                    Navigate("FournisseurView", fournisseur);
-                }
-                else if (param is string tab)
-                {
-                    Navigate(tab);
+                    case (Fournisseur fournisseur, bool isEditMode):
+                        Navigate(isEditMode ? "FournisseurEditView" : "FournisseurView", fournisseur);
+                        break;
+                    default:
+                        Navigate("FournisseursGrid");
+                        break;
                 }
             });
             Navigate("FournisseursGrid");
@@ -47,17 +47,32 @@ namespace JamaisASec.ViewModels.Pages
             switch (tab)
             {
                 case "FournisseursGrid":
-                    CurrentContent = new FournisseursGrid();
+                    if(_gridCache == null)
+                    {
+                        _gridCache = new FournisseursGrid();
+                    }
+                    CurrentContent = _gridCache;
                     break;
                 case "FournisseurView":
                     if (fournisseur != null)
                     {
-                        var fournisseurViewModel = new FournisseurViewModel(fournisseur);
+                        var fournisseurViewModel = new FournisseurViewModel(fournisseur, NavigateCommand);
                         var fournisseurView = new FournisseurView
                         {
                             DataContext = fournisseurViewModel
                         };
                         CurrentContent = fournisseurView;
+                    }
+                    break;
+                case "FournisseurEditView":
+                    if (fournisseur != null)
+                    {
+                        var fournisseurViewModel = new FournisseurViewModel(fournisseur, NavigateCommand, isEditMode: true);
+                        var fournisseurEditView = new FournisseurEditView
+                        {
+                            DataContext = fournisseurViewModel
+                        };
+                        CurrentContent = fournisseurEditView;
                     }
                     break;
             }

@@ -9,10 +9,10 @@ namespace JamaisASec.ViewModels.Pages
     {
         private readonly ObservableCollection<Article> _allStocks;
         public ObservableCollection<Article> Stocks { get; set; }
-        private string _searchText;
+        private string? _searchText;
         public string SearchText
         {
-            get => _searchText;
+            get => _searchText?? string.Empty;
             set
             {
                 if (SetProperty(ref _searchText, value, nameof(SearchText)))
