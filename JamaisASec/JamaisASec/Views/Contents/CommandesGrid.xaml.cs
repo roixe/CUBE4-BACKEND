@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using JamaisASec.Models;
+using JamaisASec.ViewModels.Contents;
 
 namespace JamaisASec.Views.Contents
 {
@@ -23,6 +25,15 @@ namespace JamaisASec.Views.Contents
         public CommandesGrid()
         {
             InitializeComponent();
+        }
+
+        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is DataGridRow row && row.DataContext is Commande selectedCommande)
+            {
+                var viewModel = DataContext as CommandesGridViewModel;
+                viewModel?.RowDoubleClickCommand.Execute(selectedCommande);
+            }
         }
     }
 }

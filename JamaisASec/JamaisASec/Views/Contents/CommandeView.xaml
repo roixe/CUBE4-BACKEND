@@ -20,14 +20,27 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button Style="{StaticResource topButton}"
-                Margin="5 10 0 5"
-                Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
-                CommandParameter="CommandesGrid"
-                Grid.Column="0" Grid.Row="0"
-                HorizontalAlignment="Left">
-            <iconPacks:PackIconBootstrapIcons Kind="ArrowLeft" Width="20" Height="20"/>
-        </Button>
+        <StackPanel Orientation="Horizontal">
+            <Button Style="{StaticResource topButton}"
+            Margin="5 10 0 5"
+            Command="{Binding NavigateCommand}" 
+            CommandParameter=""
+            HorizontalAlignment="Left">
+                <iconPacks:PackIconBootstrapIcons Kind="ArrowLeft" Width="20" Height="20"/>
+            </Button>
+            <Button Style="{StaticResource topButton}"
+            Margin="5 10 0 5"
+            Command="{Binding NavigateCommand}"
+            HorizontalAlignment="Left">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource ObjectEditModeConverter}">
+                        <Binding Path="Commande"/>
+                        <Binding Source="True"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+                <iconPacks:PackIconBootstrapIcons Kind="Pencil" Width="20" Height="20"/>
+            </Button>
+        </StackPanel>
 
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Référence:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Commande.reference}" Margin="5" VerticalAlignment="Center"/>
@@ -55,9 +68,9 @@
                                     Binding="{Binding Path=., Converter={StaticResource TotalPriceConverter}}" />
             </DataGrid.Columns>
         </DataGrid>
-        <!--Need to debug <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <TextBlock Text="Total de la commande :" FontWeight="Bold" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             <TextBlock Text="{Binding TotalCommande}" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        </StackPanel>--> 
+        </StackPanel>
     </Grid>
 </UserControl>

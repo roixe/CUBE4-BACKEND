@@ -11,6 +11,7 @@ namespace JamaisASec.ViewModels.Pages
 
     class PageCommandesViewModel : BaseViewModel
     {
+        private CommandesGrid? _gridCache;
         private UserControl _currentContent = new();
         public UserControl CurrentContent
         {
@@ -29,13 +30,17 @@ namespace JamaisASec.ViewModels.Pages
         {
             NavigateCommand = new RelayCommand<object>(param =>
             {
-                if (param is Commande commande)
+                switch(param)
                 {
-                    Navigate("CommandeView", commande);
-                }
-                else if (param is string tab)
-                {
-                    Navigate(tab);
+                    case Commande commande:
+                        Navigate("CommandeView", commande);
+                        break;
+                    case (Commande commande, bool isEditMode):
+                        Navigate(isEditMode ? "CommandeEditView" : "CommandeView", commande);
+                        break;
+                    default:
+                        Navigate("CommandesGrid");
+                        break;
                 }
             });
             Navigate("CommandesGrid");
@@ -46,17 +51,33 @@ namespace JamaisASec.ViewModels.Pages
             switch (tab)
             {
                 case "CommandesGrid":
-                    CurrentContent = new CommandesGrid();
+                    if (_gridCache == null)
+                    {
+                        _gridCache = new CommandesGrid
+                        {
+                            DataContext = new CommandesGridViewModel(NavigateCommand)
+                        };
+                    }
+                    CurrentContent = _gridCache;
                     break;
                 case "CommandeView":
                     if (commande != null)
                     {
-                        var commandeViewModel = new CommandeViewModel(commande);
                         var commandeView = new CommandeView
                         {
-                            DataContext = commandeViewModel
+                            DataContext = new CommandeViewModel(commande, NavigateCommand)
                         };
                         CurrentContent = commandeView;
+                    }
+                    break;
+                case "CommandeEditView":
+                    if (commande != null)
+                    {
+                        var commandeEditView = new CommandeEditView
+                        {
+                            DataContext = new CommandeViewModel(commande, NavigateCommand, true)
+                        };
+                        CurrentContent = commandeEditView;
                     }
                     break;
             }
