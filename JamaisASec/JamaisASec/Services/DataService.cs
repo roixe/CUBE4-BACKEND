@@ -163,6 +163,7 @@ namespace JamaisASec.Services
                         _cachedArticles[index] = article;
                     }
                 }
+                ArticlesUpdated?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -192,8 +193,8 @@ namespace JamaisASec.Services
                             article.maison = maison;
                         }
                     }
-                    ArticlesUpdated?.Invoke(this, EventArgs.Empty);
                 }
+                ArticlesUpdated?.Invoke(this, EventArgs.Empty);
             }
 
             return success;
@@ -216,7 +217,6 @@ namespace JamaisASec.Services
                         _cachedFamilles[index] = famille;
                     }
                 }
-                
                 if (_cachedArticles != null)
                 {
                     foreach (var article in _cachedArticles)
@@ -225,9 +225,10 @@ namespace JamaisASec.Services
                         {
                             article.famille = famille;
                         }
-                        ArticlesUpdated?.Invoke(this, EventArgs.Empty);
+                        
                     }
                 }
+                ArticlesUpdated?.Invoke(this, EventArgs.Empty);
             }
 
             return success;
@@ -248,7 +249,6 @@ namespace JamaisASec.Services
                     {
                         _cachedClients[index] = client;
                     }
-                    ClientsUpdated?.Invoke(this, EventArgs.Empty);
                 }
                 if(_cachedCommandes != null)
                 {
@@ -259,8 +259,9 @@ namespace JamaisASec.Services
                             commande.client = client;
                         }
                     }
-                    CommandesUpdated?.Invoke(this, EventArgs.Empty);
                 }
+                ClientsUpdated?.Invoke(this, EventArgs.Empty);
+                CommandesUpdated?.Invoke(this, EventArgs.Empty);
             }
             return success;
         }

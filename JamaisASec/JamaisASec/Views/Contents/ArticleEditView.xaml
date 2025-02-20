@@ -25,51 +25,66 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Button Style="{StaticResource topButton}"
-            Margin="5 10 0 5"
-            Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
-            CommandParameter="ArticlesGrid"
-            HorizontalAlignment="Left">
-            <iconPacks:PackIconBootstrapIcons Kind="ArrowLeft" Width="20" Height="20"/>
-        </Button>
+        <StackPanel Orientation="Horizontal">
+            <Button Style="{StaticResource topButton}"
+                    Margin="5 10 0 5"
+                    Command="{Binding NavigateCommand}" 
+                    HorizontalAlignment="Left">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource ObjectEditModeConverter}">
+                        <Binding Path="Article"/>
+                        <Binding Source="False"/>
+                        <!-- Retourner au mode Vue -->
+                    </MultiBinding>
+                </Button.CommandParameter>
+                <iconPacks:PackIconBootstrapIcons Kind="ArrowLeft" Width="20" Height="20"/>
+            </Button>
+            <Button Style="{StaticResource topButton}"
+                    Margin="5 10 0 5"
+                    Command="{Binding SaveCommand}" 
+                    CommandParameter=""
+                    HorizontalAlignment="Left">
+                <iconPacks:PackIconBootstrapIcons Kind="Floppy" Width="20" Height="20"/>
+            </Button>
+        </StackPanel>
 
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Nom:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Article.nom, Mode=TwoWay}" Margin="5"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ArticleTemp.nom, Mode=TwoWay}" Margin="5"/>
 
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Description:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Article.description, Mode=TwoWay}" Margin="5"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ArticleTemp.description, Mode=TwoWay}" Margin="5"/>
 
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Quantité en stock:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Article.quantite, Mode=TwoWay}" Margin="5"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ArticleTemp.quantite, Mode=TwoWay}" Margin="5"/>
 
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Quantité minimum:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Article.quantite_Min, Mode=TwoWay}" Margin="5"/>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ArticleTemp.quantite_Min, Mode=TwoWay}" Margin="5"/>
 
         <TextBlock Grid.Row="5" Grid.Column="0" Text="Colisage:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Article.colisage, Mode=TwoWay}" Margin="5"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding ArticleTemp.colisage, Mode=TwoWay}" Margin="5"/>
 
         <TextBlock Grid.Row="6" Grid.Column="0" Text="Prix unitaire:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Article.prix_unitaire, Mode=TwoWay, StringFormat=N2}" Margin="5"/>
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding ArticleTemp.prix_unitaire, Mode=TwoWay, StringFormat=N2}" Margin="5"/>
 
         <TextBlock Grid.Row="7" Grid.Column="0" Text="Fournisseur:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
         <ComboBox Grid.Row="7" Grid.Column="1" 
                   Style="{DynamicResource ComboBoxStyle1}"
                   ItemsSource="{Binding Fournisseurs}" 
-                  SelectedItem="{Binding Article.fournisseur, Mode=TwoWay}" 
+                  SelectedItem="{Binding ArticleTemp.fournisseur, Mode=TwoWay}" 
                   DisplayMemberPath="nom" Margin="5"/>
 
         <TextBlock Grid.Row="8" Grid.Column="0" Text="Famille:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
         <ComboBox Grid.Row="8" Grid.Column="1" 
                   Style="{DynamicResource ComboBoxStyle1}"
                   ItemsSource="{Binding Familles}" 
-                  SelectedItem="{Binding Article.famille, Mode=TwoWay}" 
+                  SelectedItem="{Binding ArticleTemp.famille, Mode=TwoWay}" 
                   DisplayMemberPath="nom" Margin="5"/>
 
         <TextBlock Grid.Row="9" Grid.Column="0" Text="Maison:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
         <ComboBox Grid.Row="9" Grid.Column="1" 
                   Style="{DynamicResource ComboBoxStyle1}"
                   ItemsSource="{Binding Maisons}" 
-                  SelectedItem="{Binding Article.maison, Mode=TwoWay}" 
+                  SelectedItem="{Binding ArticleTemp.maison, Mode=TwoWay}" 
                   DisplayMemberPath="nom" 
                   Margin="5"/>
     </Grid>

@@ -47,20 +47,9 @@ namespace JamaisASec.ViewModels.Pages
             {
                 switch(param)
                 {
-                    //Si le commandParameter est un bouton (dans le dataGrid)
-                    case Button button:
-                        //Récupérer le datacontext du bouton (l'article)
-                        Article? article = button.DataContext as Article;
-                        string? tag = button.Tag.ToString();
-                        switch (tag)
-                        {
-                            case "View":
-                                Navigate("ArticleView", article);
-                                break;
-                            case "Edit":
-                                Navigate("ArticleEditView", article);
-                                break;
-                        }
+                    // Si le commandParameter est un article (edit dans view)
+                    case (Article article, bool isEditMode):
+                        Navigate(isEditMode ? "ArticleEditView" : "ArticleView", article);
                         break;
                     //Si le commandParameter est un string (les onglets)
                     case string tab when tab == "ArticlesGrid" || tab == "MaisonsGrid" || tab == "FamillesGrid":
@@ -99,7 +88,7 @@ namespace JamaisASec.ViewModels.Pages
                     case "ArticleView":
                         if (obj is Article article)
                         {
-                            var articleViewModel = new ArticleViewModel(article);
+                            var articleViewModel = new ArticleViewModel(article, NavigateCommand);
                             var articleView = new ArticleView
                             {
                                 DataContext = articleViewModel
@@ -111,7 +100,7 @@ namespace JamaisASec.ViewModels.Pages
                     case "ArticleEditView":
                         if (obj is Article articleEdit)
                         {
-                            var articleEditViewModel = new ArticleEditViewModel(articleEdit);
+                            var articleEditViewModel = new ArticleViewModel(articleEdit, NavigateCommand, isEditMode: true);
                             var articleEditView = new ArticleEditView
                             {
                                 DataContext = articleEditViewModel
@@ -120,6 +109,7 @@ namespace JamaisASec.ViewModels.Pages
                         }
                         break;
                 }
+                tab = "ArticlesGrid";
             }
 
             ActiveTab = tab;
