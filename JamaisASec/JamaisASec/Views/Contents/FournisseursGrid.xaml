@@ -55,12 +55,26 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridButton}"
-                                        Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
-                                        CommandParameter="{Binding}">
+                                <Button Style="{StaticResource gridButton}" Tag="View"
+                                        Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType=Page}}">
+                                    <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource ObjectEditModeConverter}">
+                                            <Binding Path="."/>
+                                            <Binding Source="False"/>
+                                            <!-- Mode Vue -->
+                                        </MultiBinding>
+                                    </Button.CommandParameter>
                                     <iconPacks:PackIconBootstrapIcons Kind="Eye" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
-                                <Button Style="{StaticResource gridEditButton}">
+                                <Button Style="{StaticResource gridButton}" Tag="Edit"
+                                        Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType=Page}}">
+                                    <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource ObjectEditModeConverter}">
+                                            <Binding Path="."/>
+                                            <Binding Source="True"/>
+                                            <!-- Mode Édition -->
+                                        </MultiBinding>
+                                    </Button.CommandParameter>
                                     <iconPacks:PackIconBootstrapIcons Kind="Pencil" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
                                 <Button Style="{StaticResource gridRemoveButton}"

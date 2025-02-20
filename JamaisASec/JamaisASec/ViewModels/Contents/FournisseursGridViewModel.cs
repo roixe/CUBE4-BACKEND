@@ -50,11 +50,17 @@ namespace JamaisASec.ViewModels.Contents
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             LoadDataCommand.Execute(null);
 
+            _dataService.FournisseursUpdated += OnFournisseursUpdated;
+
             AddCommand = new RelayCommand<object>(Add);
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             DeleteCommand = new RelayCommand<Fournisseur>(Delete);
         }
-
+        
+        private void OnFournisseursUpdated(object? sender, EventArgs e)
+        {
+            _ = LoadData();
+        }
         private async Task LoadData()
         {
             var fournisseurs = await _dataService.GetFournisseursAsync();

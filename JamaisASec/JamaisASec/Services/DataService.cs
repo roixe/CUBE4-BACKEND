@@ -23,6 +23,7 @@ namespace JamaisASec.Services
         public event EventHandler<EventArgs> ArticlesUpdated;
         public event EventHandler<EventArgs> CommandesUpdated;
         public event EventHandler<EventArgs> ClientsUpdated;
+        public event EventHandler<EventArgs> FournisseursUpdated;
 
         public DataService(ApiService apiService)
         {
@@ -261,6 +262,38 @@ namespace JamaisASec.Services
                     }
                 }
                 ClientsUpdated?.Invoke(this, EventArgs.Empty);
+                CommandesUpdated?.Invoke(this, EventArgs.Empty);
+            }
+            return success;
+        }
+
+        public async Task<bool> UpdateFournisseurAsync(Fournisseur fournisseur)
+        {
+            if (fournisseur == null) return false;
+            var success = true;
+            //var success = await _apiService.UpdateFournisseurAsync(fournisseur);
+            // Si l'appel est un succès, on met à jour le cache
+            if (success)
+            {
+                if (_cachedFournisseurs != null)
+                {
+                    var index = _cachedFournisseurs.FindIndex(f => f.id == fournisseur.id);
+                    if (index != -1)
+                    {
+                        _cachedFournisseurs[index] = fournisseur;
+                    }
+                }
+                if (_cachedCommandes != null)
+                {
+                    foreach (var commande in _cachedCommandes)
+                    {
+                        if (commande.fournisseur?.id == fournisseur.id)
+                        {
+                            commande.fournisseur = fournisseur;
+                        }
+                    }
+                }
+                FournisseursUpdated?.Invoke(this, EventArgs.Empty);
                 CommandesUpdated?.Invoke(this, EventArgs.Empty);
             }
             return success;
