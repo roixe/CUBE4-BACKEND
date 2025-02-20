@@ -299,5 +299,26 @@ namespace JamaisASec.Services
             return success;
         }
 
+        public async Task<bool> UpdateCommandeAsync(Commande commande)
+        {
+            if (commande == null) return false;
+            var success = true;
+            //var success = await _apiService.UpdateCommandeAsync(commande);
+            // Si l'appel est un succès, on met à jour le cache
+            if (success)
+            {
+                if (_cachedCommandes != null)
+                {
+                    var index = _cachedCommandes.FindIndex(c => c.id == commande.id);
+                    if (index != -1)
+                    {
+                        _cachedCommandes[index] = commande;
+                    }
+                }
+                CommandesUpdated?.Invoke(this, EventArgs.Empty);
+            }
+            return success;
+        }
+
     }
 }

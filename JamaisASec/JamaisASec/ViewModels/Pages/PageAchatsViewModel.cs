@@ -9,6 +9,7 @@ namespace JamaisASec.ViewModels.Pages
 {
     class PageAchatsViewModel : BaseViewModel
     {
+        private AchatsGrid? _gridCache;
         private UserControl _currentContent = new();
         public UserControl CurrentContent
         {
@@ -27,13 +28,17 @@ namespace JamaisASec.ViewModels.Pages
         {
             NavigateCommand = new RelayCommand<object>(param =>
             {
-                if (param is Commande commande)
+                switch(param)
                 {
-                    Navigate("AchatView", commande);
-                }
-                else if (param is string tab)
-                {
-                    Navigate(tab);
+                    case Commande achat:
+                        Navigate("AchatView", achat);
+                        break;
+                    case (Commande achat, bool isEditMode):
+                        Navigate(isEditMode? "AchatEditView" : "AchatView", achat);
+                        break;
+                    default:
+                        Navigate("AchatsGrid");
+                        break;
                 }
             });
             Navigate("AchatsGrid");
@@ -44,15 +49,31 @@ namespace JamaisASec.ViewModels.Pages
             switch (tab)
             {
                 case "AchatsGrid":
-                    CurrentContent = new AchatsGrid();
+                    if (_gridCache == null)
+                    {
+                        _gridCache = new AchatsGrid
+                        {
+                            DataContext = new AchatsGridViewModel(NavigateCommand)
+                        };
+                    }
+                    CurrentContent = _gridCache;
                     break;
                 case "AchatView":
                     if (commande != null)
                     {
-                        var commandeViewModel = new AchatViewModel(commande);
                         var commandeView = new AchatView
                         {
-                            DataContext = commandeViewModel
+                            DataContext = new AchatViewModel(commande, NavigateCommand)
+                        };
+                        CurrentContent = commandeView;
+                    }
+                    break;
+                case "AchatEditView":
+                    if (commande != null)
+                    {
+                        var commandeView = new AchatEditView
+                        {
+                            DataContext = new AchatViewModel(commande, NavigateCommand, true)
                         };
                         CurrentContent = commandeView;
                     }

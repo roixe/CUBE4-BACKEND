@@ -14,7 +14,7 @@ namespace JamaisASec.ViewModels.Contents
     {
         private readonly ObservableCollection<Commande> _allAchats;
         public ObservableCollection<Commande> Achats { get; set; }
-        public ICommand LoadDataCommand { get; }
+        
         private string? _searchText;
         public string SearchText
         {
@@ -44,14 +44,33 @@ namespace JamaisASec.ViewModels.Contents
                 }
             }
         }
-
-        public AchatsGridViewModel()
+        public ICommand LoadDataCommand { get; }
+        public ICommand NavigateCommand { get; }
+        public ICommand RowDoubleClickCommand { get; }
+        public AchatsGridViewModel(ICommand navigateCommand)
         {
             _allAchats = new ObservableCollection<Commande>();
             Achats = new ObservableCollection<Commande>();
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             LoadDataCommand.Execute(null);
+
+            _dataService.CommandesUpdated += OnAchatsUpdated;
+
+            NavigateCommand = navigateCommand;
+            
+            RowDoubleClickCommand = new RelayCommand<Commande>(achat =>
+            {
+                if (achat != null)
+                {
+                    NavigateCommand?.Execute(achat);
+                }
+            });
+        }
+
+        private void OnAchatsUpdated(object? sender, EventArgs e)
+        {
+            _ = LoadData();
         }
 
         private async Task LoadData()
