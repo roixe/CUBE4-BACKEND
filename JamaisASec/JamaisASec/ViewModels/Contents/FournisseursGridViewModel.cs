@@ -10,10 +10,10 @@ namespace JamaisASec.ViewModels.Contents
     {
         private readonly ObservableCollection<Fournisseur> _allFournisseurs;
         public ObservableCollection<Fournisseur> Fournisseurs { get; set; }
-        private string _searchText;
+        private string? _searchText;
         public string SearchText
         {
-            get => _searchText;
+            get => _searchText ?? string.Empty;
             set
             {
                 if (SetProperty(ref _searchText, value, nameof(SearchText)))

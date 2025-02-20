@@ -23,7 +23,6 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Button Back to Grid -->
         <StackPanel Orientation="Horizontal">
             <Button Style="{StaticResource topButton}"
                     Margin="5 10 0 5"
@@ -46,23 +45,17 @@
                 <iconPacks:PackIconBootstrapIcons Kind="Floppy" Width="20" Height="20"/>
             </Button>
         </StackPanel>
-        
 
-        <!-- Nom Field -->
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Nom:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ClientTemp.nom}" Margin="5" VerticalAlignment="Center"/>
 
-        <!-- Adresse Field -->
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Adresse:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ClientTemp.adresse}" Margin="5" VerticalAlignment="Center"/>
 
-        <!-- Email Field -->
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Email:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ClientTemp.mail}" Margin="5" VerticalAlignment="Center"/>
 
-        <!-- Téléphone Field -->
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Téléphone:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ClientTemp.telephone}" Margin="5" VerticalAlignment="Center"/>
-
     </Grid>
 </UserControl>
