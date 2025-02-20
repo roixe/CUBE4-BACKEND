@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using JamaisASec.Models;
+﻿using JamaisASec.Models;
 using System.Windows.Input;
 using JamaisASec.Services;
 using System.Windows.Controls;
@@ -8,7 +7,6 @@ using JamaisASec.ViewModels.Contents;
 
 namespace JamaisASec.ViewModels.Pages
 {
-
     class PageClientsViewModel : BaseViewModel
     {
         private ClientsGrid? _gridCache;
@@ -58,10 +56,9 @@ namespace JamaisASec.ViewModels.Pages
                 case "ClientView":
                     if(client != null)
                     {
-                        var clientViewModel = new ClientViewModel(client, NavigateCommand);
                         var clientView = new ClientView
                         {
-                            DataContext = clientViewModel
+                            DataContext = new ClientViewModel(client, NavigateCommand)
                         };
                         CurrentContent = clientView;
                     }
@@ -69,10 +66,9 @@ namespace JamaisASec.ViewModels.Pages
                 case "ClientEditView":
                     if (client != null)
                     {
-                        var clientViewModel = new ClientViewModel(client, NavigateCommand, isEditMode: true);
                         var clientEditView = new ClientEditView
                         {
-                            DataContext = clientViewModel
+                            DataContext = new ClientViewModel(client, NavigateCommand, isEditMode: true)
                         };
                         CurrentContent = clientEditView;
                     }
