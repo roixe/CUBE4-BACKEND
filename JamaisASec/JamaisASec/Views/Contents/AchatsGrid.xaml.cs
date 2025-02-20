@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using JamaisASec.ViewModels.Contents;
+using JamaisASec.Models;
 
 namespace JamaisASec.Views.Contents
 {
@@ -23,6 +25,14 @@ namespace JamaisASec.Views.Contents
         public AchatsGrid()
         {
             InitializeComponent();
+        }
+        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is DataGridRow row && row.DataContext is Commande selectedAchat)
+            {
+                var viewModel = DataContext as AchatsGridViewModel;
+                viewModel?.RowDoubleClickCommand.Execute(selectedAchat);
+            }
         }
     }
 }

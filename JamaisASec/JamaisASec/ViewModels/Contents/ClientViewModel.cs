@@ -8,7 +8,14 @@ namespace JamaisASec.ViewModels.Contents
 {
     public class ClientViewModel : BaseViewModel
     {
+        public Client Client { get; } // Client original, non modifié
         private Client _clientTemp;
+        public Client ClientTemp
+        {
+            get => _clientTemp;
+            set => SetProperty(ref _clientTemp, value, nameof(ClientTemp));
+        }
+
         private bool _isEditMode;
         public bool IsEditMode
         {
@@ -31,13 +38,6 @@ namespace JamaisASec.ViewModels.Contents
                     }
                 }
             }
-        }
-
-        public Client Client { get; } // Client original, non modifié
-        public Client ClientTemp
-        {
-            get => _clientTemp;
-            set => SetProperty(ref _clientTemp, value, nameof(ClientTemp));
         }
         
         private ObservableCollection<Commande> _commandes = new();

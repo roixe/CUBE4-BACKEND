@@ -66,7 +66,6 @@ namespace JamaisASec.ViewModels.Contents
 
         private void OnClientsUpdated(object? sender, EventArgs e)
         {
-            // Mettre à jour les propriétés liées
             _ = LoadData();
         }
 
