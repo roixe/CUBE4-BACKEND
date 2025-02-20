@@ -33,7 +33,7 @@ namespace JamaisASec.ViewModels.Contents
                             date = Achat.date,
                             reference = Achat.reference,
                             status = Achat.status,
-                            client = Achat.client
+                            fournisseur = Achat.fournisseur
                         };
                     }
                 }
@@ -100,15 +100,14 @@ namespace JamaisASec.ViewModels.Contents
 
             try
             {
-                // Mettre à jour des données de l'achat
-                Achat.id = AchatTemp.id;
+                // Mettre à jour les données de l'achat
                 Achat.date = AchatTemp.date;
                 Achat.reference = AchatTemp.reference;
                 Achat.status = AchatTemp.status;
-                Achat.client = AchatTemp.client;
+                Achat.fournisseur = AchatTemp.fournisseur;
 
                 // Envoyer les modification au serveur
-                await _dataService.UpdateCommandeAsync(Achat);
+                //await _dataService.UpdateCommandeAsync(Achat);
 
                 NavigateCommand?.Execute((Achat, false));
             }
