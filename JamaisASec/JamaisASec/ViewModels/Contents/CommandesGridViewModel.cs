@@ -7,52 +7,29 @@ namespace JamaisASec.ViewModels.Contents
 {
     class CommandesGridViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Commande> _allCommandes;
-        public ObservableCollection<Commande> Commandes { get; set; }
-        
-        private string? _searchText;
-        public string SearchText
-        {
-            get => _searchText ?? String.Empty;
-            set
-            {
-                if (SetProperty(ref _searchText, value, nameof(SearchText)))
-                {
-                    Filter();
-                }
-            }
-        }
-        private bool _isHeaderCheckBoxChecked;
-        public bool IsHeaderCheckBoxChecked
-        {
-            get => _isHeaderCheckBoxChecked;
-            set
-            {
-                if (_isHeaderCheckBoxChecked != value)
-                {
-                    _isHeaderCheckBoxChecked = value;
-                    OnPropertyChanged(nameof(IsHeaderCheckBoxChecked));
-                    foreach (var commande in Commandes)
-                    {
-                        commande.IsSelected = _isHeaderCheckBoxChecked;
-                    }
-                }
-            }
-        }
+        private readonly ObservableCollection<Commande> _allCommandes = [];
+        public ObservableCollection<Commande> Commandes { get; } = [];
 
         public ICommand LoadDataCommand { get; }
         public ICommand NavigateCommand { get; }
         public ICommand RowDoubleClickCommand { get; }
         public CommandesGridViewModel(ICommand navigateCommand)
         {
-            _allCommandes = new ObservableCollection<Commande>();
-            Commandes = new ObservableCollection<Commande>();
+            // Liaison du filtrage
+            OnSearchTextChanged = _ => Filter();
 
-            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            LoadDataCommand.Execute(null);
+            // Liaison de la sélection globale
+            OnHeaderCheckBoxChanged = isChecked =>
+            {
+                foreach (var commande in Commandes)
+                {
+                    commande.IsSelected = isChecked;
+                }
+            };
 
             _dataService.CommandesUpdated += OnCommandesUpdated;
 
+            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             NavigateCommand = navigateCommand;
 
             RowDoubleClickCommand = new RelayCommand<Commande>(commande =>
@@ -62,6 +39,8 @@ namespace JamaisASec.ViewModels.Contents
                     NavigateCommand.Execute(commande);
                 }
             });
+
+            _ = LoadData();
         }
 
         private void OnCommandesUpdated(object? sender, EventArgs e)

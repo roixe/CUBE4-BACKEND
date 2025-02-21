@@ -19,10 +19,10 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Horizontal">
-                <Button Grid.Row="0" Style="{StaticResource topButton}" Command="{Binding AddCommand}" CommandParameter="null" >
+                <Button Grid.Row="0" Style="{StaticResource topButton}" Command="{Binding AddCommand}" CommandParameter="" >
                     <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="20" Height="20"/>
                 </Button>
-                <Button Grid.Row="0" Style="{StaticResource topButton}" Command="{Binding DeleteSelectedCommand}" CommandParameter="null">
+                <Button Grid.Row="0" Style="{StaticResource topButton}" Command="{Binding DeleteSelectedCommand}" CommandParameter="">
                     <iconPacks:PackIconBootstrapIcons Kind="Trash" Width="20" Height="20"/>
                 </Button>
             </StackPanel>

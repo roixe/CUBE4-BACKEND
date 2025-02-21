@@ -10,56 +10,38 @@ namespace JamaisASec.ViewModels.Contents
 {
     class ArticlesGridViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Article> _allArticles;
-        public ObservableCollection<Article> Articles { get; }
+        private readonly ObservableCollection<Article> _allArticles = [];
+        public ObservableCollection<Article> Articles { get; } = [];
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
         public ICommand EditCommand { get; }
         public ICommand DeleteSelectedCommand { get; }
         public ICommand DeleteCommand { get; }
-        private string? _searchText;
-        public string SearchText
-        {
-            get => _searchText ?? string.Empty;
-            set
-            {
-                if (SetProperty(ref _searchText, value, nameof(SearchText)))
-                {
-                    Filter();
-                }
-            }
-        }
-        private bool _isHeaderCheckBoxChecked;
-        public bool IsHeaderCheckBoxChecked
-        {
-            get => _isHeaderCheckBoxChecked;
-            set
-            {
-                if (SetProperty(ref _isHeaderCheckBoxChecked, value, nameof(IsHeaderCheckBoxChecked)))
-                {
-                    foreach (var article in Articles)
-                    {
-                        article.IsSelected = _isHeaderCheckBoxChecked;
-                    }
-                }
-            }
-        }
-
 
         public ArticlesGridViewModel()
         {
-            _allArticles = new ObservableCollection<Article>();
-            Articles = new ObservableCollection<Article>();
 
-            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            LoadDataCommand.Execute(null);
+            // Liaison du filtrage
+            OnSearchTextChanged = _ => Filter();
+
+            // Liaison de la sélection globale
+            OnHeaderCheckBoxChanged = isChecked =>
+            {
+                foreach (var article in Articles)
+                {
+                    article.IsSelected = isChecked;
+                }
+            };
 
             _dataService.ArticlesUpdated += OnArticlesUpdated;
 
-            AddCommand = new RelayCommand<object>(Add);
+            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
+            AddCommand = new RelayCommand<object>(_ => Add());
             EditCommand = new RelayCommand<Article>(Edit);
-            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            DeleteSelectedCommand = new RelayCommand<object>(_ => DeleteSelected());
             DeleteCommand = new RelayCommand<Article>(Delete);
+
+            _ = LoadData();
         }
 
         private void OnArticlesUpdated(object? sender, EventArgs e)
@@ -90,7 +72,7 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private async void Add(object obj)
+        private async void Add()
         {
             var modal = new ArticleModal();
             var article = new Article();
@@ -116,7 +98,7 @@ namespace JamaisASec.ViewModels.Contents
                 LoadDataCommand.Execute(null);
             }
         }
-        private void DeleteSelected(object obj)
+        private void DeleteSelected()
         {
             if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les articles sélectionnés ?",
                         "Confirmation",
