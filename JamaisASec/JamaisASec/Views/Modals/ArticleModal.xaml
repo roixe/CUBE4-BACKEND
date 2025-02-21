@@ -16,8 +16,9 @@
         <Grid Margin="10" Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="120"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -25,6 +26,8 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+
+            <!-- Nom -->
             <uc:CustomTextBox 
                 Grid.Column="0"
                 Grid.Row="0"
@@ -34,6 +37,8 @@
                 DynamicHeight="80"
                 TextWrapping="Wrap"
                 Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+            <!-- Description -->
             <uc:CustomTextBox 
                 Grid.Column="0"
                 Grid.Row="2"
@@ -43,6 +48,8 @@
                 TextWrapping="Wrap"
                 DynamicHeight="120"
                 Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+            <!-- Stock et Stock Min -->
             <uc:CustomTextBox 
                 Grid.Column="1"
                 Grid.Row="0"
@@ -50,6 +57,7 @@
                 Hint="Entrez le stock"
                 DynamicHeight="40"
                 Text="{Binding Quantite, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
             <uc:CustomTextBox 
                 Grid.Column="2"
                 Grid.Row="0"
@@ -57,6 +65,8 @@
                 Hint="Entrez le stock minimum"
                 DynamicHeight="40"
                 Text="{Binding QuantiteMin, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+            <!-- Colisage et Année -->
             <uc:CustomTextBox 
                 Grid.Column="1"
                 Grid.Row="1"
@@ -64,13 +74,16 @@
                 Hint="Entrez le colisage"
                 DynamicHeight="40"
                 Text="{Binding Colisage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
             <uc:CustomTextBox 
                 Grid.Column="2"
                 Grid.Row="1"
-                Caption="Annee" 
+                Caption="Année" 
                 Hint="Entrez l'année"
                 DynamicHeight="40"
                 Text="{Binding Annee, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+            <!-- Famille, Maison et Fournisseur sur la même ligne -->
             <uc:CustomComboBox 
                 Grid.Column="1"
                 Grid.Row="2"
@@ -78,6 +91,7 @@
                 ItemsSource="{Binding Familles}"
                 SelectedItem="{Binding SelectedFamille, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                 DisplayMemberPath="nom"/>
+
             <uc:CustomComboBox 
                 Grid.Column="2"
                 Grid.Row="2"
@@ -85,6 +99,16 @@
                 ItemsSource="{Binding Maisons}"
                 SelectedItem="{Binding SelectedMaison, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                 DisplayMemberPath="nom"/>
+
+            <uc:CustomComboBox 
+                Grid.Column="3"
+                Grid.Row="2"
+                Caption="Fournisseur"
+                ItemsSource="{Binding Fournisseurs}"
+                SelectedItem="{Binding SelectedFournisseur, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                DisplayMemberPath="nom"/>
+
+            <!-- Prix -->
             <uc:CustomTextBox 
                 Grid.Column="1"
                 Grid.Row="3"
@@ -93,6 +117,7 @@
                 DynamicHeight="40"
                 Text="{Binding Prix, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         </Grid>
+
         <Button Grid.Row="1"
                 Content="Sauvegarder"
                 Width="100" 

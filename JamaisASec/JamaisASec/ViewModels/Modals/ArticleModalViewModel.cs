@@ -8,9 +8,11 @@ namespace JamaisASec.ViewModels.Modals
 {
     public class ArticleModalViewModel : BaseViewModel
     {
-        public Article Article { get; }
+        public ArticleDTO Article { get; }
         public ObservableCollection<Famille> Familles { get; set; }
         public ObservableCollection<Maison> Maisons { get; set; }
+        public ObservableCollection<Fournisseur> Fournisseurs { get; set; }
+
         private string? _nom;
         public string Nom
         {
@@ -62,6 +64,13 @@ namespace JamaisASec.ViewModels.Modals
             get => _selectedMaison;
             set => SetProperty(ref _selectedMaison, value, nameof(SelectedMaison));
         }
+
+        private Fournisseur? _selectedFournisseur;
+        public Fournisseur? SelectedFournisseur
+        {
+            get => _selectedFournisseur;
+            set => SetProperty(ref _selectedMaison, value, nameof(SelectedFournisseur));
+        }
         private int _prix;
         public int Prix
         {
@@ -77,11 +86,12 @@ namespace JamaisASec.ViewModels.Modals
             _window = window;
             Maisons = new ObservableCollection<Maison>();
             Familles = new ObservableCollection<Famille>();
+            Fournisseurs = new ObservableCollection<Fournisseur>();
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             LoadDataCommand.Execute(null);
 
-            Article = article ?? new Article();
+            Article = article ?? new ArticleDTO();
             _nom = Article.nom;
             _description = Article.description;
             _quantite = Article.quantite;
@@ -123,15 +133,24 @@ namespace JamaisASec.ViewModels.Modals
             {
                 return;
             }
-            Article.nom = Nom;
-            Article.description = Description;
-            Article.quantite = Quantite;
-            Article.quantite_Min = QuantiteMin;
-            Article.colisage = Colisage;
-            Article.annee = Annee;
-            Article.prix_unitaire = Prix;
-            Article.famille = Familles.FirstOrDefault(f => f.nom == SelectedFamille?.nom);
-            Article.maison = Maisons.FirstOrDefault(m => m.nom == SelectedMaison?.nom);
+
+            // Créer un ArticleDTO à partir des données saisies dans la vue
+            var articleDTO = new ArticleDTO
+            {
+                nom = Nom,
+                description = Description,
+                quantite = Quantite,
+                quantite_Min = QuantiteMin,
+                colisage = Colisage,
+                annee = Annee,
+                prix_unitaire = Prix,
+                famille = Selec,  
+                maison = SelectedMaison?.id,    
+                fournisseur = SelectedFournisseur?.id 
+            };
+
+            // Appeler le service pour ajouter l'article via l'API
+            _dataService.AddArticleAsync(articleDTO);
 
             _window.DialogResult = true;
             _window.Close();
