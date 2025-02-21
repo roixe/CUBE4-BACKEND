@@ -8,9 +8,6 @@
              xmlns:vm="clr-namespace:JamaisASec.ViewModels.Contents"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
-        <vm:CommandesGridViewModel/>
-    </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -20,13 +17,17 @@
               HorizontalAlignment="Left"
               Width="300" 
               Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
-        <!-- Table des achats -->
+        <!-- Table des commandes -->
         <DataGrid Style="{StaticResource DataGridStyle1}" 
-          CellStyle="{DynamicResource DataGridCellStyle1}" 
-          ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
-          RowStyle="{DynamicResource DataGridRowStyle1}" 
-          Grid.Row="1"
-          ItemsSource="{Binding Commandes}">
+                  CellStyle="{DynamicResource DataGridCellStyle1}" 
+                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+                  Grid.Row="1"
+                  ItemsSource="{Binding Commandes}">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridRow" BasedOn="{StaticResource DataGridRowStyle1}">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}" Binding="{Binding IsSelected}">
                     <DataGridCheckBoxColumn.HeaderTemplate>
@@ -35,19 +36,6 @@
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
-                <DataGridTemplateColumn IsReadOnly="True" Width="Auto">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridButton}"
-                        Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
-                        CommandParameter="{Binding}">
-                                    <iconPacks:PackIconBootstrapIcons Kind="Eye" Width="12" Height="12" VerticalAlignment="Center"/>
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Référence" IsReadOnly="True" Width="Auto" Binding="{Binding reference}"/>
                 <DataGridTextColumn Header="Date" IsReadOnly="True" Width="Auto" Binding="{Binding date, StringFormat={}{0:dd/MM/yyyy}}"/>
                 <DataGridTextColumn Header="Client" IsReadOnly="True" Width="Auto" Binding="{Binding client.nom}"/>
