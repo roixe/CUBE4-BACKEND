@@ -48,9 +48,7 @@ namespace JamaisASec.Services
             }
         }
 
-        /// <summary>
-        /// Retourne les articles, avec mise en cache pour éviter les appels redondants.
-        /// </summary>
+        #region Getters
         public async Task<List<Article>> GetArticlesAsync()
         {
             if (_cachedArticles == null)
@@ -130,7 +128,18 @@ namespace JamaisASec.Services
             return _cachedFamilles;
         }
 
-        public async Task AddArticleAsync(Article Article)
+        public async Task<List<Article>> GetArticlesByFournisseurAsync(int id)
+        {
+            if (_cachedArticles == null) await GetArticlesAsync();
+ 
+            return _cachedArticles.Where(a => a.fournisseur?.id == id).ToList();
+            
+        }
+
+        #endregion
+
+        #region Creaters
+        public async Task CreateArticleAsync(Article Article)
         {
             // Appel à l'API pour ajouter l'article
             //var addedArticle = await _apiService.AddArticleAsync(Article);
@@ -146,6 +155,14 @@ namespace JamaisASec.Services
             }
         }
 
+        public async Task CreateArticleCommandeAsync(ArticlesCommandes articleCommande, int commande_id)
+        {
+            await _apiService.CreateArticleCommandeAsync(articleCommande, commande_id);
+        }
+
+        #endregion
+
+        #region Updaters
         public async Task UpdateArticleAsync(Article article)
         {
             // Appel à l'API pour mettre à jour l'article
@@ -320,5 +337,19 @@ namespace JamaisASec.Services
             return success;
         }
 
+        public async Task<bool> UpdateArticleCommandeAsync(ArticlesCommandes articleCommande, int commande_id)
+        {
+            if (articleCommande == null) return false;
+
+            return await _apiService.UpdateArticleCommandeAsync(articleCommande, commande_id);
+        }
+        #endregion
+
+        #region Deleters
+        public async Task<bool> DeleteArticleCommandeAsync(int id)
+        {
+            return await _apiService.DeleteArticleCommandeAsync(id);
+        }
+        #endregion
     }
 }

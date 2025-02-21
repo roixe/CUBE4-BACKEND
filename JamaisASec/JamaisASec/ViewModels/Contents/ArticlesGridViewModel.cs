@@ -81,7 +81,7 @@ namespace JamaisASec.ViewModels.Contents
             var result = modal.ShowDialog();
             if (result == true)
             {
-                await _dataService.AddArticleAsync(modalVM.Article);
+                await _dataService.CreateArticleAsync(modalVM.Article);
                 LoadDataCommand.Execute(null);
             }
         }
