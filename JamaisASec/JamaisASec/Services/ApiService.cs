@@ -99,9 +99,9 @@ namespace JamaisASec.Services
                 throw new ArgumentNullException(nameof(article), "L'article ne peut pas être null.");
             }
 
-            if (article.Fournisseurs_ID == 0)
+            if (article.fournisseur.id == 0)
             {
-                article.Fournisseurs_ID = 1; 
+                article.fournisseur.id = 1; 
             }
 
            
@@ -136,7 +136,7 @@ namespace JamaisASec.Services
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
             // Envoi de la requête PUT
-            var response = await _httpClient.PutAsync($"api/Article/{article.ID}", content);
+            var response = await _httpClient.PutAsync($"api/Article/{article.id}", content);
             response.EnsureSuccessStatusCode();
 
             // Désérialisation de la réponse en Article

@@ -159,7 +159,7 @@ namespace JamaisASec.Services
             {
                 //Mettre à jour le cache
                 //_cachedArticles = await _apiService.GetArticlesAsync();
-                var index = _cachedArticles.FindIndex(a => a.ID == article.ID);
+                var index = _cachedArticles.FindIndex(a => a.id == article.id);
                 if (index != -1)
                 {
                     _cachedArticles[index] = article;

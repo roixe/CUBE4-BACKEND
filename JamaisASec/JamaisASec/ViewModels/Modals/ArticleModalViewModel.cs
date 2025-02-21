@@ -3,31 +3,26 @@ using JamaisASec.Services;
 using System.Windows.Input;
 using System.Windows;
 using System.Collections.ObjectModel;
-using JamaisASec.Views.Modals;
-
 
 namespace JamaisASec.ViewModels.Modals
 {
     public class ArticleModalViewModel : BaseViewModel
     {
-        private readonly DataService _dataService;
-        private readonly Window _window;
-
         public Article Article { get; }
         public ObservableCollection<Famille> Familles { get; set; }
         public ObservableCollection<Maison> Maisons { get; set; }
-
+        public ObservableCollection<Fournisseur>Fournisseurs { get; set; }
         private string? _nom;
         public string Nom
         {
-            get => _nom ?? string.Empty;
+            get => _nom ?? String.Empty;
             set => SetProperty(ref _nom, value, nameof(Nom));
         }
 
         private string? _description;
         public string Description
         {
-            get => _description ?? string.Empty;
+            get => _description ?? String.Empty;
             set => SetProperty(ref _description, value, nameof(Description));
         }
 
@@ -37,33 +32,36 @@ namespace JamaisASec.ViewModels.Modals
             get => _quantite;
             set => SetProperty(ref _quantite, value, nameof(Quantite));
         }
-
         private int _quantiteMin;
         public int QuantiteMin
         {
             get => _quantiteMin;
             set => SetProperty(ref _quantiteMin, value, nameof(QuantiteMin));
         }
-
         private int _colisage;
         public int Colisage
         {
             get => _colisage;
             set => SetProperty(ref _colisage, value, nameof(Colisage));
         }
-
         private int _annee;
         public int Annee
         {
             get => _annee;
             set => SetProperty(ref _annee, value, nameof(Annee));
         }
-
         private Famille? _selectedFamille;
         public Famille? SelectedFamille
         {
             get => _selectedFamille;
             set => SetProperty(ref _selectedFamille, value, nameof(SelectedFamille));
+        }
+
+        private Fournisseur? _selectedFournisseur;
+        public Fournisseur? SelectedFournisseur
+        {
+            get => _selectedFournisseur;
+            set => SetProperty(ref _selectedFournisseur, value, nameof(SelectedFournisseur));
         }
 
         private Maison? _selectedMaison;
@@ -72,147 +70,110 @@ namespace JamaisASec.ViewModels.Modals
             get => _selectedMaison;
             set => SetProperty(ref _selectedMaison, value, nameof(SelectedMaison));
         }
-
         private int _prix;
-        private ArticleModal modal;
-
         public int Prix
         {
             get => _prix;
             set => SetProperty(ref _prix, value, nameof(Prix));
         }
-
         public ICommand LoadDataCommand { get; }
         public ICommand SaveCommand { get; }
+        private readonly Window _window;
 
-        public ArticleModalViewModel(Article article, Window window, DataService dataService)
+        public ArticleModalViewModel(Article article, Window window, DataService _dataService)
         {
-            _dataService = dataService ?? throw new ArgumentNullException(nameof(dataService));
-            _window = window ?? throw new ArgumentNullException(nameof(window));
-
-            Familles = new ObservableCollection<Famille>();
+            _window = window;
             Maisons = new ObservableCollection<Maison>();
-
-            Article = article ?? new Article();
-            InitializeFieldsFromArticle();
+            Familles = new ObservableCollection<Famille>();
+            Fournisseurs = new ObservableCollection<Fournisseur>();
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            SaveCommand = new RelayCommand<object>(_ => Save());
-
-            // Charger les données au démarrage
             LoadDataCommand.Execute(null);
-        }
 
-        public ArticleModalViewModel(Article article, ArticleModal modal)
-        {
-            Article = article;
-            this.modal = modal;
-        }
+            Article = article ?? new Article();
+            _nom = Article.nom;
+            _description = Article.description;
+            _quantite = Article.quantite;
+            _quantiteMin = Article.quantite_Min;
+            _colisage = Article.colisage;
+            _annee = Article.annee;
+            _prix = Article.prix_unitaire;
 
-        private void InitializeFieldsFromArticle()
-        {
-            _nom = Article.Nom;
-            _description = Article.Description;
-            _quantite = Article.Quantite;
-            _quantiteMin = Article.Quantite_Min;
-            _colisage = Article.Colisage;
-            _annee = Article.Annee;
-            _prix = Article.Prix_Unitaire;
-            _selectedFamille = Familles.FirstOrDefault(f => f.id == Article.Familles_ID);
-            _selectedMaison = Maisons.FirstOrDefault(m => m.id == Article.Maisons_ID);
+            SaveCommand = new RelayCommand<object>(_ => Save());
         }
 
         private async Task LoadData()
         {
-            try
+            var maisons = await _dataService.GetMaisonsAsync();
+            Maisons.Clear();
+            foreach (var maison in maisons)
             {
-                // Charger les maisons
-                var maisons = await _dataService.GetMaisonsAsync();
-                Maisons.Clear();
-                foreach (var maison in maisons)
+                Maisons.Add(maison);
+                if (maison.nom == Article.maison?.nom)
                 {
-                    Maisons.Add(maison);
-                    if (maison.id == Article.Maisons_ID)
-                    {
-                        SelectedMaison = maison;
-                    }
-                }
-
-                // Charger les familles
-                var familles = await _dataService.GetFamillesAsync();
-                Familles.Clear();
-                foreach (var famille in familles)
-                {
-                    Familles.Add(famille);
-                    if (famille.id == Article.Familles_ID)
-                    {
-                        SelectedFamille = famille;
-                    }
+                    SelectedMaison = maison;
                 }
             }
-            catch (Exception ex)
+            var familles = await _dataService.GetFamillesAsync();
+            Familles.Clear();
+            foreach (var famille in familles)
             {
-                MessageBox.Show($"Erreur lors du chargement des données : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (famille.nom == Article.famille?.nom)
+                {
+                    SelectedFamille = famille;
+                }
+                Familles.Add(famille);
+            }
+            var fournisseurs = await _dataService.GetFournisseursAsync();
+            Fournisseurs.Clear();
+            foreach (var fournisseur in fournisseurs)
+            {
+                Fournisseurs.Add(fournisseur);
+                if (fournisseur.nom == Article.fournisseur?.nom)
+                {
+                    SelectedFournisseur = fournisseur;
+                }
             }
         }
 
-        private async void Save()
+        private void Save()
         {
             if (!Validate())
             {
-                MessageBox.Show("Les données saisies ne sont pas valides. Veuillez vérifier tous les champs obligatoires.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+            Article.nom = Nom;
+            Article.description = Description;
+            Article.quantite = Quantite;
+            Article.quantite_Min = QuantiteMin;
+            Article.colisage = Colisage;
+            Article.annee = Annee;
+            Article.prix_unitaire = Prix;
+            Article.famille = Familles.FirstOrDefault(f => f.nom == SelectedFamille?.nom);
+            Article.maison = Maisons.FirstOrDefault(m => m.nom == SelectedMaison?.nom);
+            Article.fournisseur = Fournisseurs.FirstOrDefault(f => f.nom == SelectedFournisseur?.nom);
 
-            try
-            {
-                UpdateArticleFromFields();
-
-                // Sauvegarder l'article via le service
-                await _dataService.AddArticleAsync(Article);
-
-                MessageBox.Show("Article ajouté avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                // Fermer la fenêtre
-                _window.DialogResult = true;
-                _window.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Une erreur est survenue lors de la sauvegarde : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void UpdateArticleFromFields()
-        {
-            Article.Nom = Nom;
-            Article.Description = Description;
-            Article.Quantite = Quantite;
-            Article.Quantite_Min = QuantiteMin;
-            Article.Colisage = Colisage;
-            Article.Annee = Annee;
-            Article.Prix_Unitaire = Prix;
-            Article.Familles_ID = SelectedFamille?.id ?? 0;
-            Article.Maisons_ID = SelectedMaison?.id ?? 0;
+            _window.DialogResult = true;
+            _window.Close();
         }
 
         private bool Validate()
         {
-            // Validation des champs obligatoires
-            if (string.IsNullOrWhiteSpace(Nom) ||
-                string.IsNullOrWhiteSpace(Description) ||
-                SelectedFamille == null ||
-                SelectedMaison == null ||
-                Quantite < 0 ||
-                QuantiteMin < 0 ||
-                Colisage < 0 ||
-                Prix <= 0 ||
-                Annee <= 0)
+            bool isValid = true;
+
+            // Validation pour le nom
+            if (string.IsNullOrEmpty(Nom))
             {
-                return false;
+                isValid = false;
             }
 
-            return true;
+            // Validation pour la description
+            if (string.IsNullOrEmpty(Description))
+            {
+                isValid = false;
+            }
+
+            return isValid;
         }
     }
 }

@@ -45,7 +45,7 @@ namespace JamaisASec.ViewModels.Pages
         private void Filter()
         {
             var filtered = _allStocks
-                    .Where(m => m.Nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase))
+                    .Where(m => m.nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase))
                     .ToList();
             Stocks.Clear();
             foreach (var stock in filtered)

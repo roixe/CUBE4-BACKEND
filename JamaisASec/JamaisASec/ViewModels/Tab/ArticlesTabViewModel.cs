@@ -73,7 +73,7 @@ namespace JamaisASec.ViewModels.Tab
         private void Filter()
         {
             var filtered = _allArticles
-                .Where(m => m.Nom != null && m.Nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase)).ToList();
+                .Where(m => m.nom != null && m.nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase)).ToList();
 
             Articles.Clear();
             foreach (var article in filtered)
@@ -99,7 +99,7 @@ namespace JamaisASec.ViewModels.Tab
         private async void Edit(Article article)
         {
             var modal = new ArticleModal();
-            var modalVM = new ArticleModalViewModel(article, modal);
+            var modalVM = new ArticleModalViewModel(article, modal, _dataService);
             modal.DataContext = modalVM;
             var result = modal.ShowDialog();
             if (result == true)

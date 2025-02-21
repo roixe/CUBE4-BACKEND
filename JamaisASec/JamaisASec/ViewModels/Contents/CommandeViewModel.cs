@@ -27,7 +27,7 @@ namespace JamaisASec.ViewModels.Contents
         {
             get
             {
-                decimal total = Articles?.Sum(article => article.quantite * article.article.Prix_Unitaire) ?? 0;
+                decimal total = Articles?.Sum(article => article.quantite * article.article.prix_unitaire) ?? 0;
                 return total.ToString("C2", CultureInfo.GetCultureInfo("fr-FR"));
             }
         }
