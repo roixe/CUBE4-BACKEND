@@ -7,28 +7,18 @@ namespace JamaisASec.ViewModels.Pages
 {
     class PageStocksViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Article> _allStocks;
-        public ObservableCollection<Article> Stocks { get; set; }
-        private string? _searchText;
-        public string SearchText
-        {
-            get => _searchText?? string.Empty;
-            set
-            {
-                if (SetProperty(ref _searchText, value, nameof(SearchText)))
-                {
-                    Filter();
-                }
-            }
-        }
+        private readonly ObservableCollection<Article> _allStocks = [];
+        public ObservableCollection<Article> Stocks { get; } = [];
+        
         public ICommand LoadDataCommand { get; }
 
         public PageStocksViewModel()
         {
-            _allStocks = new ObservableCollection<Article>();
-            Stocks = new ObservableCollection<Article>();
+            OnSearchTextChanged = _ => Filter();
+
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            LoadDataCommand.Execute(null);
+
+            _ = LoadData();
         }
 
         private async Task LoadData()

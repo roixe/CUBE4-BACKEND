@@ -7,22 +7,18 @@ namespace JamaisASec.ViewModels.Pages
 {
     public class PageAccueilViewModel : BaseViewModel
     {
-        public ObservableCollection<Article> Articles { get; set; }
-        public ObservableCollection<Commande> Commandes { get; set; }
-        public ObservableCollection<Commande> Achats { get; set; }
+        public ObservableCollection<Article> Articles { get; } = [];
+        public ObservableCollection<Commande> Commandes { get; } = [];
+        public ObservableCollection<Commande> Achats { get; } = [];
 
         public ICommand LoadDataCommand { get; }
 
         public PageAccueilViewModel()
         {
-            Articles = [];
-            Commandes = [];
-            Achats = [];
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
 
-            LoadDataCommand.Execute(null);
-
+            _ = LoadData();
         }
 
         private async Task LoadData()

@@ -8,35 +8,9 @@ namespace JamaisASec.ViewModels.Contents
 {
     public class FournisseursGridViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Fournisseur> _allFournisseurs;
-        public ObservableCollection<Fournisseur> Fournisseurs { get; set; }
-        private string? _searchText;
-        public string SearchText
-        {
-            get => _searchText ?? string.Empty;
-            set
-            {
-                if (SetProperty(ref _searchText, value, nameof(SearchText)))
-                {
-                    Filter();
-                }
-            }
-        }
-        private bool _isHeaderCheckBoxChecked;
-        public bool IsHeaderCheckBoxChecked
-        {
-            get => _isHeaderCheckBoxChecked;
-            set
-            {
-                if (SetProperty(ref _isHeaderCheckBoxChecked, value, nameof(IsHeaderCheckBoxChecked)))
-                {
-                    foreach (var fournisseur in Fournisseurs)
-                    {
-                        fournisseur.IsSelected = _isHeaderCheckBoxChecked;
-                    }
-                }
-            }
-        }
+        private readonly ObservableCollection<Fournisseur> _allFournisseurs = [];
+        public ObservableCollection<Fournisseur> Fournisseurs { get; } = [];
+
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
         public ICommand DeleteSelectedCommand { get; }
@@ -44,17 +18,26 @@ namespace JamaisASec.ViewModels.Contents
 
         public FournisseursGridViewModel()
         {
-            _allFournisseurs = new ObservableCollection<Fournisseur>();
-            Fournisseurs = new ObservableCollection<Fournisseur>();
+            // Liaison du filtrage
+            OnSearchTextChanged = _ => Filter();
 
-            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            LoadDataCommand.Execute(null);
+            // Liaison de la sélection globale
+            OnHeaderCheckBoxChanged = isChecked =>
+            {
+                foreach (var fournisseur in Fournisseurs)
+                {
+                    fournisseur.IsSelected = isChecked;
+                }
+            };
 
             _dataService.FournisseursUpdated += OnFournisseursUpdated;
 
-            AddCommand = new RelayCommand<object>(Add);
-            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
+            AddCommand = new RelayCommand<object>(_ => Add());
+            DeleteSelectedCommand = new RelayCommand<object>(_ => DeleteSelected());
             DeleteCommand = new RelayCommand<Fournisseur>(Delete);
+
+            _ = LoadData();
         }
         
         private void OnFournisseursUpdated(object? sender, EventArgs e)
@@ -83,7 +66,7 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private void Add(object obj)
+        private void Add()
         {
             var fournisseur = new Fournisseur();
             fournisseur.id = _allFournisseurs.Count + 1;
@@ -91,7 +74,7 @@ namespace JamaisASec.ViewModels.Contents
             _allFournisseurs.Add(fournisseur);
             Filter();
         }
-        private void DeleteSelected(object obj)
+        private void DeleteSelected()
         {
             if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les fournisseurs sélectionnés ?",
                         "Confirmation",
@@ -104,6 +87,8 @@ namespace JamaisASec.ViewModels.Contents
                 }
                 Filter();
             }
+            IsHeaderCheckBoxChecked = false;
+
         }
 
         private void Delete(Fournisseur fournisseur)

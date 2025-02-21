@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -14,36 +12,8 @@ namespace JamaisASec.ViewModels.Contents
     public class ClientsGridViewModel : BaseViewModel
     {
         private readonly ObservableCollection<Client> _allClients;
-        public ObservableCollection<Client> Clients { get; set; }
-        private string? _searchText;
-        public string SearchText
-        {
-            get => _searchText ?? string.Empty;
-            set
-            {
-                if (SetProperty(ref _searchText, value, nameof(SearchText)))
-                {
-                    Filter();
-                }
-            }
-        }
-        private bool _isHeaderCheckBoxChecked;
-        public bool IsHeaderCheckBoxChecked
-        {
-            get => _isHeaderCheckBoxChecked;
-            set
-            {
-                if (_isHeaderCheckBoxChecked != value)
-                {
-                    _isHeaderCheckBoxChecked = value;
-                    OnPropertyChanged(nameof(IsHeaderCheckBoxChecked));
-                    foreach (var client in Clients)
-                    {
-                        client.IsSelected = _isHeaderCheckBoxChecked;
-                    }
-                }
-            }
-        }
+        public ObservableCollection<Client> Clients { get; }
+
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
         public ICommand DeleteSelectedCommand { get; }
@@ -54,14 +24,29 @@ namespace JamaisASec.ViewModels.Contents
             _allClients = new ObservableCollection<Client>();
             Clients = new ObservableCollection<Client>();
 
-            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            LoadDataCommand.Execute(null);
+            // Liaison du filtrage
+            OnSearchTextChanged = _ => Filter();
 
+            // Liaison de la sélection globale
+            OnHeaderCheckBoxChanged = isChecked =>
+            {
+                foreach (var client in Clients)
+                {
+                    client.IsSelected = isChecked;
+                }
+            };
+
+            // Événement de mise à jour des clients
             _dataService.ClientsUpdated += OnClientsUpdated;
 
-            AddCommand = new RelayCommand<object>(Add);
-            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            // Initialisation des commandes
+            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
+            AddCommand = new RelayCommand<object>(_ => Add());
+            DeleteSelectedCommand = new RelayCommand<object>(_ => DeleteSelected());
             DeleteCommand = new RelayCommand<Client>(Delete);
+
+            // Chargement des données initiales
+            _ = LoadData();
         }
 
         private void OnClientsUpdated(object? sender, EventArgs e)
@@ -83,7 +68,9 @@ namespace JamaisASec.ViewModels.Contents
         private void Filter()
         {
             var filtered = _allClients
-                .Where(m => m.nom != null && m.nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase)).ToList();
+                .Where(m => !string.IsNullOrEmpty(m.nom) && m.nom.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
             Clients.Clear();
             foreach (var client in filtered)
             {
@@ -91,20 +78,22 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private void Add(object obj)
+        private void Add()
         {
-            var client = new Client();
-            client.id = _allClients.Count + 1;
-            client.nom = "Nouveau client";
+            var client = new Client
+            {
+                id = _allClients.Count + 1,
+                nom = "Nouveau client"
+            };
+
             _allClients.Add(client);
             Filter();
         }
 
-        private void DeleteSelected(object obj)
+        private void DeleteSelected()
         {
-            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les clients sélectionnés ?",
-                        "Confirmation",
-                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les clients sélectionnés ?", "Confirmation",
+                                MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 var selectedClients = _allClients.Where(a => a.IsSelected).ToList();
                 foreach (var client in selectedClients)
@@ -120,6 +109,5 @@ namespace JamaisASec.ViewModels.Contents
             _allClients.Remove(client);
             Filter();
         }
-
     }
 }
