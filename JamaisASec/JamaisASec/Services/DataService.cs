@@ -13,7 +13,7 @@ namespace JamaisASec.Services
         private readonly ApiService _apiService;
 
         // Cache des données
-        private List<Article>? _cachedArticles;
+        private List<ArticleDTO>? _cachedArticles;
         private List<Client>? _cachedClients;
         private List<Fournisseur>? _cachedFournisseurs;
         private List<Commande>? _cachedCommandes;
@@ -51,7 +51,7 @@ namespace JamaisASec.Services
         /// <summary>
         /// Retourne les articles, avec mise en cache pour éviter les appels redondants.
         /// </summary>
-        public async Task<List<Article>> GetArticlesAsync()
+        public async Task<List<ArticleDTO>> GetArticlesAsync()
         {
             if (_cachedArticles == null)
             {
@@ -130,7 +130,7 @@ namespace JamaisASec.Services
             return _cachedFamilles;
         }
 
-        public async Task AddArticleAsync(Article Article)
+        public async Task AddArticleAsync(ArticleDTO Article)
         {
             // Appel à l'API pour ajouter l'article
             //var addedArticle = await _apiService.AddArticleAsync(Article);
@@ -146,7 +146,7 @@ namespace JamaisASec.Services
             }
         }
 
-        public async Task UpdateArticleAsync(Article article)
+        public async Task UpdateArticleAsync(ArticleDTO article)
         {
             // Appel à l'API pour mettre à jour l'article
             //var updatedArticle = await _apiService.UpdateArticleAsync(article);

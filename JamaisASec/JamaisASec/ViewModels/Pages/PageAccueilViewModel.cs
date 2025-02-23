@@ -7,7 +7,7 @@ namespace JamaisASec.ViewModels.Pages
 {
     public class PageAccueilViewModel : BaseViewModel
     {
-        public ObservableCollection<Article> Articles { get; set; }
+        public ObservableCollection<ArticleDTO> Articles { get; set; }
         public ObservableCollection<Commande> Commandes { get; set; }
         public ObservableCollection<Commande> Achats { get; set; }
 

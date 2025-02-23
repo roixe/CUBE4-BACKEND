@@ -7,8 +7,8 @@ namespace JamaisASec.ViewModels.Pages
 {
     class PageStocksViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Article> _allStocks;
-        public ObservableCollection<Article> Stocks { get; set; }
+        private readonly ObservableCollection<ArticleDTO> _allStocks;
+        public ObservableCollection<ArticleDTO> Stocks { get; set; }
         private string? _searchText;
         public string SearchText
         {
@@ -25,8 +25,8 @@ namespace JamaisASec.ViewModels.Pages
 
         public PageStocksViewModel()
         {
-            _allStocks = new ObservableCollection<Article>();
-            Stocks = new ObservableCollection<Article>();
+            _allStocks = new ObservableCollection<ArticleDTO>();
+            Stocks = new ObservableCollection<ArticleDTO>();
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             LoadDataCommand.Execute(null);
         }

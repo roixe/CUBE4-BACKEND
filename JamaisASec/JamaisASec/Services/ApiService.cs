@@ -52,16 +52,27 @@ namespace JamaisASec.Services
             }
         }
 
-        public async Task<List<Article>> GetArticlesAsync()
+        //public async Task<List<Article>> GetArticlesAsync()
+        //{
+        //    return await RunWithLoadingCursor(async () =>
+        //    {
+        //        var response = await _httpClient.GetAsync("Articles/get/all");
+        //        response.EnsureSuccessStatusCode();
+        //        var content = await response.Content.ReadAsStringAsync();
+        //        return JsonSerializer.Deserialize<List<Article>>(content) ?? new List<Article>();
+        //    });
+        //}
+        public async Task<List<ArticleDTO>> GetArticlesAsync()
         {
             return await RunWithLoadingCursor(async () =>
             {
                 var response = await _httpClient.GetAsync("Articles/get/all");
                 response.EnsureSuccessStatusCode();
                 var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<Article>>(content) ?? new List<Article>();
+                return JsonSerializer.Deserialize<List<ArticleDTO>>(content) ?? new List<ArticleDTO>();
             });
         }
+
 
         public async Task<List<Commande>> GetCommandesAsync()
         {

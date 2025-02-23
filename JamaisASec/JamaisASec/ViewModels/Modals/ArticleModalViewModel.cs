@@ -69,7 +69,10 @@ namespace JamaisASec.ViewModels.Modals
         public Fournisseur? SelectedFournisseur
         {
             get => _selectedFournisseur;
-            set => SetProperty(ref _selectedMaison, value, nameof(SelectedFournisseur));
+            set
+            {
+                SetProperty(ref _selectedFournisseur, value, nameof(SelectedFournisseur));
+            }
         }
         private int _prix;
         public int Prix
@@ -81,7 +84,7 @@ namespace JamaisASec.ViewModels.Modals
         public ICommand SaveCommand { get; }
         private readonly Window _window;
 
-        public ArticleModalViewModel(Article article, Window window)
+        public ArticleModalViewModel(ArticleDTO article, Window window)
         {
             _window = window;
             Maisons = new ObservableCollection<Maison>();
@@ -144,9 +147,9 @@ namespace JamaisASec.ViewModels.Modals
                 colisage = Colisage,
                 annee = Annee,
                 prix_unitaire = Prix,
-                famille = Selec,  
-                maison = SelectedMaison?.id,    
-                fournisseur = SelectedFournisseur?.id 
+                famille = SelectedFamille,  
+                maison = SelectedMaison,    
+                fournisseur = SelectedFournisseur 
             };
 
             // Appeler le service pour ajouter l'article via l'API

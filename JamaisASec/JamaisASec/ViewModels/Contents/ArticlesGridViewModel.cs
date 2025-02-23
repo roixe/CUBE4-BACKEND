@@ -10,8 +10,8 @@ namespace JamaisASec.ViewModels.Contents
 {
     class ArticlesGridViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Article> _allArticles;
-        public ObservableCollection<Article> Articles { get; }
+        private readonly ObservableCollection<ArticleDTO> _allArticles;
+        public ObservableCollection<ArticleDTO> Articles { get; }
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
         public ICommand EditCommand { get; }
@@ -48,8 +48,8 @@ namespace JamaisASec.ViewModels.Contents
 
         public ArticlesGridViewModel()
         {
-            _allArticles = new ObservableCollection<Article>();
-            Articles = new ObservableCollection<Article>();
+            _allArticles = new ObservableCollection<ArticleDTO>();
+            Articles = new ObservableCollection<ArticleDTO>();
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             LoadDataCommand.Execute(null);
@@ -57,9 +57,9 @@ namespace JamaisASec.ViewModels.Contents
             _dataService.ArticlesUpdated += OnArticlesUpdated;
 
             AddCommand = new RelayCommand<object>(Add);
-            EditCommand = new RelayCommand<Article>(Edit);
+            EditCommand = new RelayCommand<ArticleDTO>(Edit);
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
-            DeleteCommand = new RelayCommand<Article>(Delete);
+            DeleteCommand = new RelayCommand<ArticleDTO>(Delete);
         }
 
         private void OnArticlesUpdated(object? sender, EventArgs e)
@@ -93,7 +93,7 @@ namespace JamaisASec.ViewModels.Contents
         private async void Add(object obj)
         {
             var modal = new ArticleModal();
-            var article = new Article();
+            var article = new ArticleDTO();
             var modalVM = new ArticleModalViewModel(article, modal);
             modal.DataContext = modalVM;
             var result = modal.ShowDialog();
@@ -104,7 +104,7 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private async void Edit(Article article)
+        private async void Edit(ArticleDTO article)
         {
             var modal = new ArticleModal();
             var modalVM = new ArticleModalViewModel(article, modal);
@@ -131,7 +131,7 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private void Delete(Article article)
+        private void Delete(ArticleDTO article)
         {
             _allArticles.Remove(article);
             Filter();
