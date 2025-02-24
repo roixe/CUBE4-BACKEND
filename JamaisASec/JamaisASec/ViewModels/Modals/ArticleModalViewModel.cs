@@ -128,6 +128,17 @@ namespace JamaisASec.ViewModels.Modals
                 }
                 Familles.Add(famille);
             }
+
+            var fournisseurs = await _dataService.GetFournisseursAsync();
+            Fournisseurs.Clear();
+            foreach (var fournisseur in fournisseurs)
+            {
+                if (fournisseur.nom == Article.fournisseur?.nom)
+                {
+                    SelectedFournisseur = fournisseur;
+                }
+                Fournisseurs.Add(fournisseur);
+            }
         }
 
         private void Save()

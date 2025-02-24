@@ -1,5 +1,10 @@
 ﻿using System.Collections.ObjectModel;
+using System.Configuration;
+using System.Net.Http;
+using System.Text;
+using System.Windows;
 using JamaisASec.Models;
+using Newtonsoft.Json;
 
 namespace JamaisASec.Services
 {
@@ -19,6 +24,7 @@ namespace JamaisASec.Services
         private List<Commande>? _cachedCommandes;
         private List<Maison>? _cachedMaisons;
         private List<Famille>? _cachedFamilles;
+        private object articleDTO;
 
         public event EventHandler<EventArgs> ArticlesUpdated;
         public event EventHandler<EventArgs> CommandesUpdated;
@@ -130,43 +136,101 @@ namespace JamaisASec.Services
             return _cachedFamilles;
         }
 
-        public async Task AddArticleAsync(ArticleDTO Article)
+        //public async Task AddArticleAsync(ArticleDTO Article)
+        //{
+        //    // Appel à l'API pour ajouter l'article
+        //    //var addedArticle = await _apiService.AddArticleAsync(Article);
+        //    // Vérification si l'article est bien ajouté dans la réponse
+        //    if (Article != null)
+        //    {
+        //        //Mettre à jour le cache
+        //        //_cachedArticles = await _apiService.GetArticlesAsync();
+        //        if (_cachedArticles != null)
+        //        {
+        //            _cachedArticles.Add(Article);
+        //        }
+        //    }
+        //}
+        public async Task AddArticleAsync(ArticleDTO article)
         {
-            // Appel à l'API pour ajouter l'article
-            //var addedArticle = await _apiService.AddArticleAsync(Article);
-            // Vérification si l'article est bien ajouté dans la réponse
-            if (Article != null)
+            if (article == null)
             {
-                //Mettre à jour le cache
-                //_cachedArticles = await _apiService.GetArticlesAsync();
-                if (_cachedArticles != null)
-                {
-                    _cachedArticles.Add(Article);
-                }
+                throw new ArgumentNullException(nameof(article), "L'article ne peut pas être null.");
             }
-        }
 
-        public async Task UpdateArticleAsync(ArticleDTO article)
-        {
-            // Appel à l'API pour mettre à jour l'article
-            //var updatedArticle = await _apiService.UpdateArticleAsync(article);
-
-            // Vérification si l'article est bien mis à jour dans la réponse
-            if (article != null)
+            try
             {
-                //Mettre à jour le cache
-                //_cachedArticles = await _apiService.GetArticlesAsync();
-                if (_cachedArticles != null)
+                // Récupérer l'URL de base depuis le fichier de configuration
+                string apiBaseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"]; 
+
+                // Créer l'URL complète pour appeler l'API
+                string url = $"{apiBaseUrl}/Articles/create"; 
+
+                
+                var articleToSend = new ArticleDTO
                 {
-                    var index = _cachedArticles.FindIndex(a => a.id == article.id);
-                    if (index != -1)
+                    nom = article.nom,
+                    description = article.description,
+                    quantite = article.quantite,
+                    quantite_Min = article.quantite_Min,
+                    colisage = article.colisage,
+                    prix_unitaire = article.prix_unitaire,
+                    annee = article.annee,
+                    famille = article.famille,
+                    maison= article.maison,
+                    fournisseur = article.fournisseur
+
+                };
+
+                // Sérialiser l'article en JSON
+                string jsonContent = JsonConvert.SerializeObject(articleToSend);
+
+                // Afficher le contenu de la requête dans un MessageBox
+                MessageBox.Show($"Requête envoyée :\nURL: {url}\nDonnées JSON : {jsonContent}", "Vérification Requête", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                // Utiliser HttpClient pour effectuer la requête POST
+                var httpClient = new HttpClient();
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                // Envoi de la requête POST à l'API
+                var response = await httpClient.PostAsync(url, content);
+
+                // Lire la réponse du serveur
+                string responseContent = await response.Content.ReadAsStringAsync();
+
+                // Afficher la réponse de l'API dans un MessageBox
+                MessageBox.Show($"Réponse de l'API :\n{responseContent}", "Réponse API", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                // Vérification de la réponse de l'API
+                if (response.IsSuccessStatusCode)
+                {
+                    // Si l'ajout est réussi, vous pouvez récupérer les données de l'article ajouté
+                    var addedArticle = JsonConvert.DeserializeObject<ArticleDTO>(responseContent);
+
+                    // Mettre à jour le cache si nécessaire
+                    if (_cachedArticles != null)
                     {
-                        _cachedArticles[index] = article;
+                        _cachedArticles.Add(addedArticle);
                     }
                 }
-                ArticlesUpdated?.Invoke(this, EventArgs.Empty);
+                else
+                {
+                    // Si la réponse n'est pas un succès, vous pouvez gérer l'erreur
+                    // Afficher plus de détails dans le MessageBox
+                    MessageBox.Show($"Erreur lors de l'ajout de l'article : {response.StatusCode} - {responseContent}", "Erreur lors de l'ajout", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    // Vous pouvez également lever une exception si vous souhaitez gérer cela plus en profondeur
+                    throw new Exception($"Erreur lors de l'ajout de l'article : {response.StatusCode} - {responseContent}");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Gérer les erreurs (ex. réseau, format JSON incorrect, etc.)
+                MessageBox.Show($"Une erreur s'est produite lors de l'ajout de l'article : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+
 
         public async Task<bool> UpdateMaisonAsync(Maison maison)
         {
@@ -320,5 +384,9 @@ namespace JamaisASec.Services
             return success;
         }
 
+        internal async Task UpdateArticleAsync(ArticleDTO articleDTO)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

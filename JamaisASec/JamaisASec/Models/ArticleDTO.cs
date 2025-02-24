@@ -13,7 +13,12 @@
         public Famille? famille { get; set; }
         public Maison? maison { get; set; }
         public Fournisseur? fournisseur { get; set; }
-        public bool IsSelected { get; internal set; }
-      
+        //public bool IsSelected { get; internal set; }
+        public bool IsSelected { get; set; }
+        //public int Familles_ID { get; set; }
+        //public int Maisons_ID { get; set; }
+        //public int Fournisseurs_ID { get; set; }
+
+
     }
 }
