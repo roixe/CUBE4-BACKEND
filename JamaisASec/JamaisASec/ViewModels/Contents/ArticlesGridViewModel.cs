@@ -73,14 +73,13 @@ namespace JamaisASec.ViewModels.Contents
         private async void Add()
         {
             var modal = new ArticleModal();
-            var article = new ArticleDTO();
+            var article = new Article();
             var modalVM = new ArticleModalViewModel(article, modal);
             modal.DataContext = modalVM;
             var result = modal.ShowDialog();
             if (result == true)
             {
                 await _dataService.CreateArticleAsync(modalVM.Article);
-                _ = LoadData();
             }
         }
 
@@ -99,7 +98,7 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private void Delete(ArticleDTO article)
+        private void Delete(Article article)
         {
             _allArticles.Remove(article);
             Filter();

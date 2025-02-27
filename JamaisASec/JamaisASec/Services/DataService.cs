@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows;
 using JamaisASec.Models;
 
 namespace JamaisASec.Services
@@ -14,7 +13,7 @@ namespace JamaisASec.Services
         private readonly IApiService _apiService;
 
         // Cache des données
-        private List<ArticleDTO>? _cachedArticles;
+        private List<Article>? _cachedArticles;
         private List<Client>? _cachedClients;
         private List<Fournisseur>? _cachedFournisseurs;
         private List<Commande>? _cachedCommandes;
@@ -143,10 +142,21 @@ namespace JamaisASec.Services
         #region Creaters
         public async Task CreateArticleAsync(Article Article)
         {
-            if (article == null)
+            if (Article == null) return; 
+            
+            // Appel à l'API pour ajouter l'article
+            var success = await _apiService.CreateArticleAsync(Article);
+            // Vérification si l'article est bien ajouté dans la réponse
+            if (success)
             {
-                throw new ArgumentNullException(nameof(article), "L'article ne peut pas être null.");
+                //Mettre à jour le cache
+                if (_cachedArticles != null)
+                {
+                    _cachedArticles.Add(Article);
+                }
+                ArticlesUpdated?.Invoke(this, EventArgs.Empty);
             }
+        }
 
         public async Task CreateArticleCommandeAsync(ArticlesCommandes articleCommande, int commande_id)
         {
@@ -161,36 +171,22 @@ namespace JamaisASec.Services
             // Appel à l'API pour mettre à jour l'article
             //var updatedArticle = await _apiService.UpdateArticleAsync(article);
 
-                // Vérification de la réponse de l'API
-                if (response.IsSuccessStatusCode)
+            // Vérification si l'article est bien mis à jour dans la réponse
+            if (article != null)
+            {
+                //Mettre à jour le cache
+                //_cachedArticles = await _apiService.GetArticlesAsync();
+                if (_cachedArticles != null)
                 {
-                    // Si l'ajout est réussi, vous pouvez récupérer les données de l'article ajouté
-                    var addedArticle = JsonConvert.DeserializeObject<ArticleDTO>(responseContent);
-
-                    // Mettre à jour le cache si nécessaire
-                    if (_cachedArticles != null)
+                    var index = _cachedArticles.FindIndex(a => a.id == article.id);
+                    if (index != -1)
                     {
-                        _cachedArticles.Add(addedArticle);
+                        _cachedArticles[index] = article;
                     }
                 }
-                else
-                {
-                    // Si la réponse n'est pas un succès, vous pouvez gérer l'erreur
-                    // Afficher plus de détails dans le MessageBox
-                    MessageBox.Show($"Erreur lors de l'ajout de l'article : {response.StatusCode} - {responseContent}", "Erreur lors de l'ajout", MessageBoxButton.OK, MessageBoxImage.Error);
-
-                    // Vous pouvez également lever une exception si vous souhaitez gérer cela plus en profondeur
-                    throw new Exception($"Erreur lors de l'ajout de l'article : {response.StatusCode} - {responseContent}");
-                }
-            }
-            catch (Exception ex)
-            {
-                // Gérer les erreurs (ex. réseau, format JSON incorrect, etc.)
-                MessageBox.Show($"Une erreur s'est produite lors de l'ajout de l'article : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                ArticlesUpdated?.Invoke(this, EventArgs.Empty);
             }
         }
-
-
 
         public async Task<bool> UpdateMaisonAsync(Maison maison)
         {
@@ -250,7 +246,7 @@ namespace JamaisASec.Services
                         {
                             article.famille = famille;
                         }
-                        
+
                     }
                 }
                 ArticlesUpdated?.Invoke(this, EventArgs.Empty);
@@ -275,7 +271,7 @@ namespace JamaisASec.Services
                         _cachedClients[index] = client;
                     }
                 }
-                if(_cachedCommandes != null)
+                if (_cachedCommandes != null)
                 {
                     foreach (var commande in _cachedCommandes)
                     {

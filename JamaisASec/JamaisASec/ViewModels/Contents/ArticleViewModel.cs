@@ -9,8 +9,8 @@ namespace JamaisASec.ViewModels
     public class ArticleViewModel : BaseViewModel
     {
         public Article Article { get; }
-        private ArticleDTO _articleTemp;  
-        public ArticleDTO ArticleTemp
+        private Article _articleTemp;
+        public Article ArticleTemp
         {
             get => _articleTemp;
             set => SetProperty(ref _articleTemp, value, nameof(ArticleTemp));
@@ -45,8 +45,8 @@ namespace JamaisASec.ViewModels
                 {
                     if (_isEditMode)
                     {
-                        LoadData();  
-                        ArticleTemp = new ArticleDTO
+                        LoadData();  // Charger les données uniquement si on est en mode édition
+                        ArticleTemp = new Article
                         {
                             id = Article.id,
                             nom = Article.nom,
@@ -55,9 +55,9 @@ namespace JamaisASec.ViewModels
                             quantite = Article.quantite,
                             quantite_Min = Article.quantite_Min,
                             colisage = Article.colisage,
-                            fournisseur = Article.fournisseur,  
-                            famille = Article.famille,        
-                            maison = Article.maison           
+                            fournisseur = Article.fournisseur,
+                            famille = Article.famille,
+                            maison = Article.maison
                         };
                     }
                 }
@@ -70,7 +70,7 @@ namespace JamaisASec.ViewModels
         public ArticleViewModel(Article article, ICommand navigateCommand, bool isEditMode = false)
         {
             Article = article;
-            ArticleTemp = new ArticleDTO(); // Initialiser ArticleTemp comme un ArticleDTO vide
+            ArticleTemp = new Article(); // Valeur par défaut avant l'édition
             IsEditMode = isEditMode; // Définit le mode d'édition
 
             NavigateCommand = navigateCommand;
@@ -94,25 +94,20 @@ namespace JamaisASec.ViewModels
 
             try
             {
-                // Créer un ArticleDTO à partir des données de ArticleTemp
-                var articleDTO = new ArticleDTO
-                {
-                    id = ArticleTemp.id,
-                    nom = ArticleTemp.nom,
-                    description = ArticleTemp.description,
-                    prix_unitaire = ArticleTemp.prix_unitaire,
-                    quantite = ArticleTemp.quantite,
-                    quantite_Min = ArticleTemp.quantite_Min,
-                    colisage = ArticleTemp.colisage,
-                    fournisseur = ArticleTemp.fournisseur,
-                    famille = ArticleTemp.famille,
-                    maison = ArticleTemp.maison
-                };
+                Article.nom = ArticleTemp.nom;
+                Article.description = ArticleTemp.description;
+                Article.prix_unitaire = ArticleTemp.prix_unitaire;
+                Article.quantite = ArticleTemp.quantite;
+                Article.quantite_Min = ArticleTemp.quantite_Min;
+                Article.colisage = ArticleTemp.colisage;
+                Article.fournisseur = ArticleTemp.fournisseur;
+                Article.famille = ArticleTemp.famille;
+                Article.maison = ArticleTemp.maison;
 
-              
-                await _dataService.UpdateArticleAsync(articleDTO);
+                await _dataService.UpdateArticleAsync(Article);
 
-                NavigateCommand.Execute((Article, false));  
+                NavigateCommand.Execute((Article, false));
+
             }
             catch (Exception ex)
             {

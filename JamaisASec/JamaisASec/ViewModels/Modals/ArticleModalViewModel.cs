@@ -8,11 +8,10 @@ namespace JamaisASec.ViewModels.Modals
 {
     public class ArticleModalViewModel : BaseViewModel
     {
-        public ArticleDTO Article { get; }
-        public ObservableCollection<Famille> Familles { get; set; }
-        public ObservableCollection<Maison> Maisons { get; set; }
-        public ObservableCollection<Fournisseur> Fournisseurs { get; set; }
-
+        public Article Article { get; }
+        public ObservableCollection<Famille> Familles { get; set; } = [];
+        public ObservableCollection<Maison> Maisons { get; set; } = [];
+        public ObservableCollection<Fournisseur> Fournisseurs { get; set; } = [];
         private string? _nom;
         public string Nom
         {
@@ -84,17 +83,14 @@ namespace JamaisASec.ViewModels.Modals
         public ICommand SaveCommand { get; }
         private readonly Window _window;
 
-        public ArticleModalViewModel(ArticleDTO article, Window window)
+        public ArticleModalViewModel(Article article, Window window)
         {
             _window = window;
-            Maisons = new ObservableCollection<Maison>();
-            Familles = new ObservableCollection<Famille>();
-            Fournisseurs = new ObservableCollection<Fournisseur>();
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            LoadDataCommand.Execute(null);
+            _ = LoadData();
 
-            Article = article ?? new ArticleDTO();
+            Article = article ?? new Article();
             _nom = Article.nom;
             _description = Article.description;
             _quantite = Article.quantite;
@@ -122,7 +118,7 @@ namespace JamaisASec.ViewModels.Modals
             Familles.Clear();
             foreach (var famille in familles)
             {
-                if(famille.nom == Article.famille?.nom)
+                if (famille.nom == Article.famille?.nom)
                 {
                     SelectedFamille = famille;
                 }
@@ -147,25 +143,16 @@ namespace JamaisASec.ViewModels.Modals
             {
                 return;
             }
-
-            // Créer un ArticleDTO à partir des données saisies dans la vue
-            var articleDTO = new ArticleDTO
-            {
-                nom = Nom,
-                description = Description,
-                quantite = Quantite,
-                quantite_Min = QuantiteMin,
-                colisage = Colisage,
-                annee = Annee,
-                prix_unitaire = Prix,
-                famille = SelectedFamille,  
-                maison = SelectedMaison,    
-                fournisseur = SelectedFournisseur 
-            };
-
-            // Appeler le service pour ajouter l'article via l'API
-            _dataService.AddArticleAsync(articleDTO);
-
+            Article.nom = Nom;
+            Article.description = Description;
+            Article.quantite = Quantite;
+            Article.quantite_Min = QuantiteMin;
+            Article.colisage = Colisage;
+            Article.annee = Annee;
+            Article.prix_unitaire = Prix;
+            Article.famille = Familles.FirstOrDefault(f => f.nom == SelectedFamille?.nom);
+            Article.maison = Maisons.FirstOrDefault(m => m.nom == SelectedMaison?.nom);
+            Article.fournisseur = Fournisseurs.FirstOrDefault(f => f.nom == SelectedFournisseur?.nom);
             _window.DialogResult = true;
             _window.Close();
         }
@@ -182,6 +169,24 @@ namespace JamaisASec.ViewModels.Modals
 
             // Validation pour la description
             if (string.IsNullOrEmpty(Description))
+            {
+                isValid = false;
+            }
+
+            // Validation pour la famille
+            if (SelectedFamille == null)
+            {
+                isValid = false;
+            }
+
+            // Validation pour la maison
+            if (SelectedMaison == null)
+            {
+                isValid = false;
+            }
+
+            // Validation pour le fournisseur
+            if (SelectedFournisseur == null)
             {
                 isValid = false;
             }
