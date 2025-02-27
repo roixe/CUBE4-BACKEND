@@ -30,7 +30,7 @@ namespace JamaisASec.ViewModels.Contents
                 }
             };
 
-            _dataService.FournisseursUpdated += OnFournisseursUpdated;
+            EventBus.Subscribe("FournisseurUpdated", OnFournisseurUpdated);
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             AddCommand = new RelayCommand<object>(_ => Add());
@@ -40,7 +40,7 @@ namespace JamaisASec.ViewModels.Contents
             _ = LoadData();
         }
         
-        private void OnFournisseursUpdated(object? sender, EventArgs e)
+        private void OnFournisseurUpdated()
         {
             _ = LoadData();
         }

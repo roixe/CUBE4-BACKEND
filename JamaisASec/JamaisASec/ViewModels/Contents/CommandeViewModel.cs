@@ -14,8 +14,8 @@ namespace JamaisASec.ViewModels.Contents
 {
     public class CommandeViewModel : BaseViewModel
     {
-        public Commande Commande { get; }
-        private Commande _commandeTemp;
+        public Commande Commande { get; } = new();
+        private Commande _commandeTemp = new();
         private Commande CommandeTemp
         {
             get => _commandeTemp;
@@ -100,7 +100,7 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private async void Save()
+        private void Save()
         {
             if (!IsEditMode) return;
 

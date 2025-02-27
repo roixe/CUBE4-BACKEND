@@ -36,8 +36,7 @@ namespace JamaisASec.ViewModels.Contents
                 }
             };
 
-            // Événement de mise à jour des clients
-            _dataService.ClientsUpdated += OnClientsUpdated;
+            EventBus.Subscribe("ClientUpdated", OnClientUpdated);
 
             // Initialisation des commandes
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
@@ -49,7 +48,7 @@ namespace JamaisASec.ViewModels.Contents
             _ = LoadData();
         }
 
-        private void OnClientsUpdated(object? sender, EventArgs e)
+        private void OnClientUpdated()
         {
             _ = LoadData();
         }

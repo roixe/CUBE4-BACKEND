@@ -18,6 +18,14 @@ namespace JamaisASec.ViewModels.Pages
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
 
+            EventBus.Subscribe("CommandeUpdated", OnCommandeUpdated);
+            EventBus.Subscribe("AchatUpdated", OnCommandeUpdated);
+
+            _ = LoadData();
+        }
+
+        private void OnCommandeUpdated()
+        {
             _ = LoadData();
         }
 

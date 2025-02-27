@@ -21,6 +21,7 @@ namespace JamaisASec.Services
         Task<bool> UpdateFamilleAsync(Famille famille);
         Task<bool> UpdateArticleCommandeAsync(ArticlesCommandes articleCommande);
         Task<bool> UpdateStatusCommandeAsync(Commande commande);
+        Task<bool> DeleteArticleAsync(int id);
         Task<bool> DeleteArticleCommandeAsync(int id);
     }
 }

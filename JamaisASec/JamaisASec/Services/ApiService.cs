@@ -9,7 +9,8 @@ namespace JamaisASec.Services
 {
     public class ApiService : IApiService
     {
-        private static ApiService _instance;
+        private static readonly Lazy<ApiService> _instance = new(() => new ApiService());
+        public static ApiService Instance => _instance.Value;
         private readonly HttpClient _httpClient;
 
         public ApiService()
@@ -21,31 +22,23 @@ namespace JamaisASec.Services
             }
             _httpClient = new HttpClient { BaseAddress = new Uri(apiBaseUrl) };
         }
-        public static ApiService Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    throw new InvalidOperationException("DataService instance has not been initialized.");
-                }
-                return _instance;
-            }
-        }
 
-        public static void Initialize()
-        {
-            if (_instance == null)
-            {
-                _instance = new ApiService();
-            }
-        }
         private async Task<T> RunWithLoadingCursor<T>(Func<Task<T>> apiCall)
         {
             try
             {
                 Mouse.OverrideCursor = Cursors.Wait;
                 return await apiCall();
+            }
+            catch (HttpRequestException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erreur HTTP : {ex.Message}");
+                return default!;
+            }
+            catch (JsonException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erreur JSON : {ex.Message}");
+                return default!;
             }
             finally
             {
@@ -271,6 +264,15 @@ namespace JamaisASec.Services
         #endregion
 
         #region Deleters
+        public async Task<bool> DeleteArticleAsync(int id)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.DeleteAsync($"Articles/delete/{id}");
+                string error = await response.Content.ReadAsStringAsync();
+                return response.IsSuccessStatusCode;
+            });
+        }
         public async Task<bool> DeleteArticleCommandeAsync(int id)
         {
             return await RunWithLoadingCursor(async () =>

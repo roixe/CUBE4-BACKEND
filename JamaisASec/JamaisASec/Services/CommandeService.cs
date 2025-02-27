@@ -5,11 +5,11 @@ namespace JamaisASec.Services
 {
     public class CommandeService
     {
-        private readonly ApiService _apiService;
+        private readonly IApiService _apiService;
 
-        public CommandeService(ApiService apiService)
+        public CommandeService(IApiService apiService)
         {
-            _apiService = apiService;
+            _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
         }
 
         public async Task<(ObservableCollection<Commande> Commandes, ObservableCollection<Commande> Achats)> GetCommandesAndAchatsAsync()
