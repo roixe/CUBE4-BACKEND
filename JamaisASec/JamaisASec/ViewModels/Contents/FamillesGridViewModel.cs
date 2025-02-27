@@ -8,52 +8,35 @@ namespace JamaisASec.ViewModels.Contents
 {
     class FamillesGridViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Famille> _allFamilles;
-        public ObservableCollection<Famille> Familles { get; }
+        private readonly ObservableCollection<Famille> _allFamilles = [];
+        public ObservableCollection<Famille> Familles { get; } = [];
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
         public ICommand EditCommand { get; }
         public ICommand DeleteSelectedCommand { get; }
         public ICommand DeleteCommand { get; }
-        private string? _searchText;
-        public string SearchText
-        {
-            get => _searchText ?? string.Empty;
-            set
-            {
-                if (SetProperty(ref _searchText, value, nameof(SearchText)))
-                {
-                    Filter();
-                }
-            }
-        }
-        private bool _isHeaderCheckBoxChecked;
-        public bool IsHeaderCheckBoxChecked
-        {
-            get => _isHeaderCheckBoxChecked;
-            set
-            {
-                if (SetProperty(ref _isHeaderCheckBoxChecked, value, nameof(IsHeaderCheckBoxChecked)))
-                {
-                    foreach (var famille in Familles)
-                    {
-                        famille.IsSelected = _isHeaderCheckBoxChecked;
-                    }
-                }
-            }
-        }
+        
         public FamillesGridViewModel()
         {
-            _allFamilles = new ObservableCollection<Famille>();
-            Familles = new ObservableCollection<Famille>(_allFamilles);
+            // Liaison du filtrage
+            OnSearchTextChanged = _ => Filter();
+
+            // Liaison de la sélection globale
+            OnHeaderCheckBoxChanged = isChecked =>
+            {
+                foreach (var famille in Familles)
+                {
+                    famille.IsSelected = isChecked;
+                }
+            };
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            LoadDataCommand.Execute(null);
-
-            AddCommand = new RelayCommand<object>(Add);
+            AddCommand = new RelayCommand<object>(_ => Add());
             EditCommand = new RelayCommand<Famille>(async (famille) => await Edit(famille));
-            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            DeleteSelectedCommand = new RelayCommand<object>(_ => DeleteSelected());
             DeleteCommand = new RelayCommand<Famille>(Delete);
+
+            _ = LoadData();
         }
 
         private async Task LoadData()
@@ -79,7 +62,7 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private void Add(object obj)
+        private void Add()
         {
             var famille = new Famille("Nouvelle famille");
             famille.id = _allFamilles.Count + 1;
@@ -97,7 +80,7 @@ namespace JamaisASec.ViewModels.Contents
                 MessageBox.Show("Erreur lors de la sauvegarde.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void DeleteSelected(object obj)
+        private void DeleteSelected()
         {
             if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les familles sélectionnées ?",
                         "Confirmation",

@@ -1,10 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using System.Configuration;
-using System.Net.Http;
-using System.Text;
 using System.Windows;
 using JamaisASec.Models;
-using Newtonsoft.Json;
 
 namespace JamaisASec.Services
 {
@@ -15,7 +11,7 @@ namespace JamaisASec.Services
     {
         private static DataService _instance;
         
-        private readonly ApiService _apiService;
+        private readonly IApiService _apiService;
 
         // Cache des données
         private List<ArticleDTO>? _cachedArticles;
@@ -54,10 +50,8 @@ namespace JamaisASec.Services
             }
         }
 
-        /// <summary>
-        /// Retourne les articles, avec mise en cache pour éviter les appels redondants.
-        /// </summary>
-        public async Task<List<ArticleDTO>> GetArticlesAsync()
+        #region Getters
+        public async Task<List<Article>> GetArticlesAsync()
         {
             if (_cachedArticles == null)
             {
@@ -136,70 +130,36 @@ namespace JamaisASec.Services
             return _cachedFamilles;
         }
 
-        //public async Task AddArticleAsync(ArticleDTO Article)
-        //{
-        //    // Appel à l'API pour ajouter l'article
-        //    //var addedArticle = await _apiService.AddArticleAsync(Article);
-        //    // Vérification si l'article est bien ajouté dans la réponse
-        //    if (Article != null)
-        //    {
-        //        //Mettre à jour le cache
-        //        //_cachedArticles = await _apiService.GetArticlesAsync();
-        //        if (_cachedArticles != null)
-        //        {
-        //            _cachedArticles.Add(Article);
-        //        }
-        //    }
-        //}
-        public async Task AddArticleAsync(ArticleDTO article)
+        public async Task<List<Article>> GetArticlesByFournisseurAsync(int id)
+        {
+            if (_cachedArticles == null) await GetArticlesAsync();
+ 
+            return _cachedArticles.Where(a => a.fournisseur?.id == id).ToList();
+            
+        }
+
+        #endregion
+
+        #region Creaters
+        public async Task CreateArticleAsync(Article Article)
         {
             if (article == null)
             {
                 throw new ArgumentNullException(nameof(article), "L'article ne peut pas être null.");
             }
 
-            try
-            {
-                // Récupérer l'URL de base depuis le fichier de configuration
-                string apiBaseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"]; 
+        public async Task CreateArticleCommandeAsync(ArticlesCommandes articleCommande, int commande_id)
+        {
+            await _apiService.CreateArticleCommandeAsync(articleCommande, commande_id);
+        }
 
-                // Créer l'URL complète pour appeler l'API
-                string url = $"{apiBaseUrl}/Articles/create"; 
+        #endregion
 
-                
-                var articleToSend = new ArticleDTO
-                {
-                    nom = article.nom,
-                    description = article.description,
-                    quantite = article.quantite,
-                    quantite_Min = article.quantite_Min,
-                    colisage = article.colisage,
-                    prix_unitaire = article.prix_unitaire,
-                    annee = article.annee,
-                    famille = article.famille,
-                    maison= article.maison,
-                    fournisseur = article.fournisseur
-
-                };
-
-                // Sérialiser l'article en JSON
-                string jsonContent = JsonConvert.SerializeObject(articleToSend);
-
-                // Afficher le contenu de la requête dans un MessageBox
-                MessageBox.Show($"Requête envoyée :\nURL: {url}\nDonnées JSON : {jsonContent}", "Vérification Requête", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                // Utiliser HttpClient pour effectuer la requête POST
-                var httpClient = new HttpClient();
-                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-                // Envoi de la requête POST à l'API
-                var response = await httpClient.PostAsync(url, content);
-
-                // Lire la réponse du serveur
-                string responseContent = await response.Content.ReadAsStringAsync();
-
-                // Afficher la réponse de l'API dans un MessageBox
-                MessageBox.Show($"Réponse de l'API :\n{responseContent}", "Réponse API", MessageBoxButton.OK, MessageBoxImage.Information);
+        #region Updaters
+        public async Task UpdateArticleAsync(Article article)
+        {
+            // Appel à l'API pour mettre à jour l'article
+            //var updatedArticle = await _apiService.UpdateArticleAsync(article);
 
                 // Vérification de la réponse de l'API
                 if (response.IsSuccessStatusCode)
@@ -384,9 +344,38 @@ namespace JamaisASec.Services
             return success;
         }
 
-        internal async Task UpdateArticleAsync(ArticleDTO articleDTO)
+        public async Task<bool> UpdateArticleCommandeAsync(ArticlesCommandes articleCommande)
         {
-            throw new NotImplementedException();
+            if (articleCommande == null) return false;
+            return await _apiService.UpdateArticleCommandeAsync(articleCommande);
         }
+
+        public async Task<bool> UpdateStatusCommandeAsync(Commande commande)
+        {
+            if (commande == null) return false;
+            var success = await _apiService.UpdateStatusCommandeAsync(commande);
+            // Si l'appel est un succès, on met à jour le cache
+            if (success)
+            {
+                if (_cachedCommandes != null)
+                {
+                    var index = _cachedCommandes.FindIndex(c => c.id == commande.id);
+                    if (index != -1)
+                    {
+                        _cachedCommandes[index] = commande;
+                    }
+                }
+                CommandesUpdated?.Invoke(this, EventArgs.Empty);
+            }
+            return success;
+        }
+        #endregion
+
+        #region Deleters
+        public async Task<bool> DeleteArticleCommandeAsync(int id)
+        {
+            return await _apiService.DeleteArticleCommandeAsync(id);
+        }
+        #endregion
     }
 }

@@ -34,5 +34,39 @@ namespace JamaisASec.ViewModels
             }
             return false;
         }
+
+        // Propriété SearchText
+        private string? _searchText;
+        public string SearchText
+        {
+            get => _searchText ?? string.Empty;
+            set
+            {
+                if (SetProperty(ref _searchText, value, nameof(SearchText)))
+                {
+                    OnSearchTextChanged?.Invoke(value);
+                }
+            }
+        }
+
+        // Callback pour SearchText (à définir dans les ViewModels)
+        public Action<string>? OnSearchTextChanged { get; set; }
+
+        // Propriété IsHeaderCheckBoxChecked
+        private bool _isHeaderCheckBoxChecked;
+        public bool IsHeaderCheckBoxChecked
+        {
+            get => _isHeaderCheckBoxChecked;
+            set
+            {
+                if (SetProperty(ref _isHeaderCheckBoxChecked, value, nameof(IsHeaderCheckBoxChecked)))
+                {
+                    OnHeaderCheckBoxChanged?.Invoke(value);
+                }
+            }
+        }
+
+        // Callback pour IsHeaderCheckBoxChecked (à définir dans les ViewModels)
+        public Action<bool>? OnHeaderCheckBoxChanged { get; set; }
     }
 }

@@ -8,53 +8,35 @@ namespace JamaisASec.ViewModels.Contents
 {
     class MaisonsGridViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Maison> _allMaisons;
-        public ObservableCollection<Maison> Maisons { get; set; }
+        private readonly ObservableCollection<Maison> _allMaisons = [];
+        public ObservableCollection<Maison> Maisons { get; } = [];
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
         public ICommand EditCommand { get; }
         public ICommand DeleteSelectedCommand { get; }
         public ICommand DeleteCommand { get; }
-        private string? _searchText;
-        public string SearchText
-        {
-            get => _searchText ?? string.Empty;
-            set
-            {
-                if (SetProperty(ref _searchText, value, nameof(SearchText)))
-                {
-                    Filter();
-                }
-            }
-        }
-        private bool _isHeaderCheckBoxChecked;
-        public bool IsHeaderCheckBoxChecked
-        {
-            get => _isHeaderCheckBoxChecked;
-            set
-            {
-                if (SetProperty(ref _isHeaderCheckBoxChecked, value, nameof(IsHeaderCheckBoxChecked)))
-                {
-                    foreach (var maison in Maisons)
-                    {
-                        maison.IsSelected = _isHeaderCheckBoxChecked;
-                    }
-                }
-            }
-        }
 
         public MaisonsGridViewModel()
         {
-            _allMaisons = new ObservableCollection<Maison>();
-            Maisons = new ObservableCollection<Maison>(_allMaisons);
+            // Liaison du filtrage
+            OnSearchTextChanged = _ => Filter();
+
+            // Liaison de la sélection globale
+            OnHeaderCheckBoxChanged = isChecked =>
+            {
+                foreach (var maison in Maisons)
+                {
+                    maison.IsSelected = isChecked;
+                }
+            };
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            LoadDataCommand.Execute(null);
-
-            AddCommand = new RelayCommand<object>(Add);
+            AddCommand = new RelayCommand<object>(_ => Add());
             EditCommand = new RelayCommand<Maison>(async (maison) => await Edit(maison));
-            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            DeleteSelectedCommand = new RelayCommand<object>(_ => DeleteSelected());
             DeleteCommand = new RelayCommand<Maison>(Delete);
+
+            _ = LoadData();
         }
 
         private async Task LoadData()
@@ -81,7 +63,7 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private void Add(object obj)
+        private void Add()
         {
             var maison = new Maison("Nouvelle maison");
             _allMaisons.Add(maison);
@@ -99,7 +81,7 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private void DeleteSelected(object obj)
+        private void DeleteSelected()
         {
             if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les maisons sélectionnés ?",
                         "Confirmation",

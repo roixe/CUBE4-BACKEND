@@ -11,18 +11,47 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <uc:SearchBox Grid.Row="0" 
-                  Width="300" 
-                  HorizontalAlignment="Left"
-                  Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource topButton}" Command="{Binding AddCommand}" CommandParameter="" >
+                    <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="20" Height="20"/>
+                </Button>
+            </StackPanel>
+            <Rectangle VerticalAlignment="Stretch" Fill="{StaticResource Taupe}" Width="1" Margin="20 10 25 10"/>
+            <uc:SearchBox Width="300" 
+                          HorizontalAlignment="Left"
+                          Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Cursor=""/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2"
+            Orientation="Horizontal" HorizontalAlignment="Left">
+            <TextBlock Text="Statut:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
+            <ComboBox Width="180" Margin="5"
+                      Style="{DynamicResource ComboBoxStyle1}"
+                      ItemsSource="{Binding Status}" 
+                      SelectedItem="{Binding SelectedStatus}" Cursor="Hand">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Style="{StaticResource gridButton}"
+                    Grid.Row="1" Width="25"
+                    Command="{Binding EditStatusCommand}" 
+                    CommandParameter="">
+                <iconPacks:PackIconBootstrapIcons Kind="Check" Width="15" Height="15" VerticalAlignment="Center"/>
+            </Button>
+        </StackPanel>
+
 
         <!-- Table des achats -->
         <DataGrid Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{DynamicResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
-                  Grid.Row="1"
+                  Grid.Row="2"
                   ItemsSource="{Binding Achats}">
             <DataGrid.Resources>
                 <Style TargetType="DataGridRow" BasedOn="{StaticResource DataGridRowStyle1}">
@@ -30,7 +59,8 @@
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}" Binding="{Binding IsSelected}">
+                <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}" 
+                                        Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}">
                     <DataGridCheckBoxColumn.HeaderTemplate>
                         <DataTemplate>
                             <CheckBox IsChecked="{Binding DataContext.IsHeaderCheckBoxChecked, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource CheckBoxStyle1}" />
@@ -49,7 +79,7 @@
                                 Margin="2"
                                 Width="120"
                                 HorizontalAlignment="Left">
-                                <TextBlock Text="{Binding status}" 
+                                <TextBlock Text="{Binding status, Converter={StaticResource EnumDescriptionConverter}}" 
                                        Foreground="White"/>
                             </Border>
                         </DataTemplate>

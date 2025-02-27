@@ -7,26 +7,29 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using JamaisASec.Models;
 
 namespace JamaisASec.Helpers.Converters
 {
     class StatusToColorConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is string statut)
+            if (value is StatusCommande status)
             {
-                switch (statut.ToLower())
+                switch (status)
                 {
-                    case "en cours":
+                    case StatusCommande.EnCours:
+                        return Application.Current.Resources["Lemon"] as SolidColorBrush;
+                    case StatusCommande.Prete:
                         return Application.Current.Resources["Mandarine"] as SolidColorBrush;
-                    case "livree":
+                    case StatusCommande.Livree:
                         return Application.Current.Resources["ForestGreen"] as SolidColorBrush;
-                    case "en attente":
+                    case StatusCommande.EnAttente:
                         return Application.Current.Resources["Mandarine"] as SolidColorBrush;
-                    case "receptionnee":
+                    case StatusCommande.Receptionnee:
                         return Application.Current.Resources["ForestGreen"] as SolidColorBrush;
-                    case "annulee":
+                    case StatusCommande.Annulee:
                         return Application.Current.Resources["CalmRed"] as SolidColorBrush;
                     default:
                         return Brushes.Gray;

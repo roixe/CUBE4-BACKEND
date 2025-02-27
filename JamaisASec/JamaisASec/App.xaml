@@ -20,6 +20,7 @@
             <conv:TabActiveConverter x:Key="TabActiveConverter"/>
             <conv:TotalPriceConverter x:Key="TotalPriceConverter"/>
             <conv:ObjectEditModeConverter x:Key="ObjectEditModeConverter"/>
+            <conv:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

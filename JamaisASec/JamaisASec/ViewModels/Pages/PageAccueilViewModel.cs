@@ -7,22 +7,18 @@ namespace JamaisASec.ViewModels.Pages
 {
     public class PageAccueilViewModel : BaseViewModel
     {
-        public ObservableCollection<ArticleDTO> Articles { get; set; }
-        public ObservableCollection<Commande> Commandes { get; set; }
-        public ObservableCollection<Commande> Achats { get; set; }
+        public ObservableCollection<Article> Articles { get; } = [];
+        public ObservableCollection<Commande> Commandes { get; } = [];
+        public ObservableCollection<Commande> Achats { get; } = [];
 
         public ICommand LoadDataCommand { get; }
 
         public PageAccueilViewModel()
         {
-            Articles = [];
-            Commandes = [];
-            Achats = [];
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
 
-            LoadDataCommand.Execute(null);
-
+            _ = LoadData();
         }
 
         private async Task LoadData()
@@ -40,7 +36,7 @@ namespace JamaisASec.ViewModels.Pages
             Commandes.Clear();
             foreach (var commande in commandes)
             {
-                if (commande?.status?.Equals("en cours", StringComparison.CurrentCultureIgnoreCase) == true)
+                if (commande?.status == StatusCommande.EnCours)
                 {
                     Commandes.Add(commande);
                 }
@@ -49,7 +45,7 @@ namespace JamaisASec.ViewModels.Pages
             Achats.Clear();
             foreach (var achat in achats)
             {
-                if (achat?.status?.Equals("en attente", StringComparison.CurrentCultureIgnoreCase) == true)
+                if (achat?.status == StatusCommande.EnAttente)
                 {
                     Achats.Add(achat);
                 }

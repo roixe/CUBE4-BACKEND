@@ -10,56 +10,36 @@ namespace JamaisASec.ViewModels.Contents
 {
     class ArticlesGridViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<ArticleDTO> _allArticles;
-        public ObservableCollection<ArticleDTO> Articles { get; }
+        private readonly ObservableCollection<Article> _allArticles = [];
+        public ObservableCollection<Article> Articles { get; } = [];
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
-        public ICommand EditCommand { get; }
         public ICommand DeleteSelectedCommand { get; }
         public ICommand DeleteCommand { get; }
-        private string? _searchText;
-        public string SearchText
-        {
-            get => _searchText ?? string.Empty;
-            set
-            {
-                if (SetProperty(ref _searchText, value, nameof(SearchText)))
-                {
-                    Filter();
-                }
-            }
-        }
-        private bool _isHeaderCheckBoxChecked;
-        public bool IsHeaderCheckBoxChecked
-        {
-            get => _isHeaderCheckBoxChecked;
-            set
-            {
-                if (SetProperty(ref _isHeaderCheckBoxChecked, value, nameof(IsHeaderCheckBoxChecked)))
-                {
-                    foreach (var article in Articles)
-                    {
-                        article.IsSelected = _isHeaderCheckBoxChecked;
-                    }
-                }
-            }
-        }
-
 
         public ArticlesGridViewModel()
         {
-            _allArticles = new ObservableCollection<ArticleDTO>();
-            Articles = new ObservableCollection<ArticleDTO>();
 
-            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            LoadDataCommand.Execute(null);
+            // Liaison du filtrage
+            OnSearchTextChanged = _ => Filter();
+
+            // Liaison de la sélection globale
+            OnHeaderCheckBoxChanged = isChecked =>
+            {
+                foreach (var article in Articles)
+                {
+                    article.IsSelected = isChecked;
+                }
+            };
 
             _dataService.ArticlesUpdated += OnArticlesUpdated;
 
-            AddCommand = new RelayCommand<object>(Add);
-            EditCommand = new RelayCommand<ArticleDTO>(Edit);
-            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
-            DeleteCommand = new RelayCommand<ArticleDTO>(Delete);
+            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
+            AddCommand = new RelayCommand<object>(_ => Add());
+            DeleteSelectedCommand = new RelayCommand<object>(_ => DeleteSelected());
+            DeleteCommand = new RelayCommand<Article>(Delete);
+
+            _ = LoadData();
         }
 
         private void OnArticlesUpdated(object? sender, EventArgs e)
@@ -90,7 +70,7 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private async void Add(object obj)
+        private async void Add()
         {
             var modal = new ArticleModal();
             var article = new ArticleDTO();
@@ -99,24 +79,12 @@ namespace JamaisASec.ViewModels.Contents
             var result = modal.ShowDialog();
             if (result == true)
             {
-                await _dataService.AddArticleAsync(modalVM.Article);
-                LoadDataCommand.Execute(null);
+                await _dataService.CreateArticleAsync(modalVM.Article);
+                _ = LoadData();
             }
         }
 
-        private async void Edit(ArticleDTO article)
-        {
-            var modal = new ArticleModal();
-            var modalVM = new ArticleModalViewModel(article, modal);
-            modal.DataContext = modalVM;
-            var result = modal.ShowDialog();
-            if (result == true)
-            {
-                await _dataService.UpdateArticleAsync(modalVM.Article);
-                LoadDataCommand.Execute(null);
-            }
-        }
-        private void DeleteSelected(object obj)
+        private void DeleteSelected()
         {
             if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les articles sélectionnés ?",
                         "Confirmation",

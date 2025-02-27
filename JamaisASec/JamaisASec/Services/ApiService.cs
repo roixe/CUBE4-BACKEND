@@ -52,17 +52,8 @@ namespace JamaisASec.Services
             }
         }
 
-        //public async Task<List<Article>> GetArticlesAsync()
-        //{
-        //    return await RunWithLoadingCursor(async () =>
-        //    {
-        //        var response = await _httpClient.GetAsync("Articles/get/all");
-        //        response.EnsureSuccessStatusCode();
-        //        var content = await response.Content.ReadAsStringAsync();
-        //        return JsonSerializer.Deserialize<List<Article>>(content) ?? new List<Article>();
-        //    });
-        //}
-        public async Task<List<ArticleDTO>> GetArticlesAsync()
+        #region Getters
+        public async Task<List<Article>> GetArticlesAsync()
         {
             return await RunWithLoadingCursor(async () =>
             {
@@ -81,7 +72,20 @@ namespace JamaisASec.Services
                 var response = await _httpClient.GetAsync("Commandes/get/all");
                 response.EnsureSuccessStatusCode();
                 var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<Commande>>(content) ?? new List<Commande>();
+                try
+                {
+                    var commandes = JsonSerializer.Deserialize<List<Commande>>(content, new JsonSerializerOptions
+                    {
+                        Converters = { new StatusCommandeConverter() } 
+                    });
+                    return commandes ?? new List<Commande>(); // Retourner une liste vide si désérialisation échoue
+                }
+                catch (Exception ex)
+                {
+                    // Gérer les erreurs de désérialisation
+                    System.Diagnostics.Debug.WriteLine($"Erreur de désérialisation : {ex.Message}");
+                    return new List<Commande>();
+                }
             });
         }
 
@@ -161,7 +165,29 @@ namespace JamaisASec.Services
                 return JsonSerializer.Deserialize<List<Commande>>(content) ?? new List<Commande>();
             });
         }
+        #endregion
 
+        #region Creators
+        public async Task<bool> CreateArticleCommandeAsync(ArticlesCommandes articleCommande, int commande_id)
+        {
+            var dto = new ArticlesCommandesDTO
+            {
+                ID = articleCommande.id,
+                Commandes_ID = commande_id,
+                Articles_ID = articleCommande.article.id,
+                Quantite = articleCommande.quantite
+            };
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(dto);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync("ArticlesCommandes/create", content);
+                return response.IsSuccessStatusCode;
+            });
+        }
+        #endregion
+
+        #region Updaters
         public async Task<bool> UpdateMaisonAsync(Maison maison)
         {
             return await RunWithLoadingCursor(async () =>
@@ -187,5 +213,45 @@ namespace JamaisASec.Services
                 return response.IsSuccessStatusCode;
             });
         }
+
+        public async Task<bool> UpdateArticleCommandeAsync(ArticlesCommandes articleCommande)
+        {
+            var dto = new ArticlesCommandesDTO
+            {
+                ID = articleCommande.id,
+                Quantite = articleCommande.quantite
+            };
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(articleCommande);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync($"ArticlesCommandes/update/{articleCommande.id}", content);
+                return response.IsSuccessStatusCode;
+            });
+        }
+
+        public async Task<bool> UpdateStatusCommandeAsync(Commande commande)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(new { Status = commande.status.ToString() });
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync($"Commandes/update/status/{commande.id}", content);
+                return response.IsSuccessStatusCode;
+            });
+        }
+        #endregion
+
+        #region Deleters
+        public async Task<bool> DeleteArticleCommandeAsync(int id)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.DeleteAsync($"ArticlesCommandes/delete/{id}");
+                string error = await response.Content.ReadAsStringAsync();
+                return response.IsSuccessStatusCode;
+            });
+        }
+        #endregion
     }
 }
