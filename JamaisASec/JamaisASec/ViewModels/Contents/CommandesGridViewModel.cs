@@ -9,9 +9,19 @@ namespace JamaisASec.ViewModels.Contents
     {
         private readonly ObservableCollection<Commande> _allCommandes = [];
         public ObservableCollection<Commande> Commandes { get; } = [];
+        private StatusCommande _selectedStatus;
+        public StatusCommande SelectedStatus
+        {
+            get => _selectedStatus;
+            set => SetProperty(ref _selectedStatus, value, nameof(SelectedStatus));
+        }
+
+        public ObservableCollection<StatusCommande> Status { get; set; }
 
         public ICommand LoadDataCommand { get; }
         public ICommand NavigateCommand { get; }
+        public ICommand AddCommand { get; }
+        public ICommand EditStatusCommand { get; }
         public ICommand RowDoubleClickCommand { get; }
         public CommandesGridViewModel(ICommand navigateCommand)
         {
@@ -27,10 +37,21 @@ namespace JamaisASec.ViewModels.Contents
                 }
             };
 
+            Status = new ObservableCollection<StatusCommande>(new[]
+            {
+                StatusCommande.EnCours,
+                StatusCommande.Prete,
+                StatusCommande.Livree,
+                StatusCommande.Annulee
+            });
+            SelectedStatus = Status.FirstOrDefault();
+
             _dataService.CommandesUpdated += OnCommandesUpdated;
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             NavigateCommand = navigateCommand;
+            AddCommand = new RelayCommand<object>(_ => Add());
+            EditStatusCommand = new RelayCommand<object>(_ => EditStatus());
 
             RowDoubleClickCommand = new RelayCommand<Commande>(commande =>
             {
@@ -72,5 +93,23 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
+        private void Add()
+        {
+            return;
+        }
+
+        private async void EditStatus()
+        {
+            var selectedCommandes = Commandes.Where(c => c.IsSelected).ToList();
+            if (selectedCommandes != null)
+            {
+                foreach(var commande in selectedCommandes)
+                {
+                    commande.status = SelectedStatus;
+                    await _dataService.UpdateCommandeAsync(commande);
+                    commande.IsSelected = false;
+                }
+            }
+        }
     }
 }

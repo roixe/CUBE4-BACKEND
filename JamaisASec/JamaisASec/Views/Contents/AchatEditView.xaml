@@ -40,7 +40,6 @@
                     HorizontalAlignment="Left">
                 <iconPacks:PackIconBootstrapIcons Kind="Floppy" Width="20" Height="20"/>
             </Button>
-
         </StackPanel>
         
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Fournisseur:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>

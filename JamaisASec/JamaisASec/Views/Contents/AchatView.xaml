@@ -52,7 +52,7 @@
         <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Achat.date, StringFormat={}{0:dd/MM/yyyy}}" Margin="5" VerticalAlignment="Center"/>
 
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Statut:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Achat.status}" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Achat.status, Converter={StaticResource EnumDescriptionConverter}}" Margin="5" VerticalAlignment="Center"/>
         
         <DataGrid Style="{StaticResource DataGridStyle1}" 
               CellStyle="{DynamicResource DataGridCellStyle1}" 
