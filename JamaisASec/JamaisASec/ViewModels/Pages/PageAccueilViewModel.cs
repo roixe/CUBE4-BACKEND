@@ -36,7 +36,7 @@ namespace JamaisASec.ViewModels.Pages
             Commandes.Clear();
             foreach (var commande in commandes)
             {
-                if (commande?.status?.Equals("en cours", StringComparison.CurrentCultureIgnoreCase) == true)
+                if (commande?.status == StatusCommande.EnCours)
                 {
                     Commandes.Add(commande);
                 }
@@ -45,7 +45,7 @@ namespace JamaisASec.ViewModels.Pages
             Achats.Clear();
             foreach (var achat in achats)
             {
-                if (achat?.status?.Equals("en attente", StringComparison.CurrentCultureIgnoreCase) == true)
+                if (achat?.status == StatusCommande.EnAttente)
                 {
                     Achats.Add(achat);
                 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using JamaisASec.Models;
 
 namespace JamaisASec.Services
@@ -10,7 +11,7 @@ namespace JamaisASec.Services
     {
         private static DataService _instance;
         
-        private readonly ApiService _apiService;
+        private readonly IApiService _apiService;
 
         // Cache des données
         private List<Article>? _cachedArticles;
@@ -337,11 +338,30 @@ namespace JamaisASec.Services
             return success;
         }
 
-        public async Task<bool> UpdateArticleCommandeAsync(ArticlesCommandes articleCommande, int commande_id)
+        public async Task<bool> UpdateArticleCommandeAsync(ArticlesCommandes articleCommande)
         {
             if (articleCommande == null) return false;
+            return await _apiService.UpdateArticleCommandeAsync(articleCommande);
+        }
 
-            return await _apiService.UpdateArticleCommandeAsync(articleCommande, commande_id);
+        public async Task<bool> UpdateStatusCommandeAsync(Commande commande)
+        {
+            if (commande == null) return false;
+            var success = await _apiService.UpdateStatusCommandeAsync(commande);
+            // Si l'appel est un succès, on met à jour le cache
+            if (success)
+            {
+                if (_cachedCommandes != null)
+                {
+                    var index = _cachedCommandes.FindIndex(c => c.id == commande.id);
+                    if (index != -1)
+                    {
+                        _cachedCommandes[index] = commande;
+                    }
+                }
+                CommandesUpdated?.Invoke(this, EventArgs.Empty);
+            }
+            return success;
         }
         #endregion
 

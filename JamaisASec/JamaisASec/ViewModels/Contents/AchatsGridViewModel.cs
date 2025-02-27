@@ -2,6 +2,8 @@
 using JamaisASec.Models;
 using JamaisASec.Services;
 using System.Windows.Input;
+using System.Data;
+using System.Windows;
 
 namespace JamaisASec.ViewModels.Contents
 {
@@ -9,7 +11,17 @@ namespace JamaisASec.ViewModels.Contents
     {
         private readonly ObservableCollection<Commande> _allAchats = [];
         public ObservableCollection<Commande> Achats { get; } = [];
-        
+        private StatusCommande _selectedStatus;
+        public StatusCommande SelectedStatus
+        {
+            get => _selectedStatus;
+            set => SetProperty(ref _selectedStatus, value, nameof(SelectedStatus));
+        }
+
+        public ObservableCollection<StatusCommande> Status { get; set; }
+
+        public ICommand EditStatusCommand { get; }
+
         public ICommand LoadDataCommand { get; }
         public ICommand NavigateCommand { get; }
         public ICommand RowDoubleClickCommand { get; }
@@ -28,8 +40,17 @@ namespace JamaisASec.ViewModels.Contents
                 }
             };
 
+            Status = new ObservableCollection<StatusCommande>(new[]
+            {
+                StatusCommande.EnAttente,
+                StatusCommande.Receptionnee,
+                StatusCommande.Annulee
+            });
+            SelectedStatus = Status.FirstOrDefault();
+
             _dataService.CommandesUpdated += OnAchatsUpdated;
 
+            EditStatusCommand = new RelayCommand<object>(_ => EditStatus());
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             NavigateCommand = navigateCommand;
             
@@ -71,6 +92,20 @@ namespace JamaisASec.ViewModels.Contents
             {
                 Achats.Add(achat);
             }
+        }
+
+        private async void EditStatus()
+        {
+            var selectedAchats = _allAchats.Where(a => a.IsSelected).ToList();
+            if (selectedAchats != null)
+            {
+                foreach (var achat in selectedAchats)
+                {
+                    achat.status = SelectedStatus;
+                    await _dataService.UpdateStatusCommandeAsync(achat);
+                }
+            }
+
         }
     }
 }

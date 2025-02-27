@@ -22,16 +22,17 @@
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal">
             <Button Style="{StaticResource topButton}"
-            Margin="5 10 0 5"
-            Command="{Binding NavigateCommand}" 
-            CommandParameter=""
-            HorizontalAlignment="Left">
+                    Margin="5 10 0 5"
+                    Command="{Binding NavigateCommand}" 
+                    CommandParameter=""
+                    HorizontalAlignment="Left">
                 <iconPacks:PackIconBootstrapIcons Kind="ArrowLeft" Width="20" Height="20"/>
             </Button>
+            <!--
             <Button Style="{StaticResource topButton}"
-            Margin="5 10 0 5"
-            Command="{Binding NavigateCommand}"
-            HorizontalAlignment="Left">
+                    Margin="5 10 0 5"
+                    Command="{Binding NavigateCommand}"
+                    HorizontalAlignment="Left">
                 <Button.CommandParameter>
                     <MultiBinding Converter="{StaticResource ObjectEditModeConverter}">
                         <Binding Path="Commande"/>
@@ -39,7 +40,7 @@
                     </MultiBinding>
                 </Button.CommandParameter>
                 <iconPacks:PackIconBootstrapIcons Kind="Pencil" Width="20" Height="20"/>
-            </Button>
+            </Button>-->
         </StackPanel>
 
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Référence:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
@@ -52,7 +53,7 @@
         <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Commande.date, StringFormat={}{0:dd/MM/yyyy}}" Margin="5" VerticalAlignment="Center"/>
 
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Statut:" FontWeight="Bold" Margin="5" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Commande.status}" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Commande.status, Converter={StaticResource EnumDescriptionConverter}}" Margin="5" VerticalAlignment="Center"/>
 
         <DataGrid Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{DynamicResource DataGridCellStyle1}" 

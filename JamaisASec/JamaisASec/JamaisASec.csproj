@@ -22,8 +22,4 @@
     <Resource Include="Resources\DataGridStyles.xaml" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModels\Tab\" />
-  </ItemGroup>
-
 </Project>

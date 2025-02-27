@@ -14,7 +14,6 @@ namespace JamaisASec.ViewModels.Contents
         public ObservableCollection<Article> Articles { get; } = [];
         public ICommand LoadDataCommand { get; }
         public ICommand AddCommand { get; }
-        public ICommand EditCommand { get; }
         public ICommand DeleteSelectedCommand { get; }
         public ICommand DeleteCommand { get; }
 
@@ -37,7 +36,6 @@ namespace JamaisASec.ViewModels.Contents
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             AddCommand = new RelayCommand<object>(_ => Add());
-            EditCommand = new RelayCommand<Article>(Edit);
             DeleteSelectedCommand = new RelayCommand<object>(_ => DeleteSelected());
             DeleteCommand = new RelayCommand<Article>(Delete);
 
@@ -82,22 +80,10 @@ namespace JamaisASec.ViewModels.Contents
             if (result == true)
             {
                 await _dataService.CreateArticleAsync(modalVM.Article);
-                LoadDataCommand.Execute(null);
+                _ = LoadData();
             }
         }
 
-        private async void Edit(Article article)
-        {
-            var modal = new ArticleModal();
-            var modalVM = new ArticleModalViewModel(article, modal);
-            modal.DataContext = modalVM;
-            var result = modal.ShowDialog();
-            if (result == true)
-            {
-                await _dataService.UpdateArticleAsync(modalVM.Article);
-                LoadDataCommand.Execute(null);
-            }
-        }
         private void DeleteSelected()
         {
             if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les articles sélectionnés ?",

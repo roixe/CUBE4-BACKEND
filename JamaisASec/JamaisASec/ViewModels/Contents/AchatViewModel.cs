@@ -186,7 +186,7 @@ namespace JamaisASec.ViewModels.Contents
                     if (existingArticle != null)
                     {
                         // Si l'article existe dans articles, c'est une mise à jour
-                        await _dataService.UpdateArticleCommandeAsync(articleCommande, commande_id);
+                        await _dataService.UpdateArticleCommandeAsync(articleCommande);
                     }
                     else
                     {

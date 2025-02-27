@@ -71,7 +71,20 @@ namespace JamaisASec.Services
                 var response = await _httpClient.GetAsync("Commandes/get/all");
                 response.EnsureSuccessStatusCode();
                 var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<Commande>>(content) ?? new List<Commande>();
+                try
+                {
+                    var commandes = JsonSerializer.Deserialize<List<Commande>>(content, new JsonSerializerOptions
+                    {
+                        Converters = { new StatusCommandeConverter() } 
+                    });
+                    return commandes ?? new List<Commande>(); // Retourner une liste vide si désérialisation échoue
+                }
+                catch (Exception ex)
+                {
+                    // Gérer les erreurs de désérialisation
+                    System.Diagnostics.Debug.WriteLine($"Erreur de désérialisation : {ex.Message}");
+                    return new List<Commande>();
+                }
             });
         }
 
@@ -200,7 +213,7 @@ namespace JamaisASec.Services
             });
         }
 
-        public async Task<bool> UpdateArticleCommandeAsync(ArticlesCommandes articleCommande, int commande_id)
+        public async Task<bool> UpdateArticleCommandeAsync(ArticlesCommandes articleCommande)
         {
             var dto = new ArticlesCommandesDTO
             {
@@ -212,6 +225,17 @@ namespace JamaisASec.Services
                 var json = JsonSerializer.Serialize(articleCommande);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await _httpClient.PutAsync($"ArticlesCommandes/update/{articleCommande.id}", content);
+                return response.IsSuccessStatusCode;
+            });
+        }
+
+        public async Task<bool> UpdateStatusCommandeAsync(Commande commande)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(new { Status = commande.status.ToString() });
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync($"Commandes/update/status/{commande.id}", content);
                 return response.IsSuccessStatusCode;
             });
         }
