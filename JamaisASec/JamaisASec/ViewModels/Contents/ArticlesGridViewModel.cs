@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using JamaisASec.Models;
@@ -83,7 +84,7 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private void DeleteSelected()
+        private async void DeleteSelected()
         {
             if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les articles sélectionnés ?",
                         "Confirmation",
@@ -92,16 +93,14 @@ namespace JamaisASec.ViewModels.Contents
                 var selectedArticles = _allArticles.Where(a => a.IsSelected).ToList();
                 foreach (var article in selectedArticles)
                 {
-                    _allArticles.Remove(article);
+                    await _dataService.DeleteArticleAsync(article.id);
                 }
-                Filter();
             }
         }
 
-        private void Delete(Article article)
+        private async void Delete(Article article)
         {
-            _allArticles.Remove(article);
-            Filter();
+            await _dataService.DeleteArticleAsync(article.id);
         }
     }
 }

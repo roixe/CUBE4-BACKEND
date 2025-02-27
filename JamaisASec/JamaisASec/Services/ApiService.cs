@@ -264,6 +264,15 @@ namespace JamaisASec.Services
         #endregion
 
         #region Deleters
+        public async Task<bool> DeleteArticleAsync(int id)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.DeleteAsync($"Articles/delete/{id}");
+                string error = await response.Content.ReadAsStringAsync();
+                return response.IsSuccessStatusCode;
+            });
+        }
         public async Task<bool> DeleteArticleCommandeAsync(int id)
         {
             return await RunWithLoadingCursor(async () =>

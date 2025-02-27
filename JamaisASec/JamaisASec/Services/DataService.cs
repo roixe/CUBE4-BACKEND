@@ -19,7 +19,6 @@ namespace JamaisASec.Services
         private List<Commande>? _cachedCommandes;
         private List<Maison>? _cachedMaisons;
         private List<Famille>? _cachedFamilles;
-        private object articleDTO;
 
         public event EventHandler<EventArgs> ArticlesUpdated;
         public event EventHandler<EventArgs> CommandesUpdated;
@@ -368,6 +367,21 @@ namespace JamaisASec.Services
         #endregion
 
         #region Deleters
+        public async Task<bool> DeleteArticleAsync(int id)
+        {
+            var success = await _apiService.DeleteArticleAsync(id);
+            if (success)
+            {
+                var index = _cachedArticles.FindIndex(a => a.id == id);
+                if (index != -1)
+                {
+                    _cachedArticles.RemoveAt(index);
+                }
+                ArticlesUpdated?.Invoke(this, EventArgs.Empty);
+            }
+            return success;
+        }
+
         public async Task<bool> DeleteArticleCommandeAsync(int id)
         {
             return await _apiService.DeleteArticleCommandeAsync(id);

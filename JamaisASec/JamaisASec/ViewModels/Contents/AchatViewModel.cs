@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Printing.IndexedProperties;
 using System.Windows;
 using System.Windows.Input;
 using JamaisASec.Models;
@@ -202,7 +201,7 @@ namespace JamaisASec.ViewModels.Contents
 
                 foreach (var articleToDelete in articlesToDelete)
                 {
-                    var response = await _dataService.DeleteArticleCommandeAsync(articleToDelete.id);
+                    await _dataService.DeleteArticleCommandeAsync(articleToDelete.id);
                 }
 
                 NavigateCommand?.Execute((Achat, false));
