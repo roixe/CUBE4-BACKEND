@@ -46,7 +46,7 @@ namespace JamaisASec.ViewModels.Contents
             });
             SelectedStatus = Status.FirstOrDefault();
 
-            _dataService.CommandesUpdated += OnCommandesUpdated;
+            EventBus.Subscribe("CommandeUpdated", OnCommandeUpdated);
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             NavigateCommand = navigateCommand;
@@ -64,7 +64,7 @@ namespace JamaisASec.ViewModels.Contents
             _ = LoadData();
         }
 
-        private void OnCommandesUpdated(object? sender, EventArgs e)
+        private void OnCommandeUpdated()
         {
             _ = LoadData();
         }

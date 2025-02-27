@@ -74,11 +74,7 @@ namespace JamaisASec.ViewModels.Contents
         {
             if (maison == null) return;
 
-            bool success = await _dataService.UpdateMaisonAsync(maison);
-            if (!success)
-            {
-                MessageBox.Show("Erreur lors de la sauvegarde.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            await _dataService.UpdateMaisonAsync(maison);
         }
 
         private void DeleteSelected()
