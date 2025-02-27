@@ -8,7 +8,7 @@ namespace JamaisASec.ViewModels
 {
     public class ArticleViewModel : BaseViewModel
     {
-        public Article Article{ get; }
+        public Article Article { get; }
         private Article _articleTemp;
         public Article ArticleTemp
         {
@@ -103,7 +103,7 @@ namespace JamaisASec.ViewModels
                 Article.fournisseur = ArticleTemp.fournisseur;
                 Article.famille = ArticleTemp.famille;
                 Article.maison = ArticleTemp.maison;
-                
+
                 await _dataService.UpdateArticleAsync(Article);
 
                 NavigateCommand.Execute((Article, false));

@@ -80,7 +80,6 @@ namespace JamaisASec.ViewModels.Contents
             if (result == true)
             {
                 await _dataService.CreateArticleAsync(modalVM.Article);
-                _ = LoadData();
             }
         }
 

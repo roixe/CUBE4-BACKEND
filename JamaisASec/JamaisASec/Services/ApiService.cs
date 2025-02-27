@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Windows;
 using System.Windows.Input;
 using JamaisASec.Models;
 
@@ -51,7 +52,6 @@ namespace JamaisASec.Services
                 Mouse.OverrideCursor = null;
             }
         }
-
         #region Getters
         public async Task<List<Article>> GetArticlesAsync()
         {
@@ -63,6 +63,7 @@ namespace JamaisASec.Services
                 return JsonSerializer.Deserialize<List<Article>>(content) ?? new List<Article>();
             });
         }
+
 
         public async Task<List<Commande>> GetCommandesAsync()
         {
@@ -167,6 +168,34 @@ namespace JamaisASec.Services
         #endregion
 
         #region Creators
+
+        public async Task<bool> CreateArticleAsync(Article article)
+        {
+            var dto = new ArticleDTO
+            {
+                ID = article.id,
+                Nom = article.nom,
+                Description = article.description,
+                Quantite = article.quantite,
+                Quantite_Min = article.quantite_Min,
+                Colisage = article.colisage,
+                Prix_unitaire = article.prix_unitaire,
+                Annee = article.annee,
+                Familles_ID = article.famille.id,
+                Maisons_ID = article.maison.id,
+                Fournisseurs_ID = article.fournisseur.id
+
+            };
+
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(dto);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync("Articles/create", content);
+                return response.IsSuccessStatusCode;
+            });
+        }
+
         public async Task<bool> CreateArticleCommandeAsync(ArticlesCommandes articleCommande, int commande_id)
         {
             var dto = new ArticlesCommandesDTO

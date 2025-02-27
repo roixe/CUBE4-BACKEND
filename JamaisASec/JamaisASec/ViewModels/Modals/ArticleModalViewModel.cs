@@ -9,8 +9,9 @@ namespace JamaisASec.ViewModels.Modals
     public class ArticleModalViewModel : BaseViewModel
     {
         public Article Article { get; }
-        public ObservableCollection<Famille> Familles { get; set; }
-        public ObservableCollection<Maison> Maisons { get; set; }
+        public ObservableCollection<Famille> Familles { get; set; } = [];
+        public ObservableCollection<Maison> Maisons { get; set; } = [];
+        public ObservableCollection<Fournisseur> Fournisseurs { get; set; } = [];
         private string? _nom;
         public string Nom
         {
@@ -62,6 +63,16 @@ namespace JamaisASec.ViewModels.Modals
             get => _selectedMaison;
             set => SetProperty(ref _selectedMaison, value, nameof(SelectedMaison));
         }
+
+        private Fournisseur? _selectedFournisseur;
+        public Fournisseur? SelectedFournisseur
+        {
+            get => _selectedFournisseur;
+            set
+            {
+                SetProperty(ref _selectedFournisseur, value, nameof(SelectedFournisseur));
+            }
+        }
         private int _prix;
         public int Prix
         {
@@ -75,11 +86,9 @@ namespace JamaisASec.ViewModels.Modals
         public ArticleModalViewModel(Article article, Window window)
         {
             _window = window;
-            Maisons = new ObservableCollection<Maison>();
-            Familles = new ObservableCollection<Famille>();
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            LoadDataCommand.Execute(null);
+            _ = LoadData();
 
             Article = article ?? new Article();
             _nom = Article.nom;
@@ -109,11 +118,22 @@ namespace JamaisASec.ViewModels.Modals
             Familles.Clear();
             foreach (var famille in familles)
             {
-                if(famille.nom == Article.famille?.nom)
+                if (famille.nom == Article.famille?.nom)
                 {
                     SelectedFamille = famille;
                 }
                 Familles.Add(famille);
+            }
+
+            var fournisseurs = await _dataService.GetFournisseursAsync();
+            Fournisseurs.Clear();
+            foreach (var fournisseur in fournisseurs)
+            {
+                if (fournisseur.nom == Article.fournisseur?.nom)
+                {
+                    SelectedFournisseur = fournisseur;
+                }
+                Fournisseurs.Add(fournisseur);
             }
         }
 
@@ -132,7 +152,7 @@ namespace JamaisASec.ViewModels.Modals
             Article.prix_unitaire = Prix;
             Article.famille = Familles.FirstOrDefault(f => f.nom == SelectedFamille?.nom);
             Article.maison = Maisons.FirstOrDefault(m => m.nom == SelectedMaison?.nom);
-
+            Article.fournisseur = Fournisseurs.FirstOrDefault(f => f.nom == SelectedFournisseur?.nom);
             _window.DialogResult = true;
             _window.Close();
         }
@@ -149,6 +169,24 @@ namespace JamaisASec.ViewModels.Modals
 
             // Validation pour la description
             if (string.IsNullOrEmpty(Description))
+            {
+                isValid = false;
+            }
+
+            // Validation pour la famille
+            if (SelectedFamille == null)
+            {
+                isValid = false;
+            }
+
+            // Validation pour la maison
+            if (SelectedMaison == null)
+            {
+                isValid = false;
+            }
+
+            // Validation pour le fournisseur
+            if (SelectedFournisseur == null)
             {
                 isValid = false;
             }

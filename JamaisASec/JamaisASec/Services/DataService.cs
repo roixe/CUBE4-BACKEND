@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows;
 using JamaisASec.Models;
 
 namespace JamaisASec.Services
@@ -20,6 +19,7 @@ namespace JamaisASec.Services
         private List<Commande>? _cachedCommandes;
         private List<Maison>? _cachedMaisons;
         private List<Famille>? _cachedFamilles;
+        private object articleDTO;
 
         public event EventHandler<EventArgs> ArticlesUpdated;
         public event EventHandler<EventArgs> CommandesUpdated;
@@ -142,17 +142,19 @@ namespace JamaisASec.Services
         #region Creaters
         public async Task CreateArticleAsync(Article Article)
         {
+            if (Article == null) return; 
+            
             // Appel à l'API pour ajouter l'article
-            //var addedArticle = await _apiService.AddArticleAsync(Article);
+            var success = await _apiService.CreateArticleAsync(Article);
             // Vérification si l'article est bien ajouté dans la réponse
-            if (Article != null)
+            if (success)
             {
                 //Mettre à jour le cache
-                //_cachedArticles = await _apiService.GetArticlesAsync();
                 if (_cachedArticles != null)
                 {
                     _cachedArticles.Add(Article);
                 }
+                ArticlesUpdated?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -244,7 +246,7 @@ namespace JamaisASec.Services
                         {
                             article.famille = famille;
                         }
-                        
+
                     }
                 }
                 ArticlesUpdated?.Invoke(this, EventArgs.Empty);
@@ -269,7 +271,7 @@ namespace JamaisASec.Services
                         _cachedClients[index] = client;
                     }
                 }
-                if(_cachedCommandes != null)
+                if (_cachedCommandes != null)
                 {
                     foreach (var commande in _cachedCommandes)
                     {

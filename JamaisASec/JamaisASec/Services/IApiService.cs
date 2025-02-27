@@ -5,6 +5,7 @@ namespace JamaisASec.Services
     public interface IApiService
     {
         Task<List<Article>> GetArticlesAsync();
+        //Task<List<ArticleDTO>> GetArticlesAsync();
         Task<List<Commande>> GetCommandesAsync();
         Task<List<Client>> GetClientsAsync();
         Task<List<Fournisseur>> GetFournisseursAsync();
@@ -14,6 +15,7 @@ namespace JamaisASec.Services
         Task<List<Commande>> GetClientsCommandesAsync(int clientId);
         Task<List<Commande>> GetFournisseursAchatsAsync(int fournisseurId);
 
+        Task<bool> CreateArticleAsync(Article article);
         Task<bool> CreateArticleCommandeAsync(ArticlesCommandes articleCommande, int commande_id);
         Task<bool> UpdateMaisonAsync(Maison maison);
         Task<bool> UpdateFamilleAsync(Famille famille);
