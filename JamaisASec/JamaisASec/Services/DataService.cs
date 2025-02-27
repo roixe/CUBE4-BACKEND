@@ -26,9 +26,9 @@ namespace JamaisASec.Services
         public event EventHandler<EventArgs> ClientsUpdated;
         public event EventHandler<EventArgs> FournisseursUpdated;
 
-        public DataService(ApiService apiService)
+        public DataService(IApiService apiService)
         {
-            _apiService = apiService;
+            _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
         }
         public static DataService Instance
         {
@@ -41,7 +41,7 @@ namespace JamaisASec.Services
                 return _instance;
             }
         }
-        public static void Initialize(ApiService apiService)
+        public static void Initialize(IApiService apiService)
         {
             if (_instance == null)
             {

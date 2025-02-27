@@ -6,19 +6,18 @@ namespace JamaisASec.ViewModels
     public class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected readonly ApiService _apiService;
+        protected readonly IApiService _apiService;
         protected readonly CommandeService _commandeService;
         protected readonly DataService _dataService;
 
         public BaseViewModel()
         {
-            ApiService.Initialize();
-            _apiService = ApiService.Instance;
-            _commandeService = new CommandeService(_apiService);
-            DataService.Initialize(_apiService);
+            IApiService apiService = ApiService.Instance;
+            _apiService = apiService;
+            _commandeService = new CommandeService(apiService);
+            DataService.Initialize(apiService);
             _dataService = DataService.Instance;
         }
-
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
