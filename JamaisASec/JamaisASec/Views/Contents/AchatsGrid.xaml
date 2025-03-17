@@ -15,12 +15,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <StackPanel Orientation="Horizontal">
+            <!--<StackPanel Orientation="Horizontal">
                 <Button Style="{StaticResource topButton}" Command="{Binding AddCommand}" CommandParameter="" >
                     <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="20" Height="20"/>
                 </Button>
             </StackPanel>
-            <Rectangle VerticalAlignment="Stretch" Fill="{StaticResource Taupe}" Width="1" Margin="20 10 25 10"/>
+            <Rectangle VerticalAlignment="Stretch" Fill="{StaticResource Taupe}" Width="1" Margin="20 10 25 10"/>-->
             <uc:SearchBox Width="300" 
                           HorizontalAlignment="Left"
                           Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Cursor=""/>

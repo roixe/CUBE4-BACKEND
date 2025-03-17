@@ -188,6 +188,57 @@ namespace JamaisASec.Services
                 return response.IsSuccessStatusCode;
             });
         }
+        public async Task<bool> CreateMaisonAsync(Maison maison)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(maison);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync("Maisons/create", content);
+                return response.IsSuccessStatusCode;
+            });
+        }
+
+        public async Task<bool> CreateFamilleAsync(Famille famille)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(famille);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync("Familles/create", content);
+                return response.IsSuccessStatusCode;
+            });
+        }
+
+        public async Task<bool> CreateClientAsync(Client client)
+        {
+            var dto = new ClientDTO
+            {
+                Nom = client.nom,
+                Adresse = client.adresse,
+                Mail = client.mail,
+                mot_De_Passe = "default",
+                Telephone = client.telephone,
+            };
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(dto);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync("Clients/create", content);
+                return response.IsSuccessStatusCode;
+            });
+        }
+
+        public async Task<bool> CreateFournisseurAsync(Fournisseur fournisseur)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(fournisseur);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync("Fournisseurs/create", content);
+                return response.IsSuccessStatusCode;
+            });
+        }
 
         public async Task<bool> CreateArticleCommandeAsync(ArticlesCommandes articleCommande, int commande_id)
         {
@@ -260,6 +311,28 @@ namespace JamaisASec.Services
             });
         }
 
+        public async Task<bool> UpdateClientAsync(Client client)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(client);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync($"Clients/update/{client.id}", content);
+                return response.IsSuccessStatusCode;
+            });
+        }
+
+        public async Task<bool> UpdateFournisseurAsync(Fournisseur fournisseur)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(fournisseur);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync($"Fournisseurs/update/{fournisseur.id}", content);
+                return response.IsSuccessStatusCode;
+            });
+        }
+
         public async Task<bool> UpdateArticleCommandeAsync(ArticlesCommandes articleCommande)
         {
             var dto = new ArticlesCommandesDTO
@@ -276,6 +349,24 @@ namespace JamaisASec.Services
             });
         }
 
+        public async Task<bool> UpdateCommandeAsync(Commande commande)
+        {
+            CommandeDTO dto = new CommandeDTO
+            {
+                ID = commande.id,
+                Date = (DateTime)commande.date,
+                Status = commande.status?.ToString(),
+                Clients_ID = commande.client.id,
+                Fournisseurs_id = commande.fournisseur.id
+            };
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(commande);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync($"Commandes/update/{commande.id}", content);
+                return response.IsSuccessStatusCode;
+            });
+        }
         public async Task<bool> UpdateStatusCommandeAsync(Commande commande)
         {
             return await RunWithLoadingCursor(async () =>
@@ -298,6 +389,47 @@ namespace JamaisASec.Services
                 return response.IsSuccessStatusCode;
             });
         }
+
+        public async Task<bool> DeleteMaisonAsync(int id)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.DeleteAsync($"Maisons/delete/{id}");
+                string error = await response.Content.ReadAsStringAsync();
+                return response.IsSuccessStatusCode;
+            });
+        }
+
+        public async Task<bool> DeleteFamilleAsync(int id)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.DeleteAsync($"Familles/delete/{id}");
+                string error = await response.Content.ReadAsStringAsync();
+                return response.IsSuccessStatusCode;
+            });
+        }
+
+        public async Task<bool> DeleteClientAsync(int id)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.DeleteAsync($"Clients/delete/{id}");
+                string error = await response.Content.ReadAsStringAsync();
+                return response.IsSuccessStatusCode;
+            });
+        }
+
+        public async Task<bool> DeleteFournisseurAsync(int id)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.DeleteAsync($"Fournisseurs/delete/{id}");
+                string error = await response.Content.ReadAsStringAsync();
+                return response.IsSuccessStatusCode;
+            });
+        }
+
         public async Task<bool> DeleteArticleCommandeAsync(int id)
         {
             return await RunWithLoadingCursor(async () =>

@@ -105,9 +105,55 @@ namespace JamaisASec.Services
                 EventBus.Publish("ArticleUpdated"); // Publier un événement pour mettre à jour le cache
             }
         }
+        public async Task CreateMaisonAsync(Maison maison)
+        {
+            if (maison == null) return;
+
+            var success = await _apiService.CreateMaisonAsync(maison);
+
+            if(success)
+            {
+                EventBus.Publish("MaisonUpdated");
+            }
+        }
+
+        public async Task CreateFamilleAsync(Famille famille)
+        {
+            if (famille == null) return;
+
+            var success = await _apiService.CreateFamilleAsync(famille);
+
+            if(success)
+            {
+                EventBus.Publish("FamilleUpdated");
+            }
+        }
+
+        public async Task CreateClientAsync(Client client)
+        {
+            if (client == null) return;
+            var success = await _apiService.CreateClientAsync(client);
+
+            if (success)
+            {
+                EventBus.Publish("ClientUpdated");
+            }
+        }
+
+        public async Task CreateFournisseurAsync(Fournisseur fournisseur)
+        {
+            if (fournisseur == null) return;
+            var success = await _apiService.CreateFournisseurAsync(fournisseur);
+            if (success)
+            {
+                EventBus.Publish("FournisseurUpdated");
+            }
+        }
 
         public async Task CreateArticleCommandeAsync(ArticlesCommandes articleCommande, int commande_id)
         {
+            if(articleCommande == null) return;
+
             await _apiService.CreateArticleCommandeAsync(articleCommande, commande_id);
         }
         #endregion
@@ -116,7 +162,7 @@ namespace JamaisASec.Services
         public async Task UpdateArticleAsync(Article article)
         {
             if (article == null) return;
-            // Appel à l'API pour mettre à jour l'article
+
             var success = await _apiService.UpdateArticleAsync(article);
 
             // Si l'appel est un succès, on met à jour le cache
@@ -160,8 +206,9 @@ namespace JamaisASec.Services
         {
             if (client == null) return;
 
-            //var success = await _apiService.UpdateClientAsync(client);
-            var success = true;
+            var success = await _apiService.UpdateClientAsync(client);
+
+            // Si l'appel est un succès, on met à jour le cache
             if (success)
             {
                 EventBus.Publish("ClientUpdated");
@@ -171,26 +218,30 @@ namespace JamaisASec.Services
         public async Task UpdateFournisseurAsync(Fournisseur fournisseur)
         {
             if (fournisseur == null) return;
-            var success = true;
 
-            //var success = await _apiService.UpdateFournisseurAsync(fournisseur);
+            var success = await _apiService.UpdateFournisseurAsync(fournisseur);
+
+            // Si l'appel est un succès, on met à jour le cache
             if (success)
             {
-                EventBus.Publish("FournisseurUpdated"); // Publier un événement pour mettre à jour le cache
+                EventBus.Publish("FournisseurUpdated");
+                EventBus.Publish("ArticleUpdated");
             }
         }
 
         public async Task UpdateCommandeAsync(Commande commande)
         {
             if (commande == null) return;
-            var success = true;
 
-            //var success = await _apiService.UpdateCommandeAsync(commande);
+            var success = await _apiService.UpdateCommandeAsync(commande);
+
+            // Si l'appel est un succès, on met à jour le cache
             if (success)
             {
                 EventBus.Publish("CommandeUpdated"); // Publier un événement pour mettre à jour le cache
             }
         }
+
         public async Task<bool> UpdateArticleCommandeAsync(ArticlesCommandes articleCommande)
         {
             if (articleCommande == null) return false;
@@ -217,6 +268,48 @@ namespace JamaisASec.Services
             if (success)
             {
                 EventBus.Publish("ArticleUpdated"); // Publier un événement pour mettre à jour le cache
+            }
+            return success;
+        }
+
+        public async Task<bool> DeleteFamilleAsync(int id)
+        {
+            var succes = await _apiService.DeleteFamilleAsync(id);
+            if (succes) {
+                EventBus.Publish("FamilleUpdated");
+                EventBus.Publish("ArticleUpdated");
+            }
+            return succes;
+        }
+
+        public async Task<bool> DeleteMaisonAsync(int id)
+        {
+            var success = await _apiService.DeleteMaisonAsync(id);
+            if (success)
+            {
+                EventBus.Publish("MaisonUpdated");
+                EventBus.Publish("ArticleUpdated");
+            }
+            return success;
+        }
+
+        public async Task<bool> DeleteClientAsync(int id)
+        {
+            var success = await _apiService.DeleteClientAsync(id);
+            if (success)
+            {
+                EventBus.Publish("ClientUpdated");
+            }
+            return success;
+        }
+
+        public async Task<bool> DeleteFournisseurAsync(int id)
+        {
+            var success = await _apiService.DeleteFournisseurAsync(id);
+            if (success)
+            {
+                EventBus.Publish("FournisseurUpdated");
+                EventBus.Publish("ArticleUpdated");
             }
             return success;
         }

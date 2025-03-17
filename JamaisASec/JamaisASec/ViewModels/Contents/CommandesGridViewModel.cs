@@ -106,7 +106,7 @@ namespace JamaisASec.ViewModels.Contents
                 foreach(var commande in selectedCommandes)
                 {
                     commande.status = SelectedStatus;
-                    await _dataService.UpdateCommandeAsync(commande);
+                    await _dataService.UpdateStatusCommandeAsync(commande);
                     commande.IsSelected = false;
                 }
             }

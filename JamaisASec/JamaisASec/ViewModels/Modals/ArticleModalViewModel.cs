@@ -109,19 +109,11 @@ namespace JamaisASec.ViewModels.Modals
             foreach (var maison in maisons)
             {
                 Maisons.Add(maison);
-                if (maison.nom == Article.maison?.nom)
-                {
-                    SelectedMaison = maison;
-                }
             }
             var familles = await _dataService.GetFamillesAsync();
             Familles.Clear();
             foreach (var famille in familles)
             {
-                if (famille.nom == Article.famille?.nom)
-                {
-                    SelectedFamille = famille;
-                }
                 Familles.Add(famille);
             }
 
@@ -129,10 +121,6 @@ namespace JamaisASec.ViewModels.Modals
             Fournisseurs.Clear();
             foreach (var fournisseur in fournisseurs)
             {
-                if (fournisseur.nom == Article.fournisseur?.nom)
-                {
-                    SelectedFournisseur = fournisseur;
-                }
                 Fournisseurs.Add(fournisseur);
             }
         }
