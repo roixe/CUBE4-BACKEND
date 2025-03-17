@@ -39,7 +39,7 @@ namespace JamaisASec.ViewModels.Contents
             EventBus.Subscribe("ClientUpdated", OnClientUpdated);
 
             // Initialisation des commandes
-            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
+            //LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             AddCommand = new RelayCommand<object>(_ => Add());
             DeleteSelectedCommand = new RelayCommand<object>(_ => DeleteSelected());
             DeleteCommand = new RelayCommand<Client>(Delete);

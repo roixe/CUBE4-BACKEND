@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using JamaisASec.Models;
 
 namespace JamaisASec.Services
@@ -114,14 +115,13 @@ namespace JamaisASec.Services
         #region Updaters
         public async Task UpdateArticleAsync(Article article)
         {
+            if (article == null) return;
             // Appel à l'API pour mettre à jour l'article
-            //var updatedArticle = await _apiService.UpdateArticleAsync(article);
+            var success = await _apiService.UpdateArticleAsync(article);
 
-            // Vérification si l'article est bien mis à jour dans la réponse
-            if (article != null)
+            // Si l'appel est un succès, on met à jour le cache
+            if (success)
             {
-                //Mettre à jour le cache
-                //_cachedArticles = await _apiService.GetArticlesAsync();
                 EventBus.Publish("ArticleUpdated");
             }
         }
@@ -131,9 +131,11 @@ namespace JamaisASec.Services
             if (maison == null) return;
 
             var success = await _apiService.UpdateMaisonAsync(maison);
+
+            // Si l'appel est un succès, on met à jour le cache
             if (success)
             {
-                EventBus.Publish("MaisonUpdated"); // Publier un événement pour mettre à jour le cache
+                EventBus.Publish("MaisonUpdated");
                 EventBus.Publish("ArticleUpdated"); 
             }
         }
@@ -147,7 +149,7 @@ namespace JamaisASec.Services
             // Si l'appel est un succès, on met à jour le cache
             if (success)
             {
-                EventBus.Publish("FamilleUpdated"); // Publier un événement pour mettre à jour le cache
+                EventBus.Publish("FamilleUpdated"); 
                 EventBus.Publish("ArticleUpdated");
             }
 
@@ -162,7 +164,7 @@ namespace JamaisASec.Services
             var success = true;
             if (success)
             {
-                EventBus.Publish("ClientUpdated"); // Publier un événement pour mettre à jour le cache
+                EventBus.Publish("ClientUpdated");
             }
         }
 

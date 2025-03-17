@@ -48,7 +48,7 @@ namespace JamaisASec.ViewModels.Contents
 
             EventBus.Subscribe("CommandeUpdated", OnCommandeUpdated);
 
-            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
+            //LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             NavigateCommand = navigateCommand;
             AddCommand = new RelayCommand<object>(_ => Add());
             EditStatusCommand = new RelayCommand<object>(_ => EditStatus());

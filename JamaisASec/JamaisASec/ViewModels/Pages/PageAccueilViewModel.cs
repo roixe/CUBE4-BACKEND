@@ -16,18 +16,20 @@ namespace JamaisASec.ViewModels.Pages
         public PageAccueilViewModel()
         {
 
-            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-
-            EventBus.Subscribe("CommandeUpdated", OnCommandeUpdated);
-            EventBus.Subscribe("AchatUpdated", OnCommandeUpdated);
+            //LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
+            EventBus.Subscribe("ArticleUpdated", OnDataUpdated);
+            EventBus.Subscribe("CommandeUpdated", OnDataUpdated);
+            EventBus.Subscribe("AchatUpdated", OnDataUpdated);
 
             _ = LoadData();
         }
 
-        private void OnCommandeUpdated()
+        private void OnDataUpdated()
         {
+            // Mettre à jour les propriétés liées
             _ = LoadData();
         }
+
 
         private async Task LoadData()
         {
