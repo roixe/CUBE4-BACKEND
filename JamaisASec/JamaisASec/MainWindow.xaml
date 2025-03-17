@@ -1,22 +1,70 @@
 ﻿<Window x:Class="JamaisASec.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ERP" Height="600" Width="900">
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:vm="clr-namespace:JamaisASec.ViewModels"
+        WindowState="Maximized"
+        Title="Jamais à sec" Width="683" Height="618">
 
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
     <!-- Conteneur principal -->
-    <Grid Margin="10">
+    <Grid Background="{StaticResource WindowBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="210"/>
+            <!-- Colonne pour le menu -->
+            <ColumnDefinition Width="*"/>
+            <!-- Colonne pour le contenu principal -->
+        </Grid.ColumnDefinitions>
 
-        <!-- Barre de navigation en haut -->
-        <DockPanel LastChildFill="False" Background="LightGray" Height="50" VerticalAlignment="Top">
-            <TextBlock Text="ERP" FontWeight="Bold" FontSize="16" Margin="10,0" DockPanel.Dock="Left" VerticalAlignment="Center"/>
-            <Button Content="Accueil" Click="AccueilButton_Click" Margin="10,0" Width="75" />
-            <Button Content="Produits" Click="ProduitsButton_Click" Margin="10,0" Width="75"/>
-            <Button Content="Fournisseurs" Margin="10,0" Width="75"/>
-            <Button Content="Familles" Margin="10,0" Width="75"/>
-            <Button Content="Stocks" Margin="10,0" Width="75"/>
-            <Button Content="Commandes" Margin="10,0" Width="75"/>
-        </DockPanel>
-        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Margin="10,60,10,10"/>
+        <!-- Menu sur le côté gauche -->
+        <Border Background="{StaticResource Burgundy}" Grid.Column="0" CornerRadius="0,40,40,0">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Jamais à sec" FontWeight="Bold" FontSize="20" Style="{StaticResource MenuText}" Margin="20,15,10,20"/>
+                    <Button Style="{StaticResource topButton}" Command="{Binding RefreshCommand}" CommandParameter="" >
+                        <iconPacks:PackIconBootstrapIcons Kind="ArrowClockwise" Width="20" Height="20"/>
+                    </Button>
+                </StackPanel>
+                
+
+                <ToggleButton x:Name="DashboardButton" Tag="Dashboard" IsChecked="{Binding IsDashboardActive}" Style="{StaticResource MenuButton}" Command="{Binding NavigateCommand}" CommandParameter="Dashboard">
+                    <iconPacks:PackIconBootstrapIcons Kind="House" Width="30" Height="30" Margin="0 0 10 0"/>
+                </ToggleButton>
+
+                <ToggleButton x:Name="ArticlesButton" Tag="Articles et Familles" IsChecked="{Binding IsArticlesActive}" Style="{StaticResource MenuButton}" Command="{Binding NavigateCommand}" CommandParameter="Articles">
+                    <iconPacks:PackIconBootstrapIcons Kind="Box" Width="30" Height="30" Margin="0 0 10 0"/>
+                </ToggleButton>
+
+                <ToggleButton x:Name="ClientsButton" Tag="Clients" IsChecked="{Binding IsClientsActive}" Style="{StaticResource MenuButton}" Command="{Binding NavigateCommand}" CommandParameter="Clients">
+                    <iconPacks:PackIconBootstrapIcons Kind="People" Width="30" Height="30" Margin="0 0 10 0"/>
+                </ToggleButton>
+
+                <ToggleButton x:Name="CommandesButton" Tag="Commandes" IsChecked="{Binding IsCommandesActive}" Style="{StaticResource MenuButton}" Command="{Binding NavigateCommand}" CommandParameter="Commandes">
+                    <iconPacks:PackIconBootstrapIcons Kind="Clipboard" Width="30" Height="30" Margin="0 0 10 0"/>
+                </ToggleButton>
+
+                <ToggleButton x:Name="FournisseursButton" Tag="Fournisseurs" IsChecked="{Binding IsFournisseursActive}" Style="{StaticResource MenuButton}" Command="{Binding NavigateCommand}" CommandParameter="Fournisseurs">
+                    <iconPacks:PackIconBootstrapIcons Kind="Truck" Width="30" Height="30" Margin="0 0 10 0"/>
+                </ToggleButton>
+
+                <ToggleButton x:Name="AchatsButton" Tag="Achats" IsChecked="{Binding IsAchatsActive}" Style="{StaticResource MenuButton}" Command="{Binding NavigateCommand}" CommandParameter="Achats">
+                    <iconPacks:PackIconBootstrapIcons Kind="Cart" Width="30" Height="30" Margin="0 0 10 0"/>
+                </ToggleButton>
+
+                <ToggleButton x:Name="StocksButton" Tag="Stocks" IsChecked="{Binding IsStocksActive}" Style="{StaticResource MenuButton}" Command="{Binding NavigateCommand}" CommandParameter="Stocks">
+                    <iconPacks:PackIconBootstrapIcons Kind="Boxes" Width="30" Height="30" Margin="0 0 10 0"/>
+                </ToggleButton>
+            </StackPanel>
+        </Border>
+
+        <!-- Contenu principal -->
+        <Grid Grid.Column="1" Margin="10">
+            <Frame x:Name="CurrentPage" NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}"/>
+        </Grid>
     </Grid>
-    </Window>
-
+</Window>

@@ -1,5 +1,8 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using JamaisASec.Models;
+using JamaisASec.ViewModels;
+using JamaisASec.Views;
 
 namespace JamaisASec
 {
@@ -8,19 +11,9 @@ namespace JamaisASec
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Navigate(new Accueil());
         }
 
-        private void AccueilButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Charger une page d'accueil si elle existe
-            MainFrame.Navigate(new Accueil()); // Clear the frame to show default view
-        }
-
-        private void ProduitsButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Naviguer vers la page des produits
-            MainFrame.Navigate(new ProduitsPage());
-        }
     }
+
+    
 }

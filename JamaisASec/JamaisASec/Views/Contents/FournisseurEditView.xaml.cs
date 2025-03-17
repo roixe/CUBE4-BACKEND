@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace JamaisASec
+namespace JamaisASec.Views.Contents
 {
     /// <summary>
-    /// Interaction logic for Accueil.xaml
+    /// Logique d'interaction pour FournisseurEditView.xaml
     /// </summary>
-    public partial class Accueil : Page
+    public partial class FournisseurEditView : UserControl
     {
-        public Accueil()
+        public FournisseurEditView()
         {
             InitializeComponent();
         }

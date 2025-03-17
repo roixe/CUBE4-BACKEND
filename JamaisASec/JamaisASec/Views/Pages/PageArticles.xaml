@@ -1,0 +1,33 @@
+﻿<Page x:Class="JamaisASec.Views.Pages.PageArticles"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:vm="clr-namespace:JamaisASec.ViewModels.Pages"
+      xmlns:userControls="clr-namespace:JamaisASec.Views.UserControls"
+      xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="av"
+      Title="ProduitsPage" av:DesignHeight="484.51" av:DesignWidth="850.816">
+    <Page.DataContext>
+        <vm:PageArticlesViewModel/>
+    </Page.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Boutons de navigation -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="5">
+            <Button x:Name="ShowArticlesButton" Content="Articles" Style="{StaticResource tabButton}" Command="{Binding NavigateCommand}" CommandParameter="ArticlesGrid"
+                    BorderBrush="{Binding ActiveTab, Converter={StaticResource TabActiveConverter}, ConverterParameter=ArticlesGrid}" />
+            <Button x:Name="ShowFamillesButton" Content="Familles" Style="{StaticResource tabButton}" Command="{Binding NavigateCommand}" CommandParameter="FamillesGrid"
+                    BorderBrush="{Binding ActiveTab, Converter={StaticResource TabActiveConverter}, ConverterParameter=FamillesGrid}" />
+            <Button x:Name="ShowMaisonsButton" Content="Maisons" Style="{StaticResource tabButton}" Command="{Binding NavigateCommand}" CommandParameter="MaisonsGrid"
+                    BorderBrush="{Binding ActiveTab, Converter={StaticResource TabActiveConverter}, ConverterParameter=MaisonsGrid}" />
+        </StackPanel>
+
+        <!-- ContentControl -->
+        <ContentControl Grid.Row="1" x:Name="ContentArea" Content="{Binding CurrentContent}"/>
+    </Grid>
+</Page>
