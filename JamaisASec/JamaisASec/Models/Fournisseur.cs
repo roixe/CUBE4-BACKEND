@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace JamaisASec.Models
 {
     public class Fournisseur : BaseModel
@@ -14,5 +9,19 @@ namespace JamaisASec.Models
         public string mail { get; set; } = string.Empty;
         public string telephone { get; set; } = string.Empty;
         public string siret { get; set; } = string.Empty;
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as Fournisseur);
+        }
+
+        public bool Equals(Fournisseur? other)
+        {
+            return other != null && id == other.id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(id, nom);
+        }
     }
 }

@@ -1,20 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace JamaisASec.Models
 {
-    public class ArticlesCommandes
+    public class ArticlesCommandes : BaseModel
     {
-        public Article Article { get; set; }
-        public int Quantite { get; set; }
+        private int _quantite;
+        private Article _article;
+        public int id { get; set; }
 
-        public ArticlesCommandes(Article article, int quantite)
+        public Article article
         {
-            Article = article;
-            Quantite = quantite;
+            get => _article;
+            set => SetProperty(ref _article, value);  // Utilise SetProperty pour notifier des changements
         }
+
+        public int quantite
+        {
+            get => _quantite;
+            set
+            {
+                if (SetProperty(ref _quantite, value))
+                {
+                    OnPropertyChanged(nameof(TotalPrice)); // Notification du changement du prix total
+                }
+            }
+        }
+
+        public decimal TotalPrice => quantite * article.prix_unitaire;
     }
 }

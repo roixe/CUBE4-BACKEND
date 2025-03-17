@@ -11,7 +11,7 @@
     
     <!--#region etiquettes-->
     <SolidColorBrush x:Key="ForestGreen" Color="#00703C"/>
-    <SolidColorBrush x:Key="OceanBlue" Color="#5fa9e1"/>
+    <SolidColorBrush x:Key="Lemon" Color="#ffbc0d"/>
     <SolidColorBrush x:Key="CalmRed" Color="#cc0000"/>
     <SolidColorBrush x:Key="Mandarine" Color="#e69138"/>
     <!--#endregion-->

@@ -1,75 +1,83 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
 using JamaisASec.Models;
 using JamaisASec.Services;
+using JamaisASec.ViewModels.Contents;
+using JamaisASec.Views.Contents;
 
 namespace JamaisASec.ViewModels.Pages
 {
     class PageAchatsViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Commande> _allAchats;
-        public ObservableCollection<Commande> Achats { get; set; }
-        private string _searchText;
-        public string SearchText
+        private AchatsGrid? _gridCache;
+        private UserControl _currentContent = new();
+        public UserControl CurrentContent
         {
-            get => _searchText;
+            get => _currentContent;
             set
             {
-                if (SetProperty(ref _searchText, value, nameof(SearchText)))
+                if (_currentContent != value)
                 {
-                    Filter();
+                    _currentContent = value;
+                    OnPropertyChanged(nameof(CurrentContent));
                 }
             }
         }
-        private bool _isHeaderCheckBoxChecked;
-        public bool IsHeaderCheckBoxChecked
-        {
-            get => _isHeaderCheckBoxChecked;
-            set
-            {
-                if (SetProperty(ref _isHeaderCheckBoxChecked, value, nameof(IsHeaderCheckBoxChecked)))
-                {
-                    foreach (var achat in Achats)
-                    {
-                        achat.IsSelected = _isHeaderCheckBoxChecked;
-                    }
-                }
-            }
-        }
-
-        public ICommand LoadDataCommand { get; }
-
+        public ICommand NavigateCommand { get; }
         public PageAchatsViewModel()
         {
-            _allAchats = new ObservableCollection<Commande>();
-            Achats = new ObservableCollection<Commande>();
-            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-
-            LoadDataCommand.Execute(null);
+            NavigateCommand = new RelayCommand<object>(param =>
+            {
+                switch(param)
+                {
+                    case Commande achat:
+                        Navigate("AchatView", achat);
+                        break;
+                    case (Commande achat, bool isEditMode):
+                        Navigate(isEditMode? "AchatEditView" : "AchatView", achat);
+                        break;
+                    default:
+                        Navigate("AchatsGrid");
+                        break;
+                }
+            });
+            Navigate("AchatsGrid");
         }
 
-        private async Task LoadData()
+        private void Navigate(string tab, Commande? commande = null)
         {
-            var (_, achats) = await _dataService.GetCommandesAndAchatsAsync();
-            _allAchats.Clear();
-            foreach (var achat in achats)
+            switch (tab)
             {
-                _allAchats.Add(achat);
-            }
-            Filter();
-        }
-
-        private void Filter()
-        {
-            var filtered = _allAchats
-                .Where(m => m.reference.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase) ||
-                            m.fournisseur.nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase))
-                .ToList();
-            Achats.Clear();
-            foreach (var achat in filtered)
-            {
-                Achats.Add(achat);
+                case "AchatsGrid":
+                    if (_gridCache == null)
+                    {
+                        _gridCache = new AchatsGrid
+                        {
+                            DataContext = new AchatsGridViewModel(NavigateCommand)
+                        };
+                    }
+                    CurrentContent = _gridCache;
+                    break;
+                case "AchatView":
+                    if (commande != null)
+                    {
+                        var commandeView = new AchatView
+                        {
+                            DataContext = new AchatViewModel(commande, NavigateCommand)
+                        };
+                        CurrentContent = commandeView;
+                    }
+                    break;
+                case "AchatEditView":
+                    if (commande != null)
+                    {
+                        var commandeView = new AchatEditView
+                        {
+                            DataContext = new AchatViewModel(commande, NavigateCommand, true)
+                        };
+                        CurrentContent = commandeView;
+                    }
+                    break;
             }
         }
     }

@@ -1,109 +1,80 @@
-﻿using System.Collections.ObjectModel;
-using JamaisASec.Models;
+﻿using JamaisASec.Models;
 using System.Windows.Input;
 using JamaisASec.Services;
-using System.Windows;
+using System.Windows.Controls;
+using JamaisASec.Views.Contents;
+using JamaisASec.ViewModels.Contents;
 
 namespace JamaisASec.ViewModels.Pages
 {
-
     class PageClientsViewModel : BaseViewModel
     {
-        private readonly ObservableCollection<Client> _allClients;
-        public ObservableCollection<Client> Clients { get; set; }
-        public ICommand LoadDataCommand { get; }
-        public ICommand AddCommand { get; }
-        public ICommand DeleteSelectedCommand { get; }
-        public ICommand DeleteCommand { get; }
-        private string _searchText;
-        public string SearchText
+        private ClientsGrid? _gridCache;
+        private UserControl _currentContent = new();
+        public UserControl CurrentContent
         {
-            get => _searchText;
+            get => _currentContent;
             set
             {
-                if (SetProperty(ref _searchText, value, nameof(SearchText)))
+                if (_currentContent != value)
                 {
-                    Filter();
+                    _currentContent = value;
+                    OnPropertyChanged(nameof(CurrentContent));
                 }
             }
         }
-        private bool _isHeaderCheckBoxChecked;
-        public bool IsHeaderCheckBoxChecked
+        public ICommand NavigateCommand { get; }
+
+        public PageClientsViewModel()
         {
-            get => _isHeaderCheckBoxChecked;
-            set
+            NavigateCommand = new RelayCommand<object>(param =>
             {
-                if (SetProperty(ref _isHeaderCheckBoxChecked, value, nameof(IsHeaderCheckBoxChecked)))
+                switch (param)
                 {
-                    foreach (var client in Clients)
+                    case (Client client, bool isEditMode):
+                        Navigate(isEditMode ? "ClientEditView" : "ClientView", client);
+                        break;
+                    default:
+                        Navigate("ClientsGrid");
+                        break;
+                }
+            });
+            Navigate("ClientsGrid");
+        }
+
+        private void Navigate(string tab, Client? client = null)
+        {
+            switch (tab)
+            {
+                case "ClientsGrid":
+                    if (_gridCache == null)
                     {
-                        client.IsSelected = _isHeaderCheckBoxChecked;
+                        _gridCache = new ClientsGrid();
                     }
-                }
+                    CurrentContent = _gridCache;
+                    break;
+                case "ClientView":
+                    if(client != null)
+                    {
+                        var clientView = new ClientView
+                        {
+                            DataContext = new ClientViewModel(client, NavigateCommand)
+                        };
+                        CurrentContent = clientView;
+                    }
+                    break;
+                case "ClientEditView":
+                    if (client != null)
+                    {
+                        var clientEditView = new ClientEditView
+                        {
+                            DataContext = new ClientViewModel(client, NavigateCommand, isEditMode: true)
+                        };
+                        CurrentContent = clientEditView;
+                    }
+                    break;
             }
         }
 
-        public PageClientsViewModel() 
-        {
-            _allClients = new ObservableCollection<Client>();
-            Clients = new ObservableCollection<Client>();
-
-            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            LoadDataCommand.Execute(null);
-
-            AddCommand = new RelayCommand<object>(Add);
-            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
-            DeleteCommand = new RelayCommand<Client>(Delete);
-        }
-
-        private async Task LoadData()
-        {
-            var clients = await _dataService.GetClientsAsync();
-            _allClients.Clear();
-            foreach (var client in clients)
-            {
-                _allClients.Add(client);
-            }
-            Filter();
-        }
-        private void Filter()
-        {
-            var filtered = _allClients
-                .Where(m => m.nom.Contains(SearchText ?? string.Empty, StringComparison.OrdinalIgnoreCase)).ToList();
-            Clients.Clear();
-            foreach (var client in filtered)
-            {
-                Clients.Add(client);
-            }
-        }
-
-        private void Add(object obj)
-        {
-            var client = new Client();
-            client.id = _allClients.Count + 1;
-            client.nom = "Nouveau client";
-            _allClients.Add(client);
-            Filter();
-        }
-        private void DeleteSelected(object obj)
-        {
-            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les clients sélectionnés ?",
-                        "Confirmation",
-                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                var selectedClients = _allClients.Where(a => a.IsSelected).ToList();
-                foreach (var client in selectedClients)
-                {
-                    _allClients.Remove(client);
-                }
-                Filter();
-            }
-        }
-
-        private void Delete(Client client)
-        {
-            _allClients.Remove(client);
-            Filter();
-        }
     }
 }
