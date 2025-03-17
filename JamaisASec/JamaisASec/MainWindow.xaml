@@ -24,7 +24,13 @@
         <!-- Menu sur le côté gauche -->
         <Border Background="{StaticResource Burgundy}" Grid.Column="0" CornerRadius="0,40,40,0">
             <StackPanel>
-                <TextBlock Text="Jamais à sec" FontWeight="Bold" FontSize="20" Style="{StaticResource MenuText}" Margin="20,15,10,20"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Jamais à sec" FontWeight="Bold" FontSize="20" Style="{StaticResource MenuText}" Margin="20,15,10,20"/>
+                    <Button Style="{StaticResource topButton}" Command="{Binding RefreshCommand}" CommandParameter="" >
+                        <iconPacks:PackIconBootstrapIcons Kind="ArrowClockwise" Width="20" Height="20"/>
+                    </Button>
+                </StackPanel>
+                
 
                 <ToggleButton x:Name="DashboardButton" Tag="Dashboard" IsChecked="{Binding IsDashboardActive}" Style="{StaticResource MenuButton}" Command="{Binding NavigateCommand}" CommandParameter="Dashboard">
                     <iconPacks:PackIconBootstrapIcons Kind="House" Width="30" Height="30" Margin="0 0 10 0"/>

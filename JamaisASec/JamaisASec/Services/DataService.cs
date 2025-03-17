@@ -92,6 +92,22 @@ namespace JamaisASec.Services
 
             return (commandesClients, commandesFournisseurs);
         }
+
+        public async Task RefreshAllCaches()
+        {
+            await _articleCache.ForceRefreshAsync();
+            EventBus.Publish("ArticleUpdated");
+            await _clientCache.ForceRefreshAsync();
+            EventBus.Publish("ClientUpdated");
+            await _fournisseurCache.ForceRefreshAsync();
+            EventBus.Publish("FournisseurUpdated");
+            await _commandeCache.ForceRefreshAsync();
+            EventBus.Publish("CommandeUpdated");
+            await _maisonCache.ForceRefreshAsync();
+            EventBus.Publish("MaisonUpdated");
+            await _familleCache.ForceRefreshAsync();
+            EventBus.Publish("FamilleUpdated");
+        }
         #endregion
 
         #region Creaters

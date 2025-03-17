@@ -32,6 +32,7 @@ namespace JamaisASec.ViewModels
 
         // Commande de navigation
         public ICommand NavigateCommand { get; }
+        public ICommand RefreshCommand { get; }
 
         // Propriétés de chaque page
         private bool _isDashboardActive;
@@ -135,6 +136,7 @@ namespace JamaisASec.ViewModels
         public MainViewModel()
         {
             NavigateCommand = new RelayCommand<string>(Navigate);
+            RefreshCommand = new RelayCommand<object>(async _ => await RefreshAllData());
 
             Navigate("Dashboard");
         }
@@ -223,6 +225,11 @@ namespace JamaisASec.ViewModels
 
             // Naviguer vers la page existante ou nouvellement créée
             CurrentPage = _pagesCache[pageTag];
+        }
+
+        private async Task RefreshAllData()
+        {
+            await DataService.Instance.RefreshAllCaches();
         }
     }
 }

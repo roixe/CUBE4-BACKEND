@@ -26,5 +26,12 @@
         {
             EventBus.Subscribe(eventName, () => ClearCache());
         }
+
+        public async Task<List<T>> ForceRefreshAsync()
+        {
+            _cache = await _fetchFunc();
+            CacheUpdated?.Invoke();
+            return _cache;
+        }
     }
 }
