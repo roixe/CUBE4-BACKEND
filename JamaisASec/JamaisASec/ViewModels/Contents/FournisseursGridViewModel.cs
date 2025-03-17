@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using JamaisASec.Models;
@@ -33,9 +34,9 @@ namespace JamaisASec.ViewModels.Contents
             EventBus.Subscribe("FournisseurUpdated", OnFournisseurUpdated);
 
             //LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            AddCommand = new RelayCommand<object>(_ => Add());
-            DeleteSelectedCommand = new RelayCommand<object>(_ => DeleteSelected());
-            DeleteCommand = new RelayCommand<Fournisseur>(Delete);
+            AddCommand = new RelayCommandAsync<object>(_ => Add());
+            DeleteSelectedCommand = new RelayCommandAsync<object>(_ => DeleteSelected());
+            DeleteCommand = new RelayCommandAsync<Fournisseur>(Delete);
 
             _ = LoadData();
         }
@@ -66,35 +67,38 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private void Add()
+        private async Task Add()
         {
-            var fournisseur = new Fournisseur();
-            fournisseur.id = _allFournisseurs.Count + 1;
-            fournisseur.nom = "Nouveau fournisseur";
-            _allFournisseurs.Add(fournisseur);
-            Filter();
+            var fournisseur = new Fournisseur
+            {
+                nom = "Nouveau fournisseur"
+            };
+            await _dataService.CreateFournisseurAsync(fournisseur);
         }
-        private void DeleteSelected()
+        private async Task DeleteSelected()
         {
-            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les fournisseurs sélectionnés ?",
+            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les fournisseurs sélectionnés et leurs articles associés?",
                         "Confirmation",
                         MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 var selectedFournisseurs = _allFournisseurs.Where(a => a.IsSelected).ToList();
                 foreach (var fournisseur in selectedFournisseurs)
                 {
-                    _allFournisseurs.Remove(fournisseur);
+                    await _dataService.DeleteFournisseurAsync(fournisseur.id);
                 }
-                Filter();
             }
             IsHeaderCheckBoxChecked = false;
 
         }
 
-        private void Delete(Fournisseur fournisseur)
+        private async Task Delete(Fournisseur fournisseur)
         {
-            _allFournisseurs.Remove(fournisseur);
-            Filter();
+            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer " + fournisseur.nom + " et ses articles associés ?",
+                        "Confirmation",
+                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                await _dataService.DeleteFournisseurAsync(fournisseur.id);
+            }
         }
     }
 }

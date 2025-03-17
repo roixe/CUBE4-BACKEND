@@ -40,9 +40,9 @@ namespace JamaisASec.ViewModels.Contents
 
             // Initialisation des commandes
             //LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            AddCommand = new RelayCommand<object>(_ => Add());
-            DeleteSelectedCommand = new RelayCommand<object>(_ => DeleteSelected());
-            DeleteCommand = new RelayCommand<Client>(Delete);
+            AddCommand = new RelayCommandAsync<object>(_ => Add());
+            DeleteSelectedCommand = new RelayCommandAsync<object>(_ => DeleteSelected());
+            DeleteCommand = new RelayCommandAsync<Client>(Delete);
 
             // Chargement des données initiales
             _ = LoadData();
@@ -77,19 +77,20 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private void Add()
+        private async Task Add()
         {
             var client = new Client
             {
-                id = _allClients.Count + 1,
-                nom = "Nouveau client"
+                nom = "Nouveau client",
+                adresse = "Nouvelle adresse",
+                mail = "nouveau@example.com",
+                telephone = "0123456789"
             };
 
-            _allClients.Add(client);
-            Filter();
+            await _dataService.CreateClientAsync(client);
         }
 
-        private void DeleteSelected()
+        private async Task DeleteSelected()
         {
             if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les clients sélectionnés ?", "Confirmation",
                                 MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -97,16 +98,19 @@ namespace JamaisASec.ViewModels.Contents
                 var selectedClients = _allClients.Where(a => a.IsSelected).ToList();
                 foreach (var client in selectedClients)
                 {
-                    _allClients.Remove(client);
+                    await _dataService.DeleteClientAsync(client.id);
                 }
                 Filter();
             }
         }
 
-        private void Delete(Client client)
+        private async Task Delete(Client client)
         {
-            _allClients.Remove(client);
-            Filter();
+            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer " + client.nom + " ?", "Confirmation",
+                                MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                await _dataService.DeleteClientAsync(client.id);
+            }
         }
     }
 }
