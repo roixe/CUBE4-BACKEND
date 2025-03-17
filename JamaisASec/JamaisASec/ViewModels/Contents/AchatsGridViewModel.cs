@@ -51,7 +51,7 @@ namespace JamaisASec.ViewModels.Contents
             EventBus.Subscribe("CommandeUpdated", OnAchatsUpdated);
 
             EditStatusCommand = new RelayCommand<object>(_ => EditStatus());
-            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
+            //LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             NavigateCommand = navigateCommand;
             
             RowDoubleClickCommand = new RelayCommand<Commande>(achat =>
