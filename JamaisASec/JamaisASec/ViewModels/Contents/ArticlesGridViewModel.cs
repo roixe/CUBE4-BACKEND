@@ -33,7 +33,7 @@ namespace JamaisASec.ViewModels.Contents
                 }
             };
 
-            _dataService.ArticlesUpdated += OnArticlesUpdated;
+            EventBus.Subscribe("ArticleUpdated", OnArticlesUpdated);
 
             LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             AddCommand = new RelayCommand<object>(_ => Add());
@@ -43,7 +43,7 @@ namespace JamaisASec.ViewModels.Contents
             _ = LoadData();
         }
 
-        private void OnArticlesUpdated(object? sender, EventArgs e)
+        private void OnArticlesUpdated()
         {
             // Mettre à jour les propriétés liées
             _ = LoadData();
