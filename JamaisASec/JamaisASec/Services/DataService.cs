@@ -105,6 +105,29 @@ namespace JamaisASec.Services
                 EventBus.Publish("ArticleUpdated"); // Publier un événement pour mettre à jour le cache
             }
         }
+        public async Task CreateMaisonAsync(Maison maison)
+        {
+            if (maison == null) return;
+
+            var success = await _apiService.CreateMaisonAsync(maison);
+
+            if(success)
+            {
+                EventBus.Publish("MaisonUpdated");
+            }
+        }
+
+        public async Task CreateFamilleAsync(Famille famille)
+        {
+            if (famille == null) return;
+
+            var success = await _apiService.CreateFamilleAsync(famille);
+
+            if(success)
+            {
+                EventBus.Publish("FamilleUpdated");
+            }
+        }
 
         public async Task CreateArticleCommandeAsync(ArticlesCommandes articleCommande, int commande_id)
         {
@@ -183,14 +206,16 @@ namespace JamaisASec.Services
         public async Task UpdateCommandeAsync(Commande commande)
         {
             if (commande == null) return;
-            var success = true;
 
-            //var success = await _apiService.UpdateCommandeAsync(commande);
+            var success = await _apiService.UpdateCommandeAsync(commande);
+
+            // Si l'appel est un succès, on met à jour le cache
             if (success)
             {
                 EventBus.Publish("CommandeUpdated"); // Publier un événement pour mettre à jour le cache
             }
         }
+
         public async Task<bool> UpdateArticleCommandeAsync(ArticlesCommandes articleCommande)
         {
             if (articleCommande == null) return false;
@@ -217,6 +242,27 @@ namespace JamaisASec.Services
             if (success)
             {
                 EventBus.Publish("ArticleUpdated"); // Publier un événement pour mettre à jour le cache
+            }
+            return success;
+        }
+
+        public async Task<bool> DeleteFamilleAsync(int id)
+        {
+            var succes = await _apiService.DeleteFamilleAsync(id);
+            if (succes) {
+                EventBus.Publish("FamilleUpdated");
+                EventBus.Publish("ArticleUpdated");
+            }
+            return succes;
+        }
+
+        public async Task<bool> DeleteMaisonAsync(int id)
+        {
+            var success = await _apiService.DeleteMaisonAsync(id);
+            if (success)
+            {
+                EventBus.Publish("MaisonUpdated");
+                EventBus.Publish("ArticleUpdated");
             }
             return success;
         }

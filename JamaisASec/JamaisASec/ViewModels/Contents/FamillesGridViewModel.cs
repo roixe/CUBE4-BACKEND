@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using JamaisASec.Models;
@@ -30,12 +31,20 @@ namespace JamaisASec.ViewModels.Contents
                 }
             };
 
-            //LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
-            AddCommand = new RelayCommand<object>(_ => Add());
-            EditCommand = new RelayCommand<Famille>(async (famille) => await Edit(famille));
-            DeleteSelectedCommand = new RelayCommand<object>(_ => DeleteSelected());
-            DeleteCommand = new RelayCommand<Famille>(Delete);
+            EventBus.Subscribe("FamilleUpdated", OnFamilleUpdated);
 
+            //LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
+            AddCommand = new RelayCommandAsync<object>(_ => Add());
+            EditCommand = new RelayCommandAsync<Famille>(Edit);
+            DeleteSelectedCommand = new RelayCommandAsync<object>(_ => DeleteSelected());
+            DeleteCommand = new RelayCommandAsync<Famille>(Delete);
+
+            _ = LoadData();
+        }
+
+        private void OnFamilleUpdated()
+        {
+            // Mettre à jour les propriétés liées
             _ = LoadData();
         }
 
@@ -62,12 +71,11 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private void Add()
+        private async Task Add()
         {
             var famille = new Famille("Nouvelle famille");
             famille.id = _allFamilles.Count + 1;
-            _allFamilles.Add(famille);
-            Filter();
+            await _dataService.CreateFamilleAsync(famille);
         }
 
         private async Task Edit(Famille famille)
@@ -80,25 +88,28 @@ namespace JamaisASec.ViewModels.Contents
                 MessageBox.Show("Erreur lors de la sauvegarde.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void DeleteSelected()
+        private async Task DeleteSelected()
         {
-            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les familles sélectionnées ?",
+            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les familles sélectionnées et tous les articles associés ?",
                         "Confirmation",
                         MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 var selectedFamilles = Familles.Where(a => a.IsSelected).ToList();
                 foreach (var article in selectedFamilles)
                 {
-                    _allFamilles.Remove(article);
+                    await _dataService.DeleteFamilleAsync(article.id);
                 }
-                Filter();
             }
         }
 
-        private void Delete(Famille famille)
+        private async Task Delete(Famille famille)
         {
-            _allFamilles.Remove(famille);
-            Filter();
+            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer " + famille.nom + " et tous les articles associés ?",
+                        "Confirmation",
+                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                await _dataService.DeleteFamilleAsync(famille.id);
+            }
         }
     }
 }

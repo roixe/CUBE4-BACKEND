@@ -30,12 +30,20 @@ namespace JamaisASec.ViewModels.Contents
                 }
             };
 
-            //LoadDataCommand = new RelayCommandAsync(async () => await LoadData());<
-            AddCommand = new RelayCommand<object>(_ => Add());
-            EditCommand = new RelayCommand<Maison>(async (maison) => await Edit(maison));
-            DeleteSelectedCommand = new RelayCommand<object>(_ => DeleteSelected());
-            DeleteCommand = new RelayCommand<Maison>(Delete);
+            EventBus.Subscribe("MaisonUpdated", OnMaisonUpdated);
 
+            //LoadDataCommand = new RelayCommandAsync(async () => await LoadData());<
+            AddCommand = new RelayCommandAsync<object>(_ => Add());
+            EditCommand = new RelayCommandAsync<Maison>(Edit);
+            DeleteSelectedCommand = new RelayCommandAsync<object>(_ => DeleteSelected());
+            DeleteCommand = new RelayCommandAsync<Maison>(Delete);
+
+            _ = LoadData();
+        }
+
+        private void OnMaisonUpdated()
+        {
+            // Mettre à jour les propriétés liées
             _ = LoadData();
         }
 
@@ -63,11 +71,11 @@ namespace JamaisASec.ViewModels.Contents
             }
         }
 
-        private void Add()
+        private async Task Add()
         {
             var maison = new Maison("Nouvelle maison");
-            _allMaisons.Add(maison);
-            Filter();
+            maison.id = _allMaisons.Count + 1;
+            await _dataService.CreateMaisonAsync(maison);
         }
 
         private async Task Edit(Maison maison)
@@ -77,25 +85,28 @@ namespace JamaisASec.ViewModels.Contents
             await _dataService.UpdateMaisonAsync(maison);
         }
 
-        private void DeleteSelected()
+        private async Task DeleteSelected()
         {
-            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les maisons sélectionnés ?",
+            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer les maisons sélectionnés et tous les articles associés ?",
                         "Confirmation",
                         MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 var selectedMaisons = Maisons.Where(a => a.IsSelected).ToList();
                 foreach (var maison in selectedMaisons)
                 {
-                    _allMaisons.Remove(maison);
+                    await _dataService.DeleteMaisonAsync(maison.id);
                 }
-                Filter();
             }
         }
 
-        private void Delete(Maison maison)
+        private async Task Delete(Maison maison)
         {
-            _allMaisons.Remove(maison);
-            Filter();
+            if (MessageBox.Show("Êtes-vous sûr de vouloir supprimer " + maison.nom + " et tous les articles associés ?",
+                        "Confirmation",
+                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                await _dataService.DeleteMaisonAsync(maison.id);
+            }
         }
     }
 }

@@ -188,6 +188,28 @@ namespace JamaisASec.Services
                 return response.IsSuccessStatusCode;
             });
         }
+        public async Task<bool> CreateMaisonAsync(Maison maison)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(maison);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync("Maisons/create", content);
+                return response.IsSuccessStatusCode;
+            });
+        }
+
+        public async Task<bool> CreateFamilleAsync(Famille famille)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(famille);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync("Familles/create", content);
+                return response.IsSuccessStatusCode;
+            });
+        }
+
 
         public async Task<bool> CreateArticleCommandeAsync(ArticlesCommandes articleCommande, int commande_id)
         {
@@ -276,6 +298,24 @@ namespace JamaisASec.Services
             });
         }
 
+        public async Task<bool> UpdateCommandeAsync(Commande commande)
+        {
+            CommandeDTO dto = new CommandeDTO
+            {
+                ID = commande.id,
+                Date = (DateTime)commande.date,
+                Status = commande.status?.ToString(),
+                Clients_ID = commande.client.id,
+                Fournisseurs_id = commande.fournisseur.id
+            };
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(commande);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync($"Commandes/update/{commande.id}", content);
+                return response.IsSuccessStatusCode;
+            });
+        }
         public async Task<bool> UpdateStatusCommandeAsync(Commande commande)
         {
             return await RunWithLoadingCursor(async () =>
@@ -298,6 +338,27 @@ namespace JamaisASec.Services
                 return response.IsSuccessStatusCode;
             });
         }
+
+        public async Task<bool> DeleteMaisonAsync(int id)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.DeleteAsync($"Maisons/delete/{id}");
+                string error = await response.Content.ReadAsStringAsync();
+                return response.IsSuccessStatusCode;
+            });
+        }
+
+        public async Task<bool> DeleteFamilleAsync(int id)
+        {
+            return await RunWithLoadingCursor(async () =>
+            {
+                var response = await _httpClient.DeleteAsync($"Familles/delete/{id}");
+                string error = await response.Content.ReadAsStringAsync();
+                return response.IsSuccessStatusCode;
+            });
+        }
+
         public async Task<bool> DeleteArticleCommandeAsync(int id)
         {
             return await RunWithLoadingCursor(async () =>
