@@ -30,7 +30,7 @@ namespace JamaisASec.ViewModels.Contents
                 }
             };
 
-            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
+            //LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             AddCommand = new RelayCommand<object>(_ => Add());
             EditCommand = new RelayCommand<Famille>(async (famille) => await Edit(famille));
             DeleteSelectedCommand = new RelayCommand<object>(_ => DeleteSelected());

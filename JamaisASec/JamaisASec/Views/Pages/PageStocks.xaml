@@ -36,11 +36,15 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridButton}" Name="RemoveStock">
+                                <Button Style="{StaticResource gridButton}" 
+                                        Command="{Binding DataContext.DecrementStockCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                        CommandParameter="{Binding}">
                                     <iconPacks:PackIconBootstrapIcons Kind="Dash" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
                                 <TextBlock Text="{Binding quantite}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
-                                <Button Style="{StaticResource gridButton}" Name="AddStock">
+                                <Button Style="{StaticResource gridButton}" 
+                                        Command="{Binding DataContext.IncrementStockCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                        CommandParameter="{Binding}">
                                     <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
                             </StackPanel>
@@ -51,11 +55,15 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridButton}" Name="RemoveStockMin">
+                                <Button Style="{StaticResource gridButton}" 
+                                        Command="{Binding DataContext.DecrementStockMinCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                        CommandParameter="{Binding}">
                                     <iconPacks:PackIconBootstrapIcons Kind="Dash" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
                                 <TextBlock Text="{Binding quantite_Min}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
-                                <Button Style="{StaticResource gridButton}" Name="AddStockMin">
+                                <Button Style="{StaticResource gridButton}" 
+                                        Command="{Binding DataContext.IncrementStockMinCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                        CommandParameter="{Binding}">
                                     <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
                             </StackPanel>
@@ -66,11 +74,15 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridButton}" Name="RemoveColisage">
+                                <Button Style="{StaticResource gridButton}" 
+                                        Command="{Binding DataContext.DecrementColisageCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                        CommandParameter="{Binding}">
                                     <iconPacks:PackIconBootstrapIcons Kind="Dash" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
                                 <TextBlock Text="{Binding colisage}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
-                                <Button Style="{StaticResource gridButton}" Name="AddColisage">
+                                <Button Style="{StaticResource gridButton}" 
+                                        Command="{Binding DataContext.IncrementColisageCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                        CommandParameter="{Binding}">
                                     <iconPacks:PackIconBootstrapIcons Kind="Plus" Width="12" Height="12" VerticalAlignment="Center"/>
                                 </Button>
                             </StackPanel>

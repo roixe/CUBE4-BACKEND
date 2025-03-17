@@ -209,6 +209,31 @@ namespace JamaisASec.Services
         #endregion
 
         #region Updaters
+
+        public async Task<bool> UpdateArticleAsync(Article article)
+        {
+            var dto = new ArticleDTO
+            {
+                ID = article.id,
+                Nom = article.nom,
+                Description = article.description,
+                Quantite = article.quantite,
+                Quantite_Min = article.quantite_Min,
+                Colisage = article.colisage,
+                Prix_unitaire = article.prix_unitaire,
+                Annee = article.annee,
+                Familles_ID = article.famille.id,
+                Maisons_ID = article.maison.id,
+                Fournisseurs_ID = article.fournisseur.id
+            };
+            return await RunWithLoadingCursor(async () =>
+            {
+                var json = JsonSerializer.Serialize(dto);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync($"Articles/update/{article.id}", content);
+                return response.IsSuccessStatusCode;
+            });
+        }
         public async Task<bool> UpdateMaisonAsync(Maison maison)
         {
             return await RunWithLoadingCursor(async () =>

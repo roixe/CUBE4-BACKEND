@@ -17,6 +17,7 @@ namespace JamaisASec.Services
 
         Task<bool> CreateArticleAsync(Article article);
         Task<bool> CreateArticleCommandeAsync(ArticlesCommandes articleCommande, int commande_id);
+        Task<bool> UpdateArticleAsync(Article article);
         Task<bool> UpdateMaisonAsync(Maison maison);
         Task<bool> UpdateFamilleAsync(Famille famille);
         Task<bool> UpdateArticleCommandeAsync(ArticlesCommandes articleCommande);

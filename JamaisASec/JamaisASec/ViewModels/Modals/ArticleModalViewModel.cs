@@ -87,7 +87,7 @@ namespace JamaisASec.ViewModels.Modals
         {
             _window = window;
 
-            LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
+            //LoadDataCommand = new RelayCommandAsync(async () => await LoadData());
             _ = LoadData();
 
             Article = article ?? new Article();
